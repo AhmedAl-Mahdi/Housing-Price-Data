@@ -154,6 +154,9 @@ class DataProcessor:
         """Prepare data for machine learning models"""
         if target_column not in self.processed_data.columns:
             raise ValueError(f"Target column '{target_column}' not found in data")
+        
+        # First handle missing values
+        self.handle_missing_values(strategy='median')
             
         # Separate features and target
         X = self.processed_data.drop(target_column, axis=1)
@@ -162,6 +165,9 @@ class DataProcessor:
         # Encode categorical variables
         X_encoded = self.encode_categorical_variables(columns=X.select_dtypes(include=['object']).columns)
         X_encoded = X_encoded.select_dtypes(include=[np.number])
+        
+        # Handle any remaining NaN values
+        X_encoded = X_encoded.fillna(X_encoded.median())
         
         # Split data
         X_train, X_test, y_train, y_test = train_test_split(
