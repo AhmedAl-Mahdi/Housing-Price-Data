@@ -17,6 +17,7 @@ class DataProcessor:
         self.imputers = {}
         self.original_data = None
         self.processed_data = None
+        self.feature_columns = None  # Store feature column names from training
         
     def load_data(self, file_path):
         """Load data from CSV file"""
@@ -158,20 +159,44 @@ class DataProcessor:
         # First handle missing values
         self.handle_missing_values(strategy='median')
             
-        # Separate features and target
-        X = self.processed_data.drop(target_column, axis=1)
-        y = self.processed_data[target_column]
+        # Create a copy for processing
+        df_processed = self.processed_data.copy()
         
-        # Encode categorical variables
-        X_encoded = self.encode_categorical_variables(columns=X.select_dtypes(include=['object']).columns)
-        X_encoded = X_encoded.select_dtypes(include=[np.number])
+        # Encode categorical variables using the same method as prediction
+        # Convert yes/no to 1/0 for binary categorical variables
+        binary_cols = ['mainroad', 'guestroom', 'basement', 'hotwaterheating', 'airconditioning', 'prefarea']
+        
+        for col in binary_cols:
+            if col in df_processed.columns:
+                df_processed[col] = df_processed[col].map({'yes': 1, 'no': 0})
+        
+        # One-hot encode furnishingstatus
+        if 'furnishingstatus' in df_processed.columns:
+            furnishing_dummies = pd.get_dummies(df_processed['furnishingstatus'], prefix='furnishing')
+            df_processed = pd.concat([df_processed, furnishing_dummies], axis=1)
+            df_processed.drop('furnishingstatus', axis=1, inplace=True)
+            
+            # Ensure furnishing dummy columns are numeric (int64)
+            furnishing_cols = [col for col in df_processed.columns if col.startswith('furnishing_')]
+            for col in furnishing_cols:
+                df_processed[col] = df_processed[col].astype(int)
+        
+        # Separate features and target
+        X = df_processed.drop(target_column, axis=1)
+        y = df_processed[target_column]
+        
+        # Ensure only numeric columns
+        X = X.select_dtypes(include=[np.number])
         
         # Handle any remaining NaN values
-        X_encoded = X_encoded.fillna(X_encoded.median())
+        X = X.fillna(X.median())
+        
+        # Store feature names for later use
+        self.feature_columns = list(X.columns)
         
         # Split data
         X_train, X_test, y_train, y_test = train_test_split(
-            X_encoded, y, test_size=test_size, random_state=random_state
+            X, y, test_size=test_size, random_state=random_state
         )
         
         return X_train, X_test, y_train, y_test
@@ -193,9 +218,6 @@ class DataProcessor:
             processed_input = input_data.copy()
             
             # Encode categorical variables to match training data format
-            categorical_columns = ['mainroad', 'guestroom', 'basement', 'hotwaterheating', 
-                                 'airconditioning', 'prefarea', 'furnishingstatus']
-            
             # Convert yes/no to 1/0
             yes_no_columns = ['mainroad', 'guestroom', 'basement', 'hotwaterheating', 
                             'airconditioning', 'prefarea']
@@ -218,20 +240,41 @@ class DataProcessor:
                 # Drop original column and add dummy columns
                 processed_input = processed_input.drop('furnishingstatus', axis=1)
                 processed_input = pd.concat([processed_input, furnishing_dummies[expected_furnishing_cols]], axis=1)
+                
+                # Ensure furnishing dummy columns are numeric (int64)
+                for col in expected_furnishing_cols:
+                    processed_input[col] = processed_input[col].astype(int)
             
-            # Ensure columns are in the right order and all required columns are present
-            expected_columns = ['area', 'bedrooms', 'bathrooms', 'stories', 'mainroad', 
-                              'guestroom', 'basement', 'hotwaterheating', 'airconditioning', 
-                              'parking', 'prefarea', 'furnishing_furnished', 
-                              'furnishing_semi-furnished', 'furnishing_unfurnished']
+            # If we have stored feature columns from training, use them
+            if hasattr(self, 'feature_columns') and self.feature_columns:
+                # Add missing columns with default values
+                for col in self.feature_columns:
+                    if col not in processed_input.columns:
+                        processed_input[col] = 0
+                
+                # Reorder columns to match training data exactly
+                processed_input = processed_input[self.feature_columns]
+            else:
+                # Fallback: use expected columns based on typical housing data structure
+                expected_columns = ['area', 'bedrooms', 'bathrooms', 'stories', 'mainroad', 
+                                  'guestroom', 'basement', 'hotwaterheating', 'airconditioning', 
+                                  'parking', 'prefarea', 'furnishing_furnished', 
+                                  'furnishing_semi-furnished', 'furnishing_unfurnished']
+                
+                # Add missing columns with default values
+                for col in expected_columns:
+                    if col not in processed_input.columns:
+                        processed_input[col] = 0
+                
+                # Reorder columns to match expected structure
+                available_cols = [col for col in expected_columns if col in processed_input.columns]
+                processed_input = processed_input[available_cols]
             
-            # Add missing columns with default values
-            for col in expected_columns:
-                if col not in processed_input.columns:
-                    processed_input[col] = 0
+            # Ensure all values are numeric
+            processed_input = processed_input.select_dtypes(include=[np.number])
             
-            # Reorder columns to match training data
-            processed_input = processed_input[expected_columns]
+            # Handle any NaN values
+            processed_input = processed_input.fillna(0)
             
             return processed_input
             
