@@ -625,19 +625,41 @@ def show_interpretability_module(data, processor):
                 shap_values, X_sample, explainer = interpreter.get_shap_values()
                 
                 if shap_values is not None:
-                    # SHAP analysis options
+                    # Enhanced SHAP analysis options with new interactive visualizations
                     shap_option = st.selectbox(
                         "Select SHAP Analysis:",
                         [
-                            "Summary Plot",
-                            "Feature Importance",
-                            "Waterfall Plot (Individual)",
-                            "Dependence Plot",
-                            "Force Plot"
+                            "🎯 Interactive Summary Dashboard",
+                            "📊 Traditional Summary Plot",
+                            "📈 Feature Importance Ranking",
+                            "🌊 Waterfall Plot (Individual)",
+                            "📉 Dependence Plot",
+                            "⚡ Force Plot",
+                            "🔀 Decision Plot (Multiple Paths)",
+                            "🐝 Beeswarm Plot",
+                            "🎭 Clustering Analysis"
                         ]
                     )
                     
-                    if shap_option == "Summary Plot":
+                    if shap_option == "🎯 Interactive Summary Dashboard":
+                        st.markdown("**🎯 Interactive SHAP Analysis Dashboard**")
+                        st.info("Comprehensive view showing feature importance, distributions, impacts, and correlations")
+                        
+                        interactive_fig = interpreter.create_interactive_shap_summary(shap_values, X_sample)
+                        if interactive_fig:
+                            st.plotly_chart(interactive_fig, use_container_width=True)
+                        
+                        # Show insights
+                        st.markdown("**💡 Key Insights:**")
+                        mean_shap = np.abs(shap_values).mean(0)
+                        top_3_features = sorted(zip(X_sample.columns, mean_shap), key=lambda x: x[1], reverse=True)[:3]
+                        
+                        col1, col2, col3 = st.columns(3)
+                        for i, (feature, importance) in enumerate(top_3_features):
+                            with [col1, col2, col3][i]:
+                                st.metric(f"Top {i+1} Feature", feature, f"{importance:.4f}")
+                    
+                    elif shap_option == "📊 Traditional Summary Plot":
                         st.markdown("**📊 SHAP Summary Plot**")
                         shap_summary_fig = interpreter.create_shap_summary_plot(shap_values, X_sample)
                         st.plotly_chart(shap_summary_fig, use_container_width=True)
@@ -650,7 +672,7 @@ def show_interpretability_module(data, processor):
                         - Features ranked by importance (top to bottom)
                         """)
                     
-                    elif shap_option == "Feature Importance":
+                    elif shap_option == "📈 Feature Importance Ranking":
                         st.markdown("**🎯 SHAP Feature Importance**")
                         
                         # Calculate mean absolute SHAP values
@@ -757,6 +779,75 @@ def show_interpretability_module(data, processor):
                         )
                         fig.update_layout(height=500, yaxis={'categoryorder': 'total ascending'})
                         st.plotly_chart(fig, use_container_width=True)
+                    
+                    elif shap_option == "🔀 Decision Plot (Multiple Paths)":
+                        st.markdown("**🔀 SHAP Decision Plot - Multiple Prediction Paths**")
+                        st.info("Shows how each feature contributes to the final prediction, step by step")
+                        
+                        decision_fig = interpreter.create_shap_decision_plot(shap_values, X_sample)
+                        if decision_fig:
+                            st.plotly_chart(decision_fig, use_container_width=True)
+                        
+                        st.markdown("""
+                        **Understanding Decision Plots:**
+                        - Each line represents a property's prediction path
+                        - Y-axis shows cumulative prediction value
+                        - X-axis shows decision steps (features)
+                        - Starting point is the model's base prediction
+                        """)
+                    
+                    elif shap_option == "🐝 Beeswarm Plot":
+                        st.markdown("**🐝 SHAP Beeswarm Plot - Feature Impact Distribution**")
+                        st.info("Alternative to summary plot showing feature value distributions and impacts")
+                        
+                        beeswarm_fig = interpreter.create_shap_beeswarm_plot(shap_values, X_sample)
+                        if beeswarm_fig:
+                            st.plotly_chart(beeswarm_fig, use_container_width=True)
+                        
+                        st.markdown("""
+                        **Understanding Beeswarm Plots:**
+                        - Each dot represents one property
+                        - X-axis: SHAP value (impact on prediction)
+                        - Y-axis: Features (ranked by importance)
+                        - Color: Feature value (red=high, blue=low)
+                        - Spread shows value distribution for each feature
+                        """)
+                    
+                    elif shap_option == "🎭 Clustering Analysis":
+                        st.markdown("**🎭 SHAP Clustering Analysis - Similar Prediction Patterns**")
+                        st.info("Groups properties with similar SHAP value patterns to identify prediction archetypes")
+                        
+                        clustering_result = interpreter.create_shap_clustering_plot(shap_values, X_sample)
+                        if clustering_result and clustering_result[0] is not None:
+                            clustering_fig, cluster_labels = clustering_result
+                            st.plotly_chart(clustering_fig, use_container_width=True)
+                            
+                            # Show cluster statistics
+                            st.markdown("**📊 Cluster Analysis:**")
+                            n_clusters = len(np.unique(cluster_labels))
+                            
+                            # Create cluster summary
+                            cluster_summary = []
+                            for cluster in range(n_clusters):
+                                mask = cluster_labels == cluster
+                                cluster_size = np.sum(mask)
+                                cluster_predictions = [selected_model.predict(X_sample.iloc[[i]])[0] for i in range(len(X_sample)) if mask[i]]
+                                avg_prediction = np.mean(cluster_predictions) if cluster_predictions else 0
+                                
+                                cluster_summary.append({
+                                    'Cluster': f'Cluster {cluster + 1}',
+                                    'Properties': cluster_size,
+                                    'Avg Prediction': f'${avg_prediction:,.0f}',
+                                    'Percentage': f'{cluster_size/len(cluster_labels)*100:.1f}%'
+                                })
+                            
+                            cluster_df = pd.DataFrame(cluster_summary)
+                            st.dataframe(cluster_df, use_container_width=True)
+                        else:
+                            st.warning("Clustering analysis requires additional libraries. Showing feature importance instead.")
+                            fallback_fig = interpreter.create_feature_importance_fallback()
+                            if fallback_fig:
+                                st.plotly_chart(fallback_fig, use_container_width=True)
                 else:
                     st.error("SHAP analysis requires the 'shap' library. Please install it to use this feature.")
         
