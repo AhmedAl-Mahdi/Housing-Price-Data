@@ -60,7 +60,7 @@ st.markdown("""
 def load_data():
     """Load and cache the housing dataset"""
     try:
-        data = pd.read_csv('data/housing_data.csv')
+        data = pd.read_csv('Housing_Price_Data.csv')
         return data
     except Exception as e:
         st.error(f"Error loading data: {str(e)}")
@@ -97,6 +97,7 @@ def main():
             "🔧 Data Preprocessing",
             "🤖 Model Training & Evaluation",
             "🔬 Model Interpretability",
+            "🏠 Price Prediction",
             "📈 Interactive Features"
         ]
     )
@@ -120,6 +121,10 @@ def main():
     # Model Interpretability
     elif page == "🔬 Model Interpretability":
         show_interpretability_module(data, processor)
+    
+    # Price Prediction
+    elif page == "🏠 Price Prediction":
+        show_price_prediction(data, processor)
     
     # Interactive Features
     elif page == "📈 Interactive Features":
@@ -554,7 +559,7 @@ def show_model_evaluation(data, processor):
 
 def show_interpretability_module(data, processor):
     """Display model interpretability tools"""
-    st.markdown('<h2 class="section-header">Model Interpretability</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">🔬 Model Interpretability</h2>', unsafe_allow_html=True)
     
     # Check if models are trained
     if 'model_results' not in st.session_state:
@@ -574,90 +579,282 @@ def show_interpretability_module(data, processor):
         # Initialize interpreter
         interpreter = ModelInterpreter(selected_model, X_train, X_test)
         
-        # Interpretation type selection
-        interp_type = st.selectbox(
-            "Select Interpretation Method:",
-            [
-                "Feature Importance",
-                "SHAP Analysis", 
-                "LIME Explanation",
-                "Partial Dependence",
-                "Feature Interactions"
-            ]
-        )
+        # Create tabs for different interpretability methods
+        tab1, tab2, tab3, tab4 = st.tabs([
+            "🎯 Feature Importance", 
+            "🧠 SHAP Analysis", 
+            "🔍 LIME Explanations", 
+            "📊 Interactive Exploration"
+        ])
         
-        if interp_type == "Feature Importance":
+        with tab1:
             st.subheader("Feature Importance Analysis")
             
-            importance_fig = interpreter.create_feature_importance_fallback()
-            if importance_fig:
-                st.plotly_chart(importance_fig, use_container_width=True)
+            # Traditional feature importance (if available)
+            if hasattr(selected_model, 'feature_importances_'):
+                st.markdown("**🌳 Model Built-in Feature Importance:**")
+                
+                # Create feature importance DataFrame
+                importance_df = pd.DataFrame({
+                    'feature': X_train.columns,
+                    'importance': selected_model.feature_importances_
+                }).sort_values('importance', ascending=False)
+                
+                # Interactive bar plot
+                fig = px.bar(
+                    importance_df.head(10),
+                    x='importance',
+                    y='feature',
+                    orientation='h',
+                    title=f'Top 10 Feature Importance - {selected_model_name}',
+                    color='importance',
+                    color_continuous_scale='viridis'
+                )
+                fig.update_layout(height=500, yaxis={'categoryorder': 'total ascending'})
+                st.plotly_chart(fig, use_container_width=True)
+                
+                # Feature importance table
+                st.dataframe(importance_df.head(10), use_container_width=True)
             else:
-                st.info("Feature importance not available for this model type.")
+                st.info("Traditional feature importance not available for this model type.")
         
-        elif interp_type == "SHAP Analysis":
+        with tab2:
             st.subheader("SHAP (SHapley Additive exPlanations) Analysis")
             
             with st.spinner("Calculating SHAP values..."):
                 shap_values, X_sample, explainer = interpreter.get_shap_values()
                 
                 if shap_values is not None:
-                    # SHAP summary plot
-                    shap_summary_fig = interpreter.create_shap_summary_plot(shap_values, X_sample)
-                    st.plotly_chart(shap_summary_fig, use_container_width=True)
-                    
-                    # SHAP waterfall plot for specific instance
-                    st.subheader("SHAP Waterfall Plot")
-                    instance_idx = st.slider("Select Instance:", 0, len(X_sample)-1, 0)
-                    
-                    waterfall_fig = interpreter.create_shap_waterfall_plot(instance_idx, shap_values, X_sample)
-                    if waterfall_fig:
-                        st.plotly_chart(waterfall_fig, use_container_width=True)
-                    
-                    # SHAP dependence plot
-                    st.subheader("SHAP Dependence Plot")
-                    feature_for_dependence = st.selectbox("Select Feature:", X_train.columns.tolist())
-                    
-                    dependence_fig = interpreter.create_shap_dependence_plot(
-                        feature_for_dependence, shap_values, X_sample
+                    # SHAP analysis options
+                    shap_option = st.selectbox(
+                        "Select SHAP Analysis:",
+                        [
+                            "Summary Plot",
+                            "Feature Importance",
+                            "Waterfall Plot (Individual)",
+                            "Dependence Plot",
+                            "Force Plot"
+                        ]
                     )
-                    if dependence_fig:
-                        st.plotly_chart(dependence_fig, use_container_width=True)
+                    
+                    if shap_option == "Summary Plot":
+                        st.markdown("**📊 SHAP Summary Plot**")
+                        shap_summary_fig = interpreter.create_shap_summary_plot(shap_values, X_sample)
+                        st.plotly_chart(shap_summary_fig, use_container_width=True)
+                        
+                        st.info("""
+                        **Understanding the SHAP Summary Plot:**
+                        - Each point represents a house prediction
+                        - X-axis: SHAP value (impact on prediction)
+                        - Color: Feature value (red=high, blue=low)
+                        - Features ranked by importance (top to bottom)
+                        """)
+                    
+                    elif shap_option == "Feature Importance":
+                        st.markdown("**🎯 SHAP Feature Importance**")
+                        
+                        # Calculate mean absolute SHAP values
+                        feature_importance = np.abs(shap_values).mean(0)
+                        importance_df = pd.DataFrame({
+                            'feature': X_sample.columns,
+                            'mean_shap_value': feature_importance
+                        }).sort_values('mean_shap_value', ascending=False)
+                        
+                        # Interactive bar plot
+                        fig = px.bar(
+                            importance_df,
+                            x='mean_shap_value',
+                            y='feature',
+                            orientation='h',
+                            title='SHAP Feature Importance (Mean |SHAP value|)',
+                            color='mean_shap_value',
+                            color_continuous_scale='plasma'
+                        )
+                        fig.update_layout(height=500, yaxis={'categoryorder': 'total ascending'})
+                        st.plotly_chart(fig, use_container_width=True)
+                        
+                        # Display top features
+                        st.dataframe(importance_df, use_container_width=True)
+                    
+                    elif shap_option == "Waterfall Plot (Individual)":
+                        st.markdown("**🌊 SHAP Waterfall Plot**")
+                        
+                        instance_idx = st.slider(
+                            "Select Property Instance:", 
+                            0, len(X_sample)-1, 0
+                        )
+                        
+                        waterfall_fig = interpreter.create_shap_waterfall_plot(instance_idx, shap_values, X_sample)
+                        if waterfall_fig:
+                            st.plotly_chart(waterfall_fig, use_container_width=True)
+                        
+                        # Show property details
+                        st.markdown("**🏠 Property Details:**")
+                        property_details = X_sample.iloc[instance_idx].to_dict()
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            for i, (feature, value) in enumerate(property_details.items()):
+                                if i < len(property_details) // 2:
+                                    st.write(f"• **{feature}:** {value}")
+                        
+                        with col2:
+                            for i, (feature, value) in enumerate(property_details.items()):
+                                if i >= len(property_details) // 2:
+                                    st.write(f"• **{feature}:** {value}")
+                    
+                    elif shap_option == "Dependence Plot":
+                        st.markdown("**📈 SHAP Dependence Plot**")
+                        
+                        feature_for_dependence = st.selectbox(
+                            "Select Feature:", 
+                            X_train.columns.tolist()
+                        )
+                        
+                        dependence_fig = interpreter.create_shap_dependence_plot(
+                            feature_for_dependence, shap_values, X_sample
+                        )
+                        if dependence_fig:
+                            st.plotly_chart(dependence_fig, use_container_width=True)
+                        
+                        st.info(f"""
+                        **Understanding the Dependence Plot for {feature_for_dependence}:**
+                        - X-axis: {feature_for_dependence} values
+                        - Y-axis: SHAP values (impact on prediction)
+                        - Shows how {feature_for_dependence} affects model predictions
+                        """)
+                    
+                    elif shap_option == "Force Plot":
+                        st.markdown("**⚡ SHAP Force Plot**")
+                        st.info("Force plots show how each feature pushes the prediction above or below the expected value.")
+                        
+                        instance_idx = st.slider(
+                            "Select Instance for Force Plot:", 
+                            0, len(X_sample)-1, 0
+                        )
+                        
+                        # Create a simplified force plot using bar chart
+                        instance_shap = shap_values[instance_idx]
+                        feature_names = X_sample.columns
+                        
+                        force_df = pd.DataFrame({
+                            'feature': feature_names,
+                            'shap_value': instance_shap,
+                            'feature_value': X_sample.iloc[instance_idx].values
+                        })
+                        force_df['impact'] = force_df['shap_value'].apply(lambda x: 'Positive' if x > 0 else 'Negative')
+                        force_df = force_df.sort_values('shap_value', key=abs, ascending=False)
+                        
+                        fig = px.bar(
+                            force_df.head(10),
+                            x='shap_value',
+                            y='feature',
+                            orientation='h',
+                            color='impact',
+                            title=f'SHAP Force Plot - Property {instance_idx}',
+                            color_discrete_map={'Positive': 'green', 'Negative': 'red'},
+                            hover_data=['feature_value']
+                        )
+                        fig.update_layout(height=500, yaxis={'categoryorder': 'total ascending'})
+                        st.plotly_chart(fig, use_container_width=True)
                 else:
-                    st.info("SHAP analysis requires the 'shap' library. Please install it to use this feature.")
+                    st.error("SHAP analysis requires the 'shap' library. Please install it to use this feature.")
         
-        elif interp_type == "LIME Explanation":
+        with tab3:
             st.subheader("LIME (Local Interpretable Model-agnostic Explanations)")
             
-            instance_idx = st.slider("Select Instance for LIME:", 0, len(X_test)-1, 0)
+            instance_idx = st.slider("Select Property Instance for LIME:", 0, len(X_test)-1, 0)
             
             with st.spinner("Generating LIME explanation..."):
                 lime_fig = interpreter.create_lime_plot(instance_idx)
                 if lime_fig:
                     st.plotly_chart(lime_fig, use_container_width=True)
+                    
+                    # Show instance details
+                    st.markdown("**🏠 Property Details for LIME Analysis:**")
+                    instance_details = X_test.iloc[instance_idx].to_dict()
+                    
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        for i, (feature, value) in enumerate(instance_details.items()):
+                            if i < len(instance_details) // 2:
+                                st.write(f"• **{feature}:** {value}")
+                    
+                    with col2:
+                        for i, (feature, value) in enumerate(instance_details.items()):
+                            if i >= len(instance_details) // 2:
+                                st.write(f"• **{feature}:** {value}")
+                    
+                    # Actual vs Predicted
+                    actual_price = y_test.iloc[instance_idx]
+                    predicted_price = selected_model.predict(X_test.iloc[[instance_idx]])[0]
+                    
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric("Actual Price", f"${actual_price:,.0f}")
+                    with col2:
+                        st.metric("Predicted Price", f"${predicted_price:,.0f}")
+                    with col3:
+                        error = abs(actual_price - predicted_price)
+                        st.metric("Absolute Error", f"${error:,.0f}")
                 else:
-                    st.info("LIME analysis requires the 'lime' library. Please install it to use this feature.")
+                    st.error("LIME analysis requires the 'lime' library. Please install it to use this feature.")
         
-        elif interp_type == "Partial Dependence":
-            st.subheader("Partial Dependence Plots")
+        with tab4:
+            st.subheader("Interactive Exploration")
             
-            feature_for_pdp = st.selectbox("Select Feature for PDP:", X_train.columns.tolist())
+            # Comparison between SHAP and traditional importance
+            if hasattr(selected_model, 'feature_importances_'):
+                st.markdown("**🔄 SHAP vs Traditional Feature Importance**")
+                
+                with st.spinner("Computing comparison..."):
+                    shap_values, X_sample, _ = interpreter.get_shap_values()
+                    
+                    if shap_values is not None:
+                        # SHAP importance
+                        shap_importance = np.abs(shap_values).mean(0)
+                        shap_df = pd.DataFrame({
+                            'feature': X_sample.columns,
+                            'shap_importance': shap_importance / shap_importance.max()
+                        })
+                        
+                        # Traditional importance
+                        trad_importance = selected_model.feature_importances_
+                        trad_df = pd.DataFrame({
+                            'feature': X_train.columns,
+                            'traditional_importance': trad_importance / trad_importance.max()
+                        })
+                        
+                        # Merge and compare
+                        comparison_df = pd.merge(shap_df, trad_df, on='feature')
+                        
+                        # Scatter plot comparison
+                        fig = px.scatter(
+                            comparison_df,
+                            x='traditional_importance',
+                            y='shap_importance',
+                            text='feature',
+                            title='SHAP vs Traditional Feature Importance',
+                            hover_data=['feature']
+                        )
+                        fig.add_shape(type='line', x0=0, y0=0, x1=1, y1=1, 
+                                     line=dict(dash='dash', color='red'))
+                        fig.update_traces(textposition='top center')
+                        fig.update_layout(height=500)
+                        st.plotly_chart(fig, use_container_width=True)
+                        
+                        # Correlation
+                        correlation = comparison_df['shap_importance'].corr(comparison_df['traditional_importance'])
+                        st.metric("Correlation between methods", f"{correlation:.3f}")
             
-            with st.spinner("Calculating partial dependence..."):
-                pdp_fig = interpreter.create_partial_dependence_plot(feature_for_pdp)
-                if pdp_fig:
-                    st.plotly_chart(pdp_fig, use_container_width=True)
-                else:
-                    st.info("Partial dependence plots require scikit-learn >= 0.22.")
-        
-        elif interp_type == "Feature Interactions":
-            st.subheader("Feature Interaction Analysis")
+            # Feature interaction exploration
+            st.markdown("**🔗 Feature Interaction Analysis**")
             
             col1, col2 = st.columns(2)
             with col1:
-                feature1 = st.selectbox("Select First Feature:", X_train.columns.tolist(), key="feat1")
+                feature1 = st.selectbox("Select First Feature:", X_train.columns.tolist(), key="int_feat1")
             with col2:
-                feature2 = st.selectbox("Select Second Feature:", X_train.columns.tolist(), key="feat2")
+                feature2 = st.selectbox("Select Second Feature:", X_train.columns.tolist(), key="int_feat2")
             
             if feature1 != feature2:
                 with st.spinner("Analyzing feature interaction..."):
@@ -666,6 +863,43 @@ def show_interpretability_module(data, processor):
                         st.plotly_chart(interaction_fig, use_container_width=True)
                     else:
                         st.info("Feature interaction plots require scikit-learn >= 0.22.")
+            
+            # Model behavior summary
+            st.markdown("**📋 Model Behavior Summary**")
+            
+            model_perf = results[selected_model_name]['metrics']
+            col1, col2, col3, col4 = st.columns(4)
+            
+            with col1:
+                st.metric("Test R²", f"{model_perf['test_r2']:.4f}")
+            with col2:
+                st.metric("Test RMSE", f"${model_perf['test_rmse']:,.0f}")
+            with col3:
+                st.metric("Test MAE", f"${model_perf['test_mae']:,.0f}")
+            with col4:
+                overfitting = model_perf['train_r2'] - model_perf['test_r2']
+                st.metric("Overfitting", f"{overfitting:.4f}")
+            
+            # Interpretability summary
+            st.markdown("**🎯 Key Insights:**")
+            
+            if hasattr(selected_model, 'feature_importances_'):
+                top_features = pd.DataFrame({
+                    'feature': X_train.columns,
+                    'importance': selected_model.feature_importances_
+                }).sort_values('importance', ascending=False).head(3)
+                
+                st.write("**Top 3 Most Important Features:**")
+                for i, (_, row) in enumerate(top_features.iterrows(), 1):
+                    st.write(f"{i}. **{row['feature']}**: {row['importance']:.3f}")
+            
+            st.info("""
+            **💡 Tips for Model Interpretability:**
+            - Use SHAP for consistent, theoretically-grounded explanations
+            - Use LIME for model-agnostic local explanations
+            - Compare different explanation methods for validation
+            - Focus on the most important features for business decisions
+            """)
 
 def show_interactive_features(data, processor):
     """Display interactive features and custom analysis"""
@@ -792,6 +1026,237 @@ def show_interactive_features(data, processor):
                 
         except Exception as e:
             st.error(f"Error loading custom dataset: {str(e)}")
+
+def show_price_prediction(data, processor):
+    """Display price prediction interface"""
+    st.markdown('<h2 class="section-header">🏠 Price Prediction</h2>', unsafe_allow_html=True)
+    
+    # Check if models are trained
+    if 'model_results' not in st.session_state:
+        st.warning("⚠️ Please train models first in the Model Training & Evaluation section.")
+        st.info("Go to the 'Model Training & Evaluation' page and click 'Train Models' to enable predictions.")
+        return
+    
+    results = st.session_state['model_results']
+    X_train, X_test, y_train, y_test = st.session_state['model_data']
+    
+    # Find best model
+    best_model_name = max(results.keys(), key=lambda x: results[x]['metrics']['test_r2'])
+    best_model = results[best_model_name]['model']
+    
+    st.success(f"🎯 Using best performing model: **{best_model_name}** (R² = {results[best_model_name]['metrics']['test_r2']:.4f})")
+    
+    # Create two tabs: Manual Input and Bulk Prediction
+    tab1, tab2 = st.tabs(["🏠 Single Property Prediction", "📊 Bulk Prediction"])
+    
+    with tab1:
+        st.subheader("Enter Property Details")
+        
+        # Create input form for all features
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown("**🏠 Basic Information**")
+            area = st.number_input("Area (sq ft)", min_value=1000, max_value=20000, value=7500, step=100)
+            bedrooms = st.selectbox("Bedrooms", options=[1, 2, 3, 4, 5, 6], index=2)
+            bathrooms = st.selectbox("Bathrooms", options=[1, 2, 3, 4, 5], index=1)
+            stories = st.selectbox("Stories", options=[1, 2, 3, 4], index=1)
+            parking = st.selectbox("Parking Spaces", options=[0, 1, 2, 3, 4], index=2)
+        
+        with col2:
+            st.markdown("**🏛️ Property Features**")
+            mainroad = st.selectbox("Main Road Access", options=["yes", "no"], index=0)
+            guestroom = st.selectbox("Guest Room", options=["yes", "no"], index=1)
+            basement = st.selectbox("Basement", options=["yes", "no"], index=1)
+            hotwaterheating = st.selectbox("Hot Water Heating", options=["yes", "no"], index=1)
+        
+        with col3:
+            st.markdown("**✨ Premium Features**")
+            airconditioning = st.selectbox("Air Conditioning", options=["yes", "no"], index=0)
+            prefarea = st.selectbox("Preferred Area", options=["yes", "no"], index=0)
+            furnishingstatus = st.selectbox("Furnishing Status", 
+                                          options=["furnished", "semi-furnished", "unfurnished"], 
+                                          index=0)
+        
+        # Predict button
+        if st.button("🔮 Predict Price", type="primary"):
+            try:
+                # Create input data
+                input_data = pd.DataFrame({
+                    'area': [area],
+                    'bedrooms': [bedrooms],
+                    'bathrooms': [bathrooms],
+                    'stories': [stories],
+                    'parking': [parking],
+                    'mainroad': [mainroad],
+                    'guestroom': [guestroom],
+                    'basement': [basement],
+                    'hotwaterheating': [hotwaterheating],
+                    'airconditioning': [airconditioning],
+                    'prefarea': [prefarea],
+                    'furnishingstatus': [furnishingstatus]
+                })
+                
+                # Process the input data (encode categorical variables)
+                processed_input = processor.process_prediction_input(input_data)
+                
+                # Make prediction
+                predicted_price = best_model.predict(processed_input)[0]
+                
+                # Display prediction with styling
+                st.markdown("---")
+                st.markdown("### 🎯 Prediction Results")
+                
+                col1, col2, col3 = st.columns([1, 2, 1])
+                with col2:
+                    st.markdown(f"""
+                    <div style="
+                        background: linear-gradient(90deg, #4CAF50, #45a049);
+                        padding: 20px;
+                        border-radius: 10px;
+                        text-align: center;
+                        color: white;
+                        font-size: 24px;
+                        font-weight: bold;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    ">
+                        Predicted Price: ${predicted_price:,.0f}
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                # Add confidence and explanation
+                st.markdown("---")
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    st.markdown("**📊 Model Performance:**")
+                    st.write(f"• Model: {best_model_name}")
+                    st.write(f"• R² Score: {results[best_model_name]['metrics']['test_r2']:.4f}")
+                    st.write(f"• RMSE: ${results[best_model_name]['metrics']['test_rmse']:,.0f}")
+                
+                with col2:
+                    st.markdown("**🏠 Your Property Summary:**")
+                    st.write(f"• Area: {area:,} sq ft")
+                    st.write(f"• Bedrooms: {bedrooms}")
+                    st.write(f"• Bathrooms: {bathrooms}")
+                    st.write(f"• Furnishing: {furnishingstatus}")
+                
+                # Compare to market
+                st.markdown("---")
+                st.markdown("**📈 Market Comparison:**")
+                market_avg = data['price'].mean()
+                market_median = data['price'].median()
+                
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    diff_avg = predicted_price - market_avg
+                    color = "green" if diff_avg > 0 else "red"
+                    st.markdown(f"vs Market Avg: <span style='color:{color}'>{diff_avg:+,.0f}</span>", unsafe_allow_html=True)
+                
+                with col2:
+                    diff_median = predicted_price - market_median
+                    color = "green" if diff_median > 0 else "red"
+                    st.markdown(f"vs Market Median: <span style='color:{color}'>{diff_median:+,.0f}</span>", unsafe_allow_html=True)
+                
+                with col3:
+                    percentile = (data['price'] < predicted_price).mean() * 100
+                    st.write(f"Market Percentile: {percentile:.1f}%")
+                
+            except Exception as e:
+                st.error(f"Error making prediction: {str(e)}")
+                st.write("Please ensure all fields are filled correctly.")
+    
+    with tab2:
+        st.subheader("Bulk Property Prediction")
+        
+        # Sample data template
+        st.markdown("**📝 Upload a CSV file with the following columns:**")
+        st.code("area,bedrooms,bathrooms,stories,parking,mainroad,guestroom,basement,hotwaterheating,airconditioning,prefarea,furnishingstatus")
+        
+        # Download template
+        if st.button("📥 Download Template CSV"):
+            template_data = pd.DataFrame({
+                'area': [7500, 8960, 6500],
+                'bedrooms': [4, 3, 3],
+                'bathrooms': [2, 2, 1],
+                'stories': [2, 2, 1],
+                'parking': [2, 3, 1],
+                'mainroad': ['yes', 'yes', 'no'],
+                'guestroom': ['no', 'no', 'yes'],
+                'basement': ['yes', 'no', 'no'],
+                'hotwaterheating': ['no', 'no', 'yes'],
+                'airconditioning': ['yes', 'yes', 'no'],
+                'prefarea': ['yes', 'no', 'no'],
+                'furnishingstatus': ['furnished', 'semi-furnished', 'unfurnished']
+            })
+            csv = template_data.to_csv(index=False)
+            st.download_button(
+                label="Download",
+                data=csv,
+                file_name="property_template.csv",
+                mime="text/csv"
+            )
+        
+        # File upload
+        uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+        
+        if uploaded_file is not None:
+            try:
+                bulk_data = pd.read_csv(uploaded_file)
+                st.success(f"✅ Loaded {len(bulk_data)} properties")
+                
+                # Show preview
+                st.subheader("Data Preview")
+                st.dataframe(bulk_data.head(), use_container_width=True)
+                
+                if st.button("🔮 Predict All Prices"):
+                    with st.spinner("Making predictions..."):
+                        # Process the bulk data
+                        processed_bulk = processor.process_prediction_input(bulk_data)
+                        
+                        # Make predictions
+                        predictions = best_model.predict(processed_bulk)
+                        
+                        # Add predictions to original data
+                        bulk_data['predicted_price'] = predictions
+                        
+                        # Display results
+                        st.subheader("Prediction Results")
+                        st.dataframe(bulk_data, use_container_width=True)
+                        
+                        # Summary statistics
+                        col1, col2, col3, col4 = st.columns(4)
+                        with col1:
+                            st.metric("Total Properties", len(predictions))
+                        with col2:
+                            st.metric("Avg Predicted Price", f"${predictions.mean():,.0f}")
+                        with col3:
+                            st.metric("Max Price", f"${predictions.max():,.0f}")
+                        with col4:
+                            st.metric("Min Price", f"${predictions.min():,.0f}")
+                        
+                        # Download results
+                        csv = bulk_data.to_csv(index=False)
+                        st.download_button(
+                            label="📥 Download Results",
+                            data=csv,
+                            file_name="predicted_prices.csv",
+                            mime="text/csv"
+                        )
+                        
+                        # Visualization
+                        fig = px.histogram(
+                            bulk_data, 
+                            x='predicted_price',
+                            title="Distribution of Predicted Prices",
+                            nbins=20
+                        )
+                        fig.update_xaxis(title="Predicted Price")
+                        fig.update_yaxis(title="Count")
+                        st.plotly_chart(fig, use_container_width=True)
+                        
+            except Exception as e:
+                st.error(f"Error processing bulk data: {str(e)}")
 
 if __name__ == "__main__":
     main()

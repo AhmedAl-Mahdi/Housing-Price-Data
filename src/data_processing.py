@@ -185,3 +185,55 @@ class DataProcessor:
         """Reset processed data to original"""
         if self.original_data is not None:
             self.processed_data = self.original_data.copy()
+    
+    def process_prediction_input(self, input_data):
+        """Process input data for prediction (encode categorical variables)"""
+        try:
+            # Make a copy to avoid modifying the original
+            processed_input = input_data.copy()
+            
+            # Encode categorical variables to match training data format
+            categorical_columns = ['mainroad', 'guestroom', 'basement', 'hotwaterheating', 
+                                 'airconditioning', 'prefarea', 'furnishingstatus']
+            
+            # Convert yes/no to 1/0
+            yes_no_columns = ['mainroad', 'guestroom', 'basement', 'hotwaterheating', 
+                            'airconditioning', 'prefarea']
+            
+            for col in yes_no_columns:
+                if col in processed_input.columns:
+                    processed_input[col] = processed_input[col].map({'yes': 1, 'no': 0})
+            
+            # One-hot encode furnishing status
+            if 'furnishingstatus' in processed_input.columns:
+                furnishing_dummies = pd.get_dummies(processed_input['furnishingstatus'], 
+                                                  prefix='furnishing')
+                
+                # Ensure all expected columns are present
+                expected_furnishing_cols = ['furnishing_furnished', 'furnishing_semi-furnished', 'furnishing_unfurnished']
+                for col in expected_furnishing_cols:
+                    if col not in furnishing_dummies.columns:
+                        furnishing_dummies[col] = 0
+                
+                # Drop original column and add dummy columns
+                processed_input = processed_input.drop('furnishingstatus', axis=1)
+                processed_input = pd.concat([processed_input, furnishing_dummies[expected_furnishing_cols]], axis=1)
+            
+            # Ensure columns are in the right order and all required columns are present
+            expected_columns = ['area', 'bedrooms', 'bathrooms', 'stories', 'mainroad', 
+                              'guestroom', 'basement', 'hotwaterheating', 'airconditioning', 
+                              'parking', 'prefarea', 'furnishing_furnished', 
+                              'furnishing_semi-furnished', 'furnishing_unfurnished']
+            
+            # Add missing columns with default values
+            for col in expected_columns:
+                if col not in processed_input.columns:
+                    processed_input[col] = 0
+            
+            # Reorder columns to match training data
+            processed_input = processed_input[expected_columns]
+            
+            return processed_input
+            
+        except Exception as e:
+            raise Exception(f"Error processing prediction input: {str(e)}")
