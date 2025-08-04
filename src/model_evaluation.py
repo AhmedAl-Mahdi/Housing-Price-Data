@@ -29,7 +29,8 @@ class ModelEvaluator:
         """Train and evaluate regression models"""
         models = {
             'Linear Regression': LinearRegression(),
-            'Random Forest': RandomForestRegressor(n_estimators=100, random_state=42)
+            'Random Forest': RandomForestRegressor(n_estimators=100, random_state=42, max_depth=10),  # Prevent overfitting
+            'Random Forest (Deep)': RandomForestRegressor(n_estimators=100, random_state=42),  # Full depth
         }
         
         results = {}
