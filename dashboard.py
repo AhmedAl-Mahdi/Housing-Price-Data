@@ -139,7 +139,7 @@ def show_data_overview(data, processor):
     with col3:
         st.metric("Missing Values", data.isnull().sum().sum())
     with col4:
-        st.metric("Avg Price", f"${data['Price'].mean():,.0f}")
+        st.metric("Avg Price", f"${data['price'].mean():,.0f}")
     
     # Dataset preview
     st.subheader("Dataset Preview")
@@ -197,12 +197,12 @@ def show_eda_module(data, processor):
         
         with col1:
             # Price histogram
-            hist_fig = visualizer.create_histogram('Price', title="Price Distribution")
+            hist_fig = visualizer.create_histogram('price', title="Price Distribution")
             st.plotly_chart(hist_fig, use_container_width=True)
         
         with col2:
             # Price box plot
-            box_fig = visualizer.create_box_plot('Price', title="Price Box Plot")
+            box_fig = visualizer.create_box_plot('price', title="Price Box Plot")
             st.plotly_chart(box_fig, use_container_width=True)
         
         # Price statistics
@@ -210,13 +210,13 @@ def show_eda_module(data, processor):
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            st.metric("Mean", f"${data['Price'].mean():,.0f}")
+            st.metric("Mean", f"${data['price'].mean():,.0f}")
         with col2:
-            st.metric("Median", f"${data['Price'].median():,.0f}")
+            st.metric("Median", f"${data['price'].median():,.0f}")
         with col3:
-            st.metric("Std Dev", f"${data['Price'].std():,.0f}")
+            st.metric("Std Dev", f"${data['price'].std():,.0f}")
         with col4:
-            st.metric("Range", f"${data['Price'].max() - data['Price'].min():,.0f}")
+            st.metric("Range", f"${data['price'].max() - data['price'].min():,.0f}")
     
     elif analysis_type == "Feature Distributions":
         st.subheader("Feature Distribution Analysis")
@@ -237,8 +237,8 @@ def show_eda_module(data, processor):
                 st.plotly_chart(box_fig, use_container_width=True)
             
             # Feature vs Price scatter plot
-            if selected_feature != 'Price':
-                scatter_fig = visualizer.create_scatter_plot(selected_feature, 'Price')
+            if selected_feature != 'price':
+                scatter_fig = visualizer.create_scatter_plot(selected_feature, 'price')
                 st.plotly_chart(scatter_fig, use_container_width=True)
     
     elif analysis_type == "Correlation Analysis":
@@ -250,7 +250,7 @@ def show_eda_module(data, processor):
         
         # Top correlations with price
         numeric_data = data.select_dtypes(include=[np.number])
-        correlations = numeric_data.corr()['Price'].drop('Price').sort_values(ascending=False)
+        correlations = numeric_data.corr()['price'].drop('price').sort_values(ascending=False)
         
         st.subheader("Correlations with Price")
         col1, col2 = st.columns(2)
@@ -315,7 +315,7 @@ def show_eda_module(data, processor):
                 
                 with col2:
                     # Price by category
-                    avg_price = data.groupby(selected_cat)['Price'].mean().sort_values(ascending=False)
+                    avg_price = data.groupby(selected_cat)['price'].mean().sort_values(ascending=False)
                     fig = px.bar(x=avg_price.index, y=avg_price.values,
                                title=f"Average Price by {selected_cat}")
                     fig.update_xaxis(title=selected_cat)
@@ -323,7 +323,7 @@ def show_eda_module(data, processor):
                     st.plotly_chart(fig, use_container_width=True)
                 
                 # Box plot of price by category
-                box_fig = visualizer.create_distribution_comparison('Price', selected_cat)
+                box_fig = visualizer.create_distribution_comparison('price', selected_cat)
                 st.plotly_chart(box_fig, use_container_width=True)
 
 def show_preprocessing_module(data, processor):
@@ -385,8 +385,8 @@ def show_preprocessing_module(data, processor):
         st.subheader("Feature Scaling")
         
         numeric_columns = data.select_dtypes(include=[np.number]).columns.tolist()
-        if 'Price' in numeric_columns:
-            numeric_columns.remove('Price')  # Don't scale target variable
+        if 'price' in numeric_columns:
+            numeric_columns.remove('price')  # Don't scale target variable
         
         selected_features = st.multiselect("Select Features to Scale:", numeric_columns)
         scaling_method = st.selectbox("Scaling Method:", ["standard", "minmax"])
@@ -476,7 +476,7 @@ def show_model_evaluation(data, processor):
     
     col1, col2 = st.columns(2)
     with col1:
-        target_column = st.selectbox("Select Target Variable:", ['Price'])
+        target_column = st.selectbox("Select Target Variable:", ['price'])
         test_size = st.slider("Test Size", 0.1, 0.5, 0.2, 0.05)
     with col2:
         random_state = st.number_input("Random State", value=42, min_value=1)
@@ -681,41 +681,41 @@ def show_interactive_features(data, processor):
         # Price range filter
         price_min, price_max = st.slider(
             "Price Range",
-            min_value=int(data['Price'].min()),
-            max_value=int(data['Price'].max()),
-            value=(int(data['Price'].min()), int(data['Price'].max())),
+            min_value=int(data['price'].min()),
+            max_value=int(data['price'].max()),
+            value=(int(data['price'].min()), int(data['price'].max())),
             format="$%d"
         )
         
         # Bedrooms filter
-        bedroom_options = sorted(data['Bedrooms'].unique())
+        bedroom_options = sorted(data['bedrooms'].unique())
         selected_bedrooms = st.multiselect("Bedrooms", bedroom_options, default=bedroom_options)
     
     with col2:
-        # Square feet filter
-        sqft_min, sqft_max = st.slider(
-            "Square Feet Range",
-            min_value=int(data['Square_Feet'].min()),
-            max_value=int(data['Square_Feet'].max()),
-            value=(int(data['Square_Feet'].min()), int(data['Square_Feet'].max()))
+        # Area filter
+        area_min, area_max = st.slider(
+            "Area Range (Sq Ft)",
+            min_value=int(data['area'].min()),
+            max_value=int(data['area'].max()),
+            value=(int(data['area'].min()), int(data['area'].max()))
         )
         
-        # Neighborhood filter
-        if 'Neighborhood' in data.columns:
-            neighborhood_options = data['Neighborhood'].unique().tolist()
-            selected_neighborhoods = st.multiselect("Neighborhoods", neighborhood_options, default=neighborhood_options)
+        # Furnishing status filter
+        if 'furnishingstatus' in data.columns:
+            furnishing_options = data['furnishingstatus'].unique().tolist()
+            selected_furnishing = st.multiselect("Furnishing Status", furnishing_options, default=furnishing_options)
     
     # Apply filters
     filtered_data = data[
-        (data['Price'] >= price_min) & 
-        (data['Price'] <= price_max) &
-        (data['Bedrooms'].isin(selected_bedrooms)) &
-        (data['Square_Feet'] >= sqft_min) &
-        (data['Square_Feet'] <= sqft_max)
+        (data['price'] >= price_min) & 
+        (data['price'] <= price_max) &
+        (data['bedrooms'].isin(selected_bedrooms)) &
+        (data['area'] >= area_min) &
+        (data['area'] <= area_max)
     ]
     
-    if 'Neighborhood' in data.columns:
-        filtered_data = filtered_data[filtered_data['Neighborhood'].isin(selected_neighborhoods)]
+    if 'furnishingstatus' in data.columns:
+        filtered_data = filtered_data[filtered_data['furnishingstatus'].isin(selected_furnishing)]
     
     # Show filtered results
     st.subheader(f"Filtered Results ({len(filtered_data)} properties)")
@@ -724,11 +724,11 @@ def show_interactive_features(data, processor):
         # Summary statistics
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Avg Price", f"${filtered_data['Price'].mean():,.0f}")
+            st.metric("Avg Price", f"${filtered_data['price'].mean():,.0f}")
         with col2:
-            st.metric("Median Price", f"${filtered_data['Price'].median():,.0f}")
+            st.metric("Median Price", f"${filtered_data['price'].median():,.0f}")
         with col3:
-            st.metric("Avg Sq Ft", f"{filtered_data['Square_Feet'].mean():.0f}")
+            st.metric("Avg Area", f"{filtered_data['area'].mean():.0f}")
         with col4:
             st.metric("Properties", len(filtered_data))
         
@@ -752,7 +752,7 @@ def show_interactive_features(data, processor):
             x=x_axis,
             y=y_axis,
             color=color_by,
-            hover_data=['Price'],
+            hover_data=['price'],
             title=f"{y_axis} vs {x_axis}"
         )
         st.plotly_chart(fig, use_container_width=True)
