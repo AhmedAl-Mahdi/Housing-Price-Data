@@ -22,6 +22,8 @@ lime>=0.2.0
 # Dashboard and Web App
 streamlit>=1.25.0
 streamlit-option-menu>=0.3.0
+dash>=2.14.0
+dash-bootstrap-components>=1.5.0
 
 # Additional Visualization
 plotly-express>=0.4.0
