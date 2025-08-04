@@ -314,8 +314,7 @@ def show_eda_module(data, processor):
                     value_counts = data[selected_cat].value_counts()
                     fig = px.bar(x=value_counts.index, y=value_counts.values,
                                title=f"Distribution of {selected_cat}")
-                    fig.update_xaxis(title=selected_cat)
-                    fig.update_yaxis(title="Count")
+                    fig.update_layout(xaxis_title=selected_cat, yaxis_title="Count")
                     st.plotly_chart(fig, use_container_width=True)
                 
                 with col2:
@@ -323,8 +322,7 @@ def show_eda_module(data, processor):
                     avg_price = data.groupby(selected_cat)['price'].mean().sort_values(ascending=False)
                     fig = px.bar(x=avg_price.index, y=avg_price.values,
                                title=f"Average Price by {selected_cat}")
-                    fig.update_xaxis(title=selected_cat)
-                    fig.update_yaxis(title="Average Price")
+                    fig.update_layout(xaxis_title=selected_cat, yaxis_title="Average Price")
                     st.plotly_chart(fig, use_container_width=True)
                 
                 # Box plot of price by category
@@ -503,6 +501,7 @@ def show_model_evaluation(data, processor):
                 # Store results in session state
                 st.session_state['model_results'] = results
                 st.session_state['model_data'] = (X_train, X_test, y_train, y_test)
+                st.session_state['processor'] = processor  # Store processor for prediction
                 
                 st.success("✅ Models trained successfully!")
                 
@@ -519,10 +518,12 @@ def show_model_evaluation(data, processor):
         # Create performance DataFrame
         performance_data = []
         for name, result in results.items():
+            overfitting = result['metrics']['train_r2'] - result['metrics']['test_r2']
             performance_data.append({
                 'Model': name,
                 'Train R²': f"{result['metrics']['train_r2']:.4f}",
                 'Test R²': f"{result['metrics']['test_r2']:.4f}",
+                'Overfitting': f"{overfitting:.4f}",
                 'Test RMSE': f"${result['metrics']['test_rmse']:,.0f}",
                 'Test MAE': f"${result['metrics']['test_mae']:,.0f}"
             })
@@ -540,6 +541,17 @@ def show_model_evaluation(data, processor):
                             key=lambda x: results[x]['metrics']['test_r2'])
         
         st.subheader(f"Best Model: {best_model_name}")
+        
+        # Explain model selection
+        st.info(f"""
+        🎯 **Model Selection Criteria**: The best model is selected based on **Test R² Score** to ensure generalization.
+        
+        **{best_model_name}** achieved:
+        - Test R²: {results[best_model_name]['metrics']['test_r2']:.4f}
+        - Overfitting: {results[best_model_name]['metrics']['train_r2'] - results[best_model_name]['metrics']['test_r2']:.4f} (lower is better)
+        
+        💡 **Note**: A model with high training R² but low test R² indicates overfitting.
+        """)
         
         # Residual analysis
         best_result = results[best_model_name]
@@ -625,41 +637,19 @@ def show_interpretability_module(data, processor):
                 shap_values, X_sample, explainer = interpreter.get_shap_values()
                 
                 if shap_values is not None:
-                    # Enhanced SHAP analysis options with new interactive visualizations
+                    # SHAP analysis options
                     shap_option = st.selectbox(
                         "Select SHAP Analysis:",
                         [
-                            "🎯 Interactive Summary Dashboard",
-                            "📊 Traditional Summary Plot",
-                            "📈 Feature Importance Ranking",
-                            "🌊 Waterfall Plot (Individual)",
-                            "📉 Dependence Plot",
-                            "⚡ Force Plot",
-                            "🔀 Decision Plot (Multiple Paths)",
-                            "🐝 Beeswarm Plot",
-                            "🎭 Clustering Analysis"
+                            "Summary Plot",
+                            "Feature Importance",
+                            "Waterfall Plot (Individual)",
+                            "Dependence Plot",
+                            "Force Plot"
                         ]
                     )
                     
-                    if shap_option == "🎯 Interactive Summary Dashboard":
-                        st.markdown("**🎯 Interactive SHAP Analysis Dashboard**")
-                        st.info("Comprehensive view showing feature importance, distributions, impacts, and correlations")
-                        
-                        interactive_fig = interpreter.create_interactive_shap_summary(shap_values, X_sample)
-                        if interactive_fig:
-                            st.plotly_chart(interactive_fig, use_container_width=True)
-                        
-                        # Show insights
-                        st.markdown("**💡 Key Insights:**")
-                        mean_shap = np.abs(shap_values).mean(0)
-                        top_3_features = sorted(zip(X_sample.columns, mean_shap), key=lambda x: x[1], reverse=True)[:3]
-                        
-                        col1, col2, col3 = st.columns(3)
-                        for i, (feature, importance) in enumerate(top_3_features):
-                            with [col1, col2, col3][i]:
-                                st.metric(f"Top {i+1} Feature", feature, f"{importance:.4f}")
-                    
-                    elif shap_option == "📊 Traditional Summary Plot":
+                    if shap_option == "Summary Plot":
                         st.markdown("**📊 SHAP Summary Plot**")
                         shap_summary_fig = interpreter.create_shap_summary_plot(shap_values, X_sample)
                         st.plotly_chart(shap_summary_fig, use_container_width=True)
@@ -672,7 +662,7 @@ def show_interpretability_module(data, processor):
                         - Features ranked by importance (top to bottom)
                         """)
                     
-                    elif shap_option == "📈 Feature Importance Ranking":
+                    elif shap_option == "Feature Importance":
                         st.markdown("**🎯 SHAP Feature Importance**")
                         
                         # Calculate mean absolute SHAP values
@@ -779,75 +769,6 @@ def show_interpretability_module(data, processor):
                         )
                         fig.update_layout(height=500, yaxis={'categoryorder': 'total ascending'})
                         st.plotly_chart(fig, use_container_width=True)
-                    
-                    elif shap_option == "🔀 Decision Plot (Multiple Paths)":
-                        st.markdown("**🔀 SHAP Decision Plot - Multiple Prediction Paths**")
-                        st.info("Shows how each feature contributes to the final prediction, step by step")
-                        
-                        decision_fig = interpreter.create_shap_decision_plot(shap_values, X_sample)
-                        if decision_fig:
-                            st.plotly_chart(decision_fig, use_container_width=True)
-                        
-                        st.markdown("""
-                        **Understanding Decision Plots:**
-                        - Each line represents a property's prediction path
-                        - Y-axis shows cumulative prediction value
-                        - X-axis shows decision steps (features)
-                        - Starting point is the model's base prediction
-                        """)
-                    
-                    elif shap_option == "🐝 Beeswarm Plot":
-                        st.markdown("**🐝 SHAP Beeswarm Plot - Feature Impact Distribution**")
-                        st.info("Alternative to summary plot showing feature value distributions and impacts")
-                        
-                        beeswarm_fig = interpreter.create_shap_beeswarm_plot(shap_values, X_sample)
-                        if beeswarm_fig:
-                            st.plotly_chart(beeswarm_fig, use_container_width=True)
-                        
-                        st.markdown("""
-                        **Understanding Beeswarm Plots:**
-                        - Each dot represents one property
-                        - X-axis: SHAP value (impact on prediction)
-                        - Y-axis: Features (ranked by importance)
-                        - Color: Feature value (red=high, blue=low)
-                        - Spread shows value distribution for each feature
-                        """)
-                    
-                    elif shap_option == "🎭 Clustering Analysis":
-                        st.markdown("**🎭 SHAP Clustering Analysis - Similar Prediction Patterns**")
-                        st.info("Groups properties with similar SHAP value patterns to identify prediction archetypes")
-                        
-                        clustering_result = interpreter.create_shap_clustering_plot(shap_values, X_sample)
-                        if clustering_result and clustering_result[0] is not None:
-                            clustering_fig, cluster_labels = clustering_result
-                            st.plotly_chart(clustering_fig, use_container_width=True)
-                            
-                            # Show cluster statistics
-                            st.markdown("**📊 Cluster Analysis:**")
-                            n_clusters = len(np.unique(cluster_labels))
-                            
-                            # Create cluster summary
-                            cluster_summary = []
-                            for cluster in range(n_clusters):
-                                mask = cluster_labels == cluster
-                                cluster_size = np.sum(mask)
-                                cluster_predictions = [selected_model.predict(X_sample.iloc[[i]])[0] for i in range(len(X_sample)) if mask[i]]
-                                avg_prediction = np.mean(cluster_predictions) if cluster_predictions else 0
-                                
-                                cluster_summary.append({
-                                    'Cluster': f'Cluster {cluster + 1}',
-                                    'Properties': cluster_size,
-                                    'Avg Prediction': f'${avg_prediction:,.0f}',
-                                    'Percentage': f'{cluster_size/len(cluster_labels)*100:.1f}%'
-                                })
-                            
-                            cluster_df = pd.DataFrame(cluster_summary)
-                            st.dataframe(cluster_df, use_container_width=True)
-                        else:
-                            st.warning("Clustering analysis requires additional libraries. Showing feature importance instead.")
-                            fallback_fig = interpreter.create_feature_importance_fallback()
-                            if fallback_fig:
-                                st.plotly_chart(fallback_fig, use_container_width=True)
                 else:
                     st.error("SHAP analysis requires the 'shap' library. Please install it to use this feature.")
         
@@ -1131,11 +1052,21 @@ def show_price_prediction(data, processor):
     results = st.session_state['model_results']
     X_train, X_test, y_train, y_test = st.session_state['model_data']
     
+    # Get the processor used during training
+    if 'processor' in st.session_state:
+        trained_processor = st.session_state['processor']
+    else:
+        st.error("⚠️ Processor not found. Please retrain models to enable predictions.")
+        return
+    
     # Find best model
     best_model_name = max(results.keys(), key=lambda x: results[x]['metrics']['test_r2'])
     best_model = results[best_model_name]['model']
     
     st.success(f"🎯 Using best performing model: **{best_model_name}** (R² = {results[best_model_name]['metrics']['test_r2']:.4f})")
+    
+    # Info about feature preprocessing
+    st.info("💡 **Note**: If you encounter prediction errors, please retrain the models in the 'Model Training & Evaluation' section to ensure proper feature alignment.")
     
     # Create two tabs: Manual Input and Bulk Prediction
     tab1, tab2 = st.tabs(["🏠 Single Property Prediction", "📊 Bulk Prediction"])
@@ -1189,7 +1120,7 @@ def show_price_prediction(data, processor):
                 })
                 
                 # Process the input data (encode categorical variables)
-                processed_input = processor.process_prediction_input(input_data)
+                processed_input = trained_processor.process_prediction_input(input_data)
                 
                 # Make prediction
                 predicted_price = best_model.predict(processed_input)[0]
@@ -1303,7 +1234,7 @@ def show_price_prediction(data, processor):
                 if st.button("🔮 Predict All Prices"):
                     with st.spinner("Making predictions..."):
                         # Process the bulk data
-                        processed_bulk = processor.process_prediction_input(bulk_data)
+                        processed_bulk = trained_processor.process_prediction_input(bulk_data)
                         
                         # Make predictions
                         predictions = best_model.predict(processed_bulk)
@@ -1342,8 +1273,7 @@ def show_price_prediction(data, processor):
                             title="Distribution of Predicted Prices",
                             nbins=20
                         )
-                        fig.update_xaxis(title="Predicted Price")
-                        fig.update_yaxis(title="Count")
+                        fig.update_layout(xaxis_title="Predicted Price", yaxis_title="Count")
                         st.plotly_chart(fig, use_container_width=True)
                         
             except Exception as e:
