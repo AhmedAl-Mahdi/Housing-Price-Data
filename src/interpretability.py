@@ -334,6 +334,7 @@ class ModelInterpreter:
         """Create feature interaction plot"""
         try:
             from sklearn.inspection import partial_dependence
+            import sklearn
             
             if feature1 not in self.feature_names or feature2 not in self.feature_names:
                 return None
@@ -342,24 +343,52 @@ class ModelInterpreter:
             feature2_idx = self.feature_names.index(feature2)
             
             # Calculate 2D partial dependence
-            pdp_result = partial_dependence(
-                self.model,
-                self.X_train,
-                features=[feature1_idx, feature2_idx],
-                kind='average'
-            )
+            try:
+                pdp_result = partial_dependence(
+                    self.model,
+                    self.X_train,
+                    features=[feature1_idx, feature2_idx],
+                    kind='average'
+                )
+                
+                # Handle different result structures based on sklearn version
+                if hasattr(pdp_result, 'average'):
+                    # Newer sklearn versions return a Bunch object
+                    pdp_values = pdp_result.average[0]
+                    feature1_grid = pdp_result.grid_values[0]
+                    feature2_grid = pdp_result.grid_values[1]
+                elif isinstance(pdp_result, dict):
+                    # Dictionary format
+                    pdp_values = pdp_result['average'][0]
+                    feature1_grid = pdp_result['grid'][0]
+                    feature2_grid = pdp_result['grid'][1]
+                elif isinstance(pdp_result, tuple):
+                    # Tuple format
+                    pdp_values, axes = pdp_result
+                    if len(pdp_values.shape) > 2:
+                        pdp_values = pdp_values[0]
+                    feature1_grid = axes[0]
+                    feature2_grid = axes[1]
+                else:
+                    print(f"Unexpected result format: {type(pdp_result)}")
+                    return None
+                    
+            except Exception as api_error:
+                print(f"API error: {str(api_error)}")
+                return None
             
-            # Extract values and grids
-            pdp_values = pdp_result['average'][0]
-            feature1_grid = pdp_result['grid'][0]
-            feature2_grid = pdp_result['grid'][1]
-            
+            # Create contour plot
             fig = go.Figure(data=go.Contour(
                 x=feature1_grid,
                 y=feature2_grid,
                 z=pdp_values,
                 colorscale='viridis',
-                showscale=True
+                showscale=True,
+                colorbar=dict(title="Partial Dependence"),
+                contours=dict(
+                    showlabels=True,
+                    labelfont=dict(size=12, color='white')
+                )
             ))
             
             fig.update_layout(
@@ -373,6 +402,7 @@ class ModelInterpreter:
             return fig
             
         except ImportError:
+            print("sklearn.inspection.partial_dependence not available")
             return None
         except Exception as e:
             print(f"Error creating feature interaction plot: {str(e)}")

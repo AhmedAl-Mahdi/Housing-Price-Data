@@ -45,30 +45,52 @@ class DataProcessor:
         
         return info
     
-    def detect_outliers(self, column, method='iqr'):
-        """Detect outliers in a numeric column"""
-        if column not in self.original_data.columns:
+    def detect_outliers(self, feature, method='iqr', threshold=None):
+        """Detect outliers in a numeric column using various methods"""
+        if feature not in self.original_data.columns:
             return None
             
-        data = self.original_data[column].dropna()
+        data = self.original_data[feature].dropna()
+        
+        if len(data) == 0:
+            return None
+        
+        outlier_indices = []
         
         if method == 'iqr':
             Q1 = data.quantile(0.25)
             Q3 = data.quantile(0.75)
             IQR = Q3 - Q1
-            lower_bound = Q1 - 1.5 * IQR
-            upper_bound = Q3 + 1.5 * IQR
-            outliers = data[(data < lower_bound) | (data > upper_bound)]
+            multiplier = threshold if threshold is not None else 1.5
+            lower_bound = Q1 - multiplier * IQR
+            upper_bound = Q3 + multiplier * IQR
+            outlier_mask = (data < lower_bound) | (data > upper_bound)
             
         elif method == 'z_score':
+            z_threshold = threshold if threshold is not None else 3.0
             z_scores = np.abs((data - data.mean()) / data.std())
-            outliers = data[z_scores > 3]
+            outlier_mask = z_scores > z_threshold
             
+        elif method == 'modified_z_score':
+            modified_z_threshold = threshold if threshold is not None else 3.5
+            median = data.median()
+            mad = np.median(np.abs(data - median))
+            modified_z_scores = 0.6745 * (data - median) / mad
+            outlier_mask = np.abs(modified_z_scores) > modified_z_threshold
+            
+        else:
+            return None
+        
+        outlier_indices = data[outlier_mask].index.tolist()
+        outliers = data[outlier_mask]
+        
         return {
-            'outliers': outliers.tolist(),
-            'outlier_indices': outliers.index.tolist(),
+            'indices': outlier_indices,
+            'values': outliers.tolist(),
             'count': len(outliers),
-            'percentage': (len(outliers) / len(data)) * 100
+            'percentage': (len(outliers) / len(data)) * 100 if len(data) > 0 else 0,
+            'method': method,
+            'threshold': threshold
         }
     
     def handle_missing_values(self, strategy='mean', columns=None):
