@@ -21,262 +21,37 @@ from interpretability import ModelInterpreter
 
 # Configure page
 st.set_page_config(
-    page_title="Housing Price Analytics Platform | Real Estate ML Dashboard",
-    page_icon="�",
+    page_title="Housing Price ML Dashboard",
+    page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Professional CSS Styling
+# Custom CSS
 st.markdown("""
 <style>
-    /* Import professional fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-    
-    /* Global styling */
-    .stApp {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background-color: #fafbfc;
-    }
-    
-    /* Main header styling */
     .main-header {
-        font-family: 'Inter', sans-serif;
-        font-size: 2.75rem;
-        font-weight: 700;
-        color: #1a365d;
+        font-size: 2.5rem;
+        color: #1f77b4;
         text-align: center;
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.025em;
-        background: linear-gradient(135deg, #2d3748 0%, #1a365d 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        margin-bottom: 2rem;
     }
-    
-    /* Subtitle styling */
-    .main-subtitle {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.125rem;
-        font-weight: 400;
-        color: #718096;
-        text-align: center;
-        margin-bottom: 3rem;
-        line-height: 1.6;
-    }
-    
-    /* Section headers */
     .section-header {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.625rem;
-        font-weight: 600;
-        color: #2d3748;
-        border-bottom: 3px solid #e2e8f0;
-        padding-bottom: 0.75rem;
-        margin-top: 2.5rem;
-        margin-bottom: 1.5rem;
-        position: relative;
+        font-size: 1.5rem;
+        color: #2e8b57;
+        border-bottom: 2px solid #2e8b57;
+        padding-bottom: 0.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
     }
-    
-    .section-header::after {
-        content: '';
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(90deg, #3182ce 0%, #63b3ed 100%);
-        border-radius: 2px;
-    }
-    
-    /* Metric containers */
     .metric-container {
-        background: linear-gradient(145deg, #ffffff 0%, #f7fafc 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 1rem 0;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        transition: all 0.3s ease;
+        background-color: #f0f2f6;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin: 0.5rem 0;
     }
-    
-    .metric-container:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-    
-    /* Sidebar styling */
-    .css-1d391kg {
-        background-color: #f8fafc;
-        border-right: 1px solid #e2e8f0;
-    }
-    
-    /* Sidebar title */
-    .css-1d391kg .css-1lcbmhc {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        color: #2d3748;
-    }
-    
-    /* Selectbox styling */
-    .stSelectbox > div > div {
-        background-color: #ffffff;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        color: #2d3748;
-        transition: all 0.2s ease;
-    }
-    
-    .stSelectbox > div > div:hover {
-        border-color: #3182ce;
-        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
-    }
-    
-    /* Button styling */
-    .stButton > button {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        background: linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 0.75rem 1.5rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-    
-    .stButton > button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        background: linear-gradient(135deg, #2c5aa0 0%, #2a4a8b 100%);
-    }
-    
-    /* Input styling */
-    .stTextInput > div > div > input,
-    .stNumberInput > div > div > input {
-        font-family: 'Inter', sans-serif;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 0.75rem;
-        font-size: 0.875rem;
-        transition: all 0.2s ease;
-    }
-    
-    .stTextInput > div > div > input:focus,
-    .stNumberInput > div > div > input:focus {
-        border-color: #3182ce;
-        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
-        outline: none;
-    }
-    
-    /* Tab styling */
-    .stTabs [data-baseweb="tab-list"] {
-        background-color: #f8fafc;
-        border-radius: 12px;
-        padding: 0.25rem;
-        border: 1px solid #e2e8f0;
-        gap: 0.25rem;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        color: #4a5568;
-        background-color: transparent;
-        border-radius: 8px;
-        padding: 0.75rem 1rem;
-        transition: all 0.2s ease;
-    }
-    
-    .stTabs [data-baseweb="tab"]:hover {
-        background-color: #e2e8f0;
-        color: #2d3748;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background-color: #ffffff !important;
-        color: #2d3748 !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        font-weight: 600;
-    }
-    
-    /* Dataframe styling */
-    .dataframe {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.875rem;
-        border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid #e2e8f0;
-    }
-    
-    /* Info boxes */
-    .stAlert {
-        border-radius: 8px;
-        border: none;
-        font-family: 'Inter', sans-serif;
-    }
-    
-    /* Success message styling */
-    .stSuccess {
-        background-color: #f0fff4;
-        border-left: 4px solid #38a169;
-        color: #276749;
-    }
-    
-    /* Warning message styling */
-    .stWarning {
-        background-color: #fffaf0;
-        border-left: 4px solid #ed8936;
-        color: #c05621;
-    }
-    
-    /* Error message styling */
-    .stError {
-        background-color: #fed7d7;
-        border-left: 4px solid #e53e3e;
-        color: #c53030;
-    }
-    
-    /* Info message styling */
-    .stInfo {
-        background-color: #ebf8ff;
-        border-left: 4px solid #3182ce;
-        color: #2c5aa0;
-    }
-    
-    /* Professional card styling */
-    .professional-card {
-        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-        padding: 2rem;
-        border-radius: 16px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        margin: 1.5rem 0;
-        transition: all 0.3s ease;
-    }
-    
-    .professional-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    
-    /* Remove default margins */
-    .css-1v0mbdj {
-        margin-top: 0;
-    }
-    
-    /* Slider styling */
-    .stSlider > div > div > div {
-        background-color: #3182ce;
-    }
-    
-    /* Checkbox and radio styling */
-    .stCheckbox > label, .stRadio > label {
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        color: #2d3748;
+    .sidebar .sidebar-content {
+        background-color: #fafafa;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -300,44 +75,9 @@ def initialize_processor(data):
     return processor
 
 def main():
-    # Professional Header
-    st.markdown('<h1 class="main-header">Housing Price Analytics Platform</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="main-subtitle">Advanced Machine Learning Dashboard for Real Estate Market Analysis and Price Prediction</p>', unsafe_allow_html=True)
-    
-    # Professional Introduction
-    st.markdown("""
-    <div class="professional-card">
-        <h3 style="color: #2d3748; margin-bottom: 1rem; font-weight: 600;">Platform Overview</h3>
-        <p style="color: #4a5568; line-height: 1.6; margin-bottom: 1rem;">
-            This comprehensive analytics platform leverages advanced machine learning algorithms to provide 
-            deep insights into housing market dynamics and accurate price predictions. Built with enterprise-grade 
-            data science methodologies, this dashboard enables data-driven decision making for real estate professionals, 
-            investors, and market analysts.
-        </p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
-            <div style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2rem; color: #3182ce; margin-bottom: 0.5rem;">📊</div>
-                <div style="font-weight: 600; color: #2d3748;">Data Analytics</div>
-                <div style="font-size: 0.875rem; color: #718096;">Comprehensive EDA</div>
-            </div>
-            <div style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2rem; color: #3182ce; margin-bottom: 0.5rem;">🤖</div>
-                <div style="font-weight: 600; color: #2d3748;">ML Models</div>
-                <div style="font-size: 0.875rem; color: #718096;">Predictive Analytics</div>
-            </div>
-            <div style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2rem; color: #3182ce; margin-bottom: 0.5rem;">🔬</div>
-                <div style="font-weight: 600; color: #2d3748;">Model Insights</div>
-                <div style="font-size: 0.875rem; color: #718096;">Explainable AI</div>
-            </div>
-            <div style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2rem; color: #3182ce; margin-bottom: 0.5rem;">🏠</div>
-                <div style="font-weight: 600; color: #2d3748;">Price Engine</div>
-                <div style="font-size: 0.875rem; color: #718096;">Real-time Predictions</div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    # Header
+    st.markdown('<h1 class="main-header">🏠 Housing Price ML Dashboard</h1>', unsafe_allow_html=True)
+    st.markdown("**A comprehensive tool for exploratory analysis, model evaluation, and interpretability**")
     
     # Load data
     data = load_data()
@@ -347,46 +87,23 @@ def main():
     # Initialize processor
     processor = initialize_processor(data)
     
-    # Professional Sidebar Navigation
-    st.sidebar.title("📋 Module Selection")
-    st.sidebar.markdown("---")
-    
-    # Add professional info box to sidebar
-    st.sidebar.markdown("""
-    <div style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%); 
-                padding: 1rem; border-radius: 8px; margin-bottom: 1rem; 
-                border-left: 4px solid #3182ce;">
-        <div style="font-weight: 600; color: #2d3748; margin-bottom: 0.5rem;">💡 Quick Guide</div>
-        <div style="font-size: 0.85rem; color: #4a5568; line-height: 1.4;">
-            Navigate through different modules to explore data insights, build ML models, 
-            and generate price predictions.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
+    # Sidebar navigation
+    st.sidebar.title("🧭 Navigation")
     page = st.sidebar.selectbox(
-        "Select Analysis Module:",
+        "Choose a module:",
         [
-            "📊 Data Overview & Summary",
+            "📊 Data Overview",
             "🔍 Exploratory Data Analysis", 
             "🔧 Data Preprocessing",
             "🤖 Model Training & Evaluation",
             "🔬 Model Interpretability",
             "🏠 Price Prediction",
-            "📈 Interactive Analytics"
+            "📈 Interactive Features"
         ]
     )
     
-    # Add dataset info to sidebar
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("**📈 Dataset Information**")
-    if data is not None:
-        st.sidebar.metric("Total Properties", f"{len(data):,}")
-        st.sidebar.metric("Features", len(data.columns))
-        st.sidebar.metric("Avg Price", f"${data['price'].mean():,.0f}")
-    
     # Data Overview
-    if page == "📊 Data Overview & Summary":
+    if page == "📊 Data Overview":
         show_data_overview(data, processor)
     
     # EDA Module
@@ -410,12 +127,12 @@ def main():
         show_price_prediction(data, processor)
     
     # Interactive Features
-    elif page == "📈 Interactive Analytics":
+    elif page == "📈 Interactive Features":
         show_interactive_features(data, processor)
 
 def show_data_overview(data, processor):
     """Display data overview and summary statistics"""
-    st.markdown('<h2 class="section-header">Dataset Overview & Summary Statistics</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Data Overview</h2>', unsafe_allow_html=True)
     
     # Data info metrics
     col1, col2, col3, col4 = st.columns(4)
@@ -459,7 +176,7 @@ def show_data_overview(data, processor):
 
 def show_eda_module(data, processor):
     """Display exploratory data analysis tools"""
-    st.markdown('<h2 class="section-header">Exploratory Data Analysis & Insights</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Exploratory Data Analysis</h2>', unsafe_allow_html=True)
     
     visualizer = EDAVisualizer(data)
     
@@ -614,7 +331,7 @@ def show_eda_module(data, processor):
 
 def show_preprocessing_module(data, processor):
     """Display data preprocessing tools"""
-    st.markdown('<h2 class="section-header">Data Preprocessing & Feature Engineering</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Data Preprocessing</h2>', unsafe_allow_html=True)
     
     st.sidebar.subheader("🔧 Preprocessing Options")
     
@@ -911,7 +628,7 @@ def show_preprocessing_module(data, processor):
 
 def show_model_evaluation(data, processor):
     """Display model training and evaluation tools"""
-    st.markdown('<h2 class="section-header">Machine Learning Model Development & Performance Evaluation</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Model Training & Evaluation</h2>', unsafe_allow_html=True)
     
     # Model training section
     st.subheader("Model Training Configuration")
@@ -1010,7 +727,7 @@ def show_model_evaluation(data, processor):
 
 def show_interpretability_module(data, processor):
     """Display model interpretability tools"""
-    st.markdown('<h2 class="section-header">Model Interpretability & Explainable AI</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">🔬 Model Interpretability</h2>', unsafe_allow_html=True)
     
     # Check if models are trained
     if 'model_results' not in st.session_state:
@@ -1369,7 +1086,7 @@ def show_interpretability_module(data, processor):
 
 def show_interactive_features(data, processor):
     """Display interactive features and custom analysis"""
-    st.markdown('<h2 class="section-header">Interactive Analytics & Advanced Features</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Interactive Features</h2>', unsafe_allow_html=True)
     
     # Interactive data filtering
     st.subheader("🔍 Interactive Data Filtering")
@@ -1495,7 +1212,7 @@ def show_interactive_features(data, processor):
 
 def show_price_prediction(data, processor):
     """Display price prediction interface"""
-    st.markdown('<h2 class="section-header">Real Estate Price Prediction Engine</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">🏠 Price Prediction</h2>', unsafe_allow_html=True)
     
     # Check if models are trained
     if 'model_results' not in st.session_state:

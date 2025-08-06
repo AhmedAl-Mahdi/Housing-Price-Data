@@ -21,262 +21,37 @@ from interpretability import ModelInterpreter
 
 # Configure page
 st.set_page_config(
-    page_title="Housing Price Analytics Platform | Real Estate ML Dashboard",
-    page_icon="�",
+    page_title="Housing Price ML Dashboard",
+    page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Professional CSS Styling
+# Custom CSS
 st.markdown("""
 <style>
-    /* Import professional fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-    
-    /* Global styling */
-    .stApp {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background-color: #fafbfc;
-    }
-    
-    /* Main header styling */
     .main-header {
-        font-family: 'Inter', sans-serif;
-        font-size: 2.75rem;
-        font-weight: 700;
-        color: #1a365d;
+        font-size: 2.5rem;
+        color: #1f77b4;
         text-align: center;
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.025em;
-        background: linear-gradient(135deg, #2d3748 0%, #1a365d 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        margin-bottom: 2rem;
     }
-    
-    /* Subtitle styling */
-    .main-subtitle {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.125rem;
-        font-weight: 400;
-        color: #718096;
-        text-align: center;
-        margin-bottom: 3rem;
-        line-height: 1.6;
-    }
-    
-    /* Section headers */
     .section-header {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.625rem;
-        font-weight: 600;
-        color: #2d3748;
-        border-bottom: 3px solid #e2e8f0;
-        padding-bottom: 0.75rem;
-        margin-top: 2.5rem;
-        margin-bottom: 1.5rem;
-        position: relative;
+        font-size: 1.5rem;
+        color: #2e8b57;
+        border-bottom: 2px solid #2e8b57;
+        padding-bottom: 0.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
     }
-    
-    .section-header::after {
-        content: '';
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(90deg, #3182ce 0%, #63b3ed 100%);
-        border-radius: 2px;
-    }
-    
-    /* Metric containers */
     .metric-container {
-        background: linear-gradient(145deg, #ffffff 0%, #f7fafc 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        margin: 1rem 0;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        transition: all 0.3s ease;
+        background-color: #f0f2f6;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin: 0.5rem 0;
     }
-    
-    .metric-container:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-    
-    /* Sidebar styling */
-    .css-1d391kg {
-        background-color: #f8fafc;
-        border-right: 1px solid #e2e8f0;
-    }
-    
-    /* Sidebar title */
-    .css-1d391kg .css-1lcbmhc {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        color: #2d3748;
-    }
-    
-    /* Selectbox styling */
-    .stSelectbox > div > div {
-        background-color: #ffffff;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        color: #2d3748;
-        transition: all 0.2s ease;
-    }
-    
-    .stSelectbox > div > div:hover {
-        border-color: #3182ce;
-        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
-    }
-    
-    /* Button styling */
-    .stButton > button {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        background: linear-gradient(135deg, #3182ce 0%, #2c5aa0 100%);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 0.75rem 1.5rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-    
-    .stButton > button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        background: linear-gradient(135deg, #2c5aa0 0%, #2a4a8b 100%);
-    }
-    
-    /* Input styling */
-    .stTextInput > div > div > input,
-    .stNumberInput > div > div > input {
-        font-family: 'Inter', sans-serif;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 0.75rem;
-        font-size: 0.875rem;
-        transition: all 0.2s ease;
-    }
-    
-    .stTextInput > div > div > input:focus,
-    .stNumberInput > div > div > input:focus {
-        border-color: #3182ce;
-        box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
-        outline: none;
-    }
-    
-    /* Tab styling */
-    .stTabs [data-baseweb="tab-list"] {
-        background-color: #f8fafc;
-        border-radius: 12px;
-        padding: 0.25rem;
-        border: 1px solid #e2e8f0;
-        gap: 0.25rem;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        color: #4a5568;
-        background-color: transparent;
-        border-radius: 8px;
-        padding: 0.75rem 1rem;
-        transition: all 0.2s ease;
-    }
-    
-    .stTabs [data-baseweb="tab"]:hover {
-        background-color: #e2e8f0;
-        color: #2d3748;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background-color: #ffffff !important;
-        color: #2d3748 !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        font-weight: 600;
-    }
-    
-    /* Dataframe styling */
-    .dataframe {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.875rem;
-        border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid #e2e8f0;
-    }
-    
-    /* Info boxes */
-    .stAlert {
-        border-radius: 8px;
-        border: none;
-        font-family: 'Inter', sans-serif;
-    }
-    
-    /* Success message styling */
-    .stSuccess {
-        background-color: #f0fff4;
-        border-left: 4px solid #38a169;
-        color: #276749;
-    }
-    
-    /* Warning message styling */
-    .stWarning {
-        background-color: #fffaf0;
-        border-left: 4px solid #ed8936;
-        color: #c05621;
-    }
-    
-    /* Error message styling */
-    .stError {
-        background-color: #fed7d7;
-        border-left: 4px solid #e53e3e;
-        color: #c53030;
-    }
-    
-    /* Info message styling */
-    .stInfo {
-        background-color: #ebf8ff;
-        border-left: 4px solid #3182ce;
-        color: #2c5aa0;
-    }
-    
-    /* Professional card styling */
-    .professional-card {
-        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-        padding: 2rem;
-        border-radius: 16px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        margin: 1.5rem 0;
-        transition: all 0.3s ease;
-    }
-    
-    .professional-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    
-    /* Remove default margins */
-    .css-1v0mbdj {
-        margin-top: 0;
-    }
-    
-    /* Slider styling */
-    .stSlider > div > div > div {
-        background-color: #3182ce;
-    }
-    
-    /* Checkbox and radio styling */
-    .stCheckbox > label, .stRadio > label {
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        color: #2d3748;
+    .sidebar .sidebar-content {
+        background-color: #fafafa;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -291,102 +66,51 @@ def load_data():
         st.error(f"Error loading data: {str(e)}")
         return None
 
-@st.cache_data
 def initialize_processor(data):
-    """Initialize and cache the data processor"""
-    processor = DataProcessor()
-    processor.original_data = data
-    processor.processed_data = data.copy()
-    return processor
+    """Initialize the data processor using session state"""
+    if 'processor' not in st.session_state:
+        processor = DataProcessor()
+        processor.original_data = data.copy()
+        processor.processed_data = data.copy()
+        st.session_state['processor'] = processor
+    else:
+        # Update original data if it has changed (in case of new data upload)
+        if not st.session_state['processor'].original_data.equals(data):
+            st.session_state['processor'].original_data = data.copy()
+            st.session_state['processor'].processed_data = data.copy()
+    
+    return st.session_state['processor']
 
 def main():
-    # Professional Header
-    st.markdown('<h1 class="main-header">Housing Price Analytics Platform</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="main-subtitle">Advanced Machine Learning Dashboard for Real Estate Market Analysis and Price Prediction</p>', unsafe_allow_html=True)
-    
-    # Professional Introduction
-    st.markdown("""
-    <div class="professional-card">
-        <h3 style="color: #2d3748; margin-bottom: 1rem; font-weight: 600;">Platform Overview</h3>
-        <p style="color: #4a5568; line-height: 1.6; margin-bottom: 1rem;">
-            This comprehensive analytics platform leverages advanced machine learning algorithms to provide 
-            deep insights into housing market dynamics and accurate price predictions. Built with enterprise-grade 
-            data science methodologies, this dashboard enables data-driven decision making for real estate professionals, 
-            investors, and market analysts.
-        </p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
-            <div style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2rem; color: #3182ce; margin-bottom: 0.5rem;">📊</div>
-                <div style="font-weight: 600; color: #2d3748;">Data Analytics</div>
-                <div style="font-size: 0.875rem; color: #718096;">Comprehensive EDA</div>
-            </div>
-            <div style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2rem; color: #3182ce; margin-bottom: 0.5rem;">🤖</div>
-                <div style="font-weight: 600; color: #2d3748;">ML Models</div>
-                <div style="font-size: 0.875rem; color: #718096;">Predictive Analytics</div>
-            </div>
-            <div style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2rem; color: #3182ce; margin-bottom: 0.5rem;">🔬</div>
-                <div style="font-weight: 600; color: #2d3748;">Model Insights</div>
-                <div style="font-size: 0.875rem; color: #718096;">Explainable AI</div>
-            </div>
-            <div style="text-align: center; padding: 1rem;">
-                <div style="font-size: 2rem; color: #3182ce; margin-bottom: 0.5rem;">🏠</div>
-                <div style="font-weight: 600; color: #2d3748;">Price Engine</div>
-                <div style="font-size: 0.875rem; color: #718096;">Real-time Predictions</div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    # Header
+    st.markdown('<h1 class="main-header">🏠 Housing Price ML Dashboard</h1>', unsafe_allow_html=True)
+    st.markdown("**A comprehensive tool for exploratory analysis, model evaluation, and interpretability**")
     
     # Load data
     data = load_data()
     if data is None:
         st.stop()
     
-    # Initialize processor
+    # Initialize processor using session state
     processor = initialize_processor(data)
     
-    # Professional Sidebar Navigation
-    st.sidebar.title("📋 Module Selection")
-    st.sidebar.markdown("---")
-    
-    # Add professional info box to sidebar
-    st.sidebar.markdown("""
-    <div style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%); 
-                padding: 1rem; border-radius: 8px; margin-bottom: 1rem; 
-                border-left: 4px solid #3182ce;">
-        <div style="font-weight: 600; color: #2d3748; margin-bottom: 0.5rem;">💡 Quick Guide</div>
-        <div style="font-size: 0.85rem; color: #4a5568; line-height: 1.4;">
-            Navigate through different modules to explore data insights, build ML models, 
-            and generate price predictions.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
+    # Sidebar navigation
+    st.sidebar.title("🧭 Navigation")
     page = st.sidebar.selectbox(
-        "Select Analysis Module:",
+        "Choose a module:",
         [
-            "📊 Data Overview & Summary",
+            "📊 Data Overview",
             "🔍 Exploratory Data Analysis", 
             "🔧 Data Preprocessing",
             "🤖 Model Training & Evaluation",
             "🔬 Model Interpretability",
             "🏠 Price Prediction",
-            "📈 Interactive Analytics"
+            "📈 Interactive Features"
         ]
     )
     
-    # Add dataset info to sidebar
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("**📈 Dataset Information**")
-    if data is not None:
-        st.sidebar.metric("Total Properties", f"{len(data):,}")
-        st.sidebar.metric("Features", len(data.columns))
-        st.sidebar.metric("Avg Price", f"${data['price'].mean():,.0f}")
-    
     # Data Overview
-    if page == "📊 Data Overview & Summary":
+    if page == "📊 Data Overview":
         show_data_overview(data, processor)
     
     # EDA Module
@@ -410,12 +134,12 @@ def main():
         show_price_prediction(data, processor)
     
     # Interactive Features
-    elif page == "📈 Interactive Analytics":
+    elif page == "📈 Interactive Features":
         show_interactive_features(data, processor)
 
 def show_data_overview(data, processor):
     """Display data overview and summary statistics"""
-    st.markdown('<h2 class="section-header">Dataset Overview & Summary Statistics</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Data Overview</h2>', unsafe_allow_html=True)
     
     # Data info metrics
     col1, col2, col3, col4 = st.columns(4)
@@ -459,7 +183,7 @@ def show_data_overview(data, processor):
 
 def show_eda_module(data, processor):
     """Display exploratory data analysis tools"""
-    st.markdown('<h2 class="section-header">Exploratory Data Analysis & Insights</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Exploratory Data Analysis</h2>', unsafe_allow_html=True)
     
     visualizer = EDAVisualizer(data)
     
@@ -614,20 +338,77 @@ def show_eda_module(data, processor):
 
 def show_preprocessing_module(data, processor):
     """Display data preprocessing tools"""
-    st.markdown('<h2 class="section-header">Data Preprocessing & Feature Engineering</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Data Preprocessing</h2>', unsafe_allow_html=True)
     
-    st.sidebar.subheader("🔧 Preprocessing Options")
+    # Add a reset button at the top for easy access
+    col1, col2, col3 = st.columns([2, 1, 1])
+    with col1:
+        st.sidebar.subheader("🔧 Preprocessing Options")
+        
+        # Show data status
+        if not processor.processed_data.equals(processor.original_data):
+            st.info("📊 **Data Status**: Processed data available (different from original)")
+        else:
+            st.info("📋 **Data Status**: Using original data")
     
-    # Preprocessing options
+    with col2:
+        if st.button("🔄 Reset All Data", type="secondary", key="reset_all_data_top"):
+            processor.processed_data = processor.original_data.copy()
+            st.success("✅ All data reset to original state!")
+            st.rerun()
+    
+    with col3:
+        # Show quick stats
+        if not processor.processed_data.equals(processor.original_data):
+            record_diff = len(processor.processed_data) - len(processor.original_data)
+            if record_diff != 0:
+                st.metric("Records", len(processor.processed_data), delta=record_diff)
+    
+    # Check URL parameters for navigation
+    try:
+        query_params = st.query_params
+        navigate_to_comparison = query_params.get("section") == "comparison"
+    except:
+        navigate_to_comparison = False
+    
+    # Check session state for auto-navigation
+    auto_navigate = st.session_state.get('auto_navigate_to_comparison', False) or navigate_to_comparison
+    
+    # Show navigation message if auto-navigating
+    if auto_navigate:
+        st.info("🔄 **Auto-navigating to Before/After Comparison section...**")
+    
+    # Preprocessing options with forced selection
+    task_options = [
+        "Missing Value Handling",
+        "Outlier Treatment", 
+        "Feature Scaling",
+        "Categorical Encoding",
+        "Before/After Comparison"
+    ]
+    
+    # Force selection to Before/After Comparison if auto-navigating
+    if auto_navigate:
+        default_index = 4  # Before/After Comparison
+    else:
+        default_index = 0  # Missing Value Handling
+    
     preprocess_type = st.sidebar.selectbox(
         "Select Preprocessing Task:",
-        [
-            "Missing Value Handling",
-            "Outlier Treatment", 
-            "Feature Scaling",
-            "Categorical Encoding"
-        ]
+        task_options,
+        index=default_index,
+        key="preprocessing_task_selector"
     )
+    
+    # Reset the auto-navigation flag after using it
+    if auto_navigate:
+        st.session_state['auto_navigate_to_comparison'] = False
+        # Clear query parameters
+        if navigate_to_comparison:
+            try:
+                st.query_params.clear()
+            except:
+                pass  # Ignore if query params not available
     
     if preprocess_type == "Missing Value Handling":
         st.subheader("Missing Value Analysis and Treatment")
@@ -653,16 +434,37 @@ def show_preprocessing_module(data, processor):
             
             if st.button("Apply Missing Value Treatment"):
                 processor.handle_missing_values(strategy=strategy)
-                st.success(f"Missing values handled using {strategy} strategy!")
+                
+                # Store processing info
+                st.session_state['last_processing'] = {
+                    'type': 'missing_value_handling',
+                    'feature': 'multiple_columns',
+                    'method': strategy,
+                    'timestamp': pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+                }
+                
+                st.success(f"✅ Missing values handled using {strategy} strategy!")
                 
                 # Show before/after
                 col1, col2 = st.columns(2)
                 with col1:
                     st.write("**Before:**")
-                    st.write(data.isnull().sum())
+                    st.write(processor.original_data.isnull().sum())
                 with col2:
                     st.write("**After:**")
                     st.write(processor.processed_data.isnull().sum())
+                
+                # Add navigation button
+                if st.button("📊 View Before/After Comparison", type="primary", key="view_missing_comparison"):
+                    st.session_state['auto_navigate_to_comparison'] = True
+                    st.session_state['force_rerun'] = True
+                    # Set query parameter for navigation
+                    try:
+                        st.query_params["section"] = "comparison"
+                    except:
+                        pass  # Fallback to session state only
+                    st.success("🔄 Navigating to Before/After Comparison...")
+                    st.rerun()
         else:
             st.success("✅ No missing values found in the dataset!")
     
@@ -672,156 +474,248 @@ def show_preprocessing_module(data, processor):
         # Get numeric columns for outlier analysis
         numeric_columns = data.select_dtypes(include=[np.number]).columns.tolist()
         
-        if not numeric_columns:
-            st.warning("No numeric columns found for outlier analysis.")
-            return
-        
-        # Feature selection
-        selected_feature = st.selectbox("Select Feature for Outlier Analysis:", numeric_columns)
-        
-        if selected_feature:
-            # Detection method selection
-            col1, col2 = st.columns(2)
+        if numeric_columns:
+            selected_feature = st.selectbox("Select Feature for Outlier Analysis:", numeric_columns)
             
-            with col1:
-                detection_method = st.selectbox(
-                    "Detection Method:",
-                    ["IQR", "Z-Score", "Modified Z-Score"]
-                )
-            
-            with col2:
-                if detection_method == "Z-Score":
-                    threshold = st.slider("Z-Score Threshold:", 2.0, 4.0, 3.0, 0.1)
-                elif detection_method == "Modified Z-Score":
-                    threshold = st.slider("Modified Z-Score Threshold:", 2.0, 4.0, 3.5, 0.1)
-                else:  # IQR
-                    threshold = st.slider("IQR Multiplier:", 1.0, 3.0, 1.5, 0.1)
-            
-            # Detect outliers
-            try:
-                outlier_info = processor.detect_outliers(
-                    feature=selected_feature,
-                    method=detection_method.lower().replace('-', '_').replace(' ', '_'),
-                    threshold=threshold
+            if selected_feature:
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    st.markdown("**🔍 Detection Method:**")
+                    detection_method = st.selectbox(
+                        "Choose Detection Method:",
+                        ["IQR (Interquartile Range)", "Z-Score", "Modified Z-Score"]
+                    )
+                    
+                    # Method-specific parameters
+                    if detection_method == "IQR (Interquartile Range)":
+                        iqr_multiplier = st.slider("IQR Multiplier:", 1.0, 3.0, 1.5, 0.1)
+                        threshold_param = iqr_multiplier
+                    elif detection_method == "Z-Score":
+                        z_threshold = st.slider("Z-Score Threshold:", 2.0, 4.0, 3.0, 0.1)
+                        threshold_param = z_threshold
+                    else:  # Modified Z-Score
+                        mod_z_threshold = st.slider("Modified Z-Score Threshold:", 2.0, 4.0, 3.5, 0.1)
+                        threshold_param = mod_z_threshold
+                
+                with col2:
+                    st.markdown("**⚙️ Treatment Method:**")
+                    treatment_method = st.selectbox(
+                        "Choose Treatment Method:",
+                        ["Remove Outliers", "Cap/Winsorize", "Transform (Log)", "Replace with Median"]
+                    )
+                    
+                    if treatment_method == "Cap/Winsorize":
+                        lower_percentile = st.slider("Lower Percentile:", 0.01, 0.1, 0.05, 0.01)
+                        upper_percentile = st.slider("Upper Percentile:", 0.9, 0.99, 0.95, 0.01)
+                
+                # Detect outliers
+                feature_data = processor.processed_data[selected_feature].dropna()
+                
+                if detection_method == "IQR (Interquartile Range)":
+                    Q1 = feature_data.quantile(0.25)
+                    Q3 = feature_data.quantile(0.75)
+                    IQR = Q3 - Q1
+                    lower_bound = Q1 - threshold_param * IQR
+                    upper_bound = Q3 + threshold_param * IQR
+                    outliers = (feature_data < lower_bound) | (feature_data > upper_bound)
+                    
+                elif detection_method == "Z-Score":
+                    z_scores = np.abs((feature_data - feature_data.mean()) / feature_data.std())
+                    outliers = z_scores > threshold_param
+                    
+                else:  # Modified Z-Score
+                    median = feature_data.median()
+                    mad = np.median(np.abs(feature_data - median))
+                    modified_z_scores = 0.6745 * (feature_data - median) / mad
+                    outliers = np.abs(modified_z_scores) > threshold_param
+                
+                outlier_count = outliers.sum()
+                outlier_percentage = (outlier_count / len(feature_data)) * 100
+                
+                # Display outlier statistics
+                st.markdown("### 📊 Outlier Detection Results")
+                
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("Total Records", len(feature_data))
+                with col2:
+                    st.metric("Outliers Found", outlier_count)
+                with col3:
+                    st.metric("Percentage", f"{outlier_percentage:.2f}%")
+                
+                # Visualization
+                fig = make_subplots(
+                    rows=2, cols=2,
+                    subplot_titles=[
+                        f'{selected_feature} Distribution',
+                        f'{selected_feature} Box Plot',
+                        'Outlier Detection',
+                        'Statistics Summary'
+                    ],
+                    specs=[[{"type": "histogram"}, {"type": "box"}],
+                           [{"type": "scatter"}, {"type": "table"}]]
                 )
                 
-                if outlier_info:
-                    # Display outlier statistics
-                    st.subheader("Outlier Analysis Results")
+                # Histogram
+                fig.add_trace(
+                    go.Histogram(x=feature_data, name="Distribution", showlegend=False),
+                    row=1, col=1
+                )
+                
+                # Box plot
+                fig.add_trace(
+                    go.Box(y=feature_data, name="Box Plot", showlegend=False),
+                    row=1, col=2
+                )
+                
+                # Scatter plot with outliers highlighted
+                colors = ['red' if is_outlier else 'blue' for is_outlier in outliers]
+                fig.add_trace(
+                    go.Scatter(
+                        x=list(range(len(feature_data))),
+                        y=feature_data,
+                        mode='markers',
+                        marker=dict(color=colors),
+                        name="Data Points",
+                        showlegend=False
+                    ),
+                    row=2, col=1
+                )
+                
+                # Statistics table
+                stats_data = [
+                    ['Mean', f'{feature_data.mean():.2f}'],
+                    ['Median', f'{feature_data.median():.2f}'],
+                    ['Std Dev', f'{feature_data.std():.2f}'],
+                    ['Min', f'{feature_data.min():.2f}'],
+                    ['Max', f'{feature_data.max():.2f}'],
+                    ['Outliers', f'{outlier_count} ({outlier_percentage:.2f}%)']
+                ]
+                
+                fig.add_trace(
+                    go.Table(
+                        header=dict(values=['Statistic', 'Value']),
+                        cells=dict(values=[[row[0] for row in stats_data], 
+                                         [row[1] for row in stats_data]])
+                    ),
+                    row=2, col=2
+                )
+                
+                fig.update_layout(
+                    title=f'Outlier Analysis for {selected_feature} ({detection_method})',
+                    height=600,
+                    showlegend=False
+                )
+                
+                st.plotly_chart(fig, use_container_width=True)
+                
+                # Treatment options
+                if outlier_count > 0:
+                    st.markdown("### 🔧 Apply Outlier Treatment")
                     
-                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        st.metric("Total Data Points", len(data))
-                    with col2:
-                        st.metric("Outliers Found", outlier_info.get('count', 0))
-                    with col3:
-                        st.metric("Outlier Percentage", f"{outlier_info.get('percentage', 0):.1f}%")
-                    
-                    # Visualization
-                    st.subheader("Outlier Visualization")
-                    
-                    # Create outlier plot
-                    outlier_indices = outlier_info.get('indices', [])
-                    
-                    fig = make_subplots(rows=1, cols=2, 
-                                      subplot_titles=["Box Plot", "Scatter Plot"])
-                    
-                    # Box plot
-                    fig.add_trace(
-                        go.Box(y=data[selected_feature], name=selected_feature),
-                        row=1, col=1
-                    )
-                    
-                    # Scatter plot with outliers highlighted
-                    normal_indices = [i for i in range(len(data)) if i not in outlier_indices]
-                    
-                    fig.add_trace(
-                        go.Scatter(
-                            x=normal_indices,
-                            y=data.iloc[normal_indices][selected_feature],
-                            mode='markers',
-                            name='Normal',
-                            marker=dict(color='blue', size=6)
-                        ),
-                        row=1, col=2
-                    )
-                    
-                    fig.add_trace(
-                        go.Scatter(
-                            x=outlier_indices,
-                            y=data.iloc[outlier_indices][selected_feature],
-                            mode='markers',
-                            name='Outliers',
-                            marker=dict(color='red', size=8, symbol='x')
-                        ),
-                        row=1, col=2
-                    )
-                    
-                    fig.update_layout(
-                        title=f"Outlier Analysis for {selected_feature}",
-                        height=400
-                    )
-                    
-                    st.plotly_chart(fig, use_container_width=True)
-                    
-                    # Treatment options
-                    st.subheader("Outlier Treatment Options")
-                    
-                    treatment_method = st.selectbox(
-                        "Select Treatment Method:",
-                        ["Remove Outliers", "Cap Values", "Transform (Log)", "No Treatment"]
-                    )
-                    
-                    if st.button("Apply Outlier Treatment"):
+                    if st.button("Apply Treatment", type="primary"):
+                        treated_data = processor.processed_data.copy()
+                        feature_series = treated_data[selected_feature].copy()
+                        
                         if treatment_method == "Remove Outliers":
-                            # Remove outliers
-                            clean_data = data.drop(outlier_indices).reset_index(drop=True)
-                            processor.processed_data = clean_data
+                            # Remove outliers - need to map outliers back to full dataset
+                            outlier_mask = pd.Series(False, index=treated_data.index)
+                            feature_non_null = treated_data[selected_feature].notna()
+                            outlier_mask[feature_non_null] = outliers
+                            treated_data = treated_data[~outlier_mask]
+                            st.success(f"✅ Removed {outlier_count} outliers from the dataset!")
                             
-                            st.success(f"✅ Removed {len(outlier_indices)} outliers!")
+                        elif treatment_method == "Cap/Winsorize":
+                            # Cap outliers at percentiles
+                            lower_cap = feature_data.quantile(lower_percentile)
+                            upper_cap = feature_data.quantile(upper_percentile)
+                            feature_series = feature_series.clip(lower_cap, upper_cap)
+                            treated_data[selected_feature] = feature_series
+                            st.success(f"✅ Capped outliers between {lower_cap:.2f} and {upper_cap:.2f}!")
                             
-                            col1, col2 = st.columns(2)
-                            with col1:
-                                st.metric("Original Size", len(data))
-                            with col2:
-                                st.metric("After Removal", len(clean_data))
-                        
-                        elif treatment_method == "Cap Values":
-                            # Cap outliers to threshold values
-                            if detection_method == "IQR":
-                                Q1 = data[selected_feature].quantile(0.25)
-                                Q3 = data[selected_feature].quantile(0.75)
-                                IQR = Q3 - Q1
-                                lower_bound = Q1 - threshold * IQR
-                                upper_bound = Q3 + threshold * IQR
-                                
-                                capped_data = data.copy()
-                                capped_data[selected_feature] = capped_data[selected_feature].clip(
-                                    lower=lower_bound, upper=upper_bound
-                                )
-                                processor.processed_data = capped_data
-                                
-                                st.success(f"✅ Capped values to range [{lower_bound:.2f}, {upper_bound:.2f}]!")
-                        
                         elif treatment_method == "Transform (Log)":
-                            # Apply log transformation
-                            if (data[selected_feature] > 0).all():
-                                transformed_data = data.copy()
-                                transformed_data[selected_feature] = np.log1p(data[selected_feature])
-                                processor.processed_data = transformed_data
-                                
-                                st.success(f"✅ Applied log transformation to {selected_feature}!")
+                            # Log transformation (add 1 to handle zeros)
+                            if (feature_series > 0).all():
+                                feature_series = np.log(feature_series)
                             else:
-                                st.error("Cannot apply log transformation: feature contains non-positive values.")
+                                feature_series = np.log1p(feature_series)  # log(1 + x)
+                            treated_data[selected_feature] = feature_series
+                            st.success(f"✅ Applied log transformation to {selected_feature}!")
+                            
+                        elif treatment_method == "Replace with Median":
+                            # Replace outliers with median - need to map outliers back to full dataset
+                            median_val = feature_data.median()
+                            feature_non_null = treated_data[selected_feature].notna()
+                            outlier_mask = pd.Series(False, index=treated_data.index)
+                            outlier_mask[feature_non_null] = outliers
+                            feature_series[outlier_mask] = median_val
+                            treated_data[selected_feature] = feature_series
+                            st.success(f"✅ Replaced {outlier_count} outliers with median value ({median_val:.2f})!")
                         
-                        else:  # No Treatment
-                            st.info("No treatment applied. Outliers remain in the dataset.")
+                        # Store treated data in processor
+                        processor.processed_data = treated_data
+                        
+                        # Store the processing info in session state for persistent display
+                        st.session_state['last_processing'] = {
+                            'type': 'outlier_treatment',
+                            'feature': selected_feature,
+                            'method': treatment_method,
+                            'detection_method': detection_method,
+                            'outlier_count': outlier_count,
+                            'timestamp': pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+                        }
+                        
+                        # Show immediate feedback and suggest next steps
+                        st.balloons()
+                        st.success("✅ Treatment applied successfully! 🎉")
+                        
+                        # Create an info box with next steps
+                        st.info("""
+                        🎯 **Next Steps:**
+                        - Navigate to "**Before/After Comparison**" to see detailed analysis
+                        - Or apply additional preprocessing steps
+                        
+                        💡 **Tip**: Your processed data is automatically saved and ready for comparison!
+                        """)
+                        
+                        # Show quick preview of changes
+                        st.markdown("### 📊 Quick Preview of Changes")
+                        
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            st.markdown("**📋 Original:**")
+                            orig_stats = processor.original_data[selected_feature].describe()[['mean', 'std', 'min', 'max']]
+                            st.dataframe(orig_stats.to_frame(name="Value"))
+                            
+                        with col2:
+                            st.markdown("**🔧 Processed:**")
+                            if treatment_method != "Remove Outliers":
+                                treated_stats = treated_data[selected_feature].describe()[['mean', 'std', 'min', 'max']]
+                                st.dataframe(treated_stats.to_frame(name="Value"))
+                            else:
+                                st.write(f"📉 Dataset size: {len(processor.original_data)} → {len(treated_data)} records")
+                                treated_stats = treated_data[selected_feature].describe()[['mean', 'std', 'min', 'max']]
+                                st.dataframe(treated_stats.to_frame(name="Value"))
+                        
+                        # Add a button to go directly to comparison
+                        if st.button("📊 View Full Before/After Comparison", type="primary", key="view_outlier_comparison"):
+                            st.session_state['auto_navigate_to_comparison'] = True
+                            st.session_state['force_rerun'] = True
+                            # Set query parameter for navigation
+                            try:
+                                st.query_params["section"] = "comparison"
+                            except:
+                                pass  # Fallback to session state only
+                            st.success("🔄 Navigating to Before/After Comparison...")
+                            st.rerun()
                 
                 else:
-                    st.warning("No outliers detected with the current method and threshold.")
-                    
-            except Exception as e:
-                st.error(f"Error in outlier detection: {str(e)}")
+                    st.info("🎉 No outliers detected with the current settings!")
+        
+        else:
+            st.warning("⚠️ No numeric columns found for outlier analysis.")
     
     elif preprocess_type == "Feature Scaling":
         st.subheader("Feature Scaling")
@@ -835,11 +729,21 @@ def show_preprocessing_module(data, processor):
         
         if selected_features and st.button("Apply Scaling"):
             # Before scaling
-            original_stats = data[selected_features].describe()
+            original_stats = processor.original_data[selected_features].describe()
             
             # Apply scaling
             scaled_data = processor.scale_features(method=scaling_method, columns=selected_features)
             scaled_stats = scaled_data[selected_features].describe()
+            
+            # Store processing info
+            st.session_state['last_processing'] = {
+                'type': 'feature_scaling',
+                'feature': ', '.join(selected_features),
+                'method': scaling_method,
+                'timestamp': pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            
+            st.success(f"✅ Applied {scaling_method} scaling to selected features!")
             
             # Show comparison
             st.subheader("Before vs After Scaling")
@@ -861,7 +765,7 @@ def show_preprocessing_module(data, processor):
                                   subplot_titles=["Original", "Scaled"])
                 
                 fig.add_trace(
-                    go.Histogram(x=data[feature], name="Original"),
+                    go.Histogram(x=processor.original_data[feature], name="Original"),
                     row=1, col=1
                 )
                 
@@ -872,6 +776,18 @@ def show_preprocessing_module(data, processor):
                 
                 fig.update_layout(title=f"Distribution Comparison: {feature}")
                 st.plotly_chart(fig, use_container_width=True)
+            
+            # Add navigation button
+            if st.button("📊 View Before/After Comparison", type="primary", key="view_scaling_comparison"):
+                st.session_state['auto_navigate_to_comparison'] = True
+                st.session_state['force_rerun'] = True
+                # Set query parameter for navigation
+                try:
+                    st.query_params["section"] = "comparison"
+                except:
+                    pass  # Fallback to session state only
+                st.success("🔄 Navigating to Before/After Comparison...")
+                st.rerun()
     
     elif preprocess_type == "Categorical Encoding":
         st.subheader("Categorical Variable Encoding")
@@ -888,30 +804,393 @@ def show_preprocessing_module(data, processor):
                     columns=selected_cat_features
                 )
                 
-                st.success(f"Applied {encoding_method} encoding to selected features!")
+                # Store processing info
+                st.session_state['last_processing'] = {
+                    'type': 'categorical_encoding',
+                    'feature': ', '.join(selected_cat_features),
+                    'method': encoding_method,
+                    'timestamp': pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+                }
+                
+                st.success(f"✅ Applied {encoding_method} encoding to selected features!")
                 
                 # Show shape change
                 col1, col2 = st.columns(2)
                 with col1:
-                    st.metric("Original Shape", f"{data.shape[0]} × {data.shape[1]}")
+                    st.metric("Original Shape", f"{processor.original_data.shape[0]} × {processor.original_data.shape[1]}")
                 with col2:
                     st.metric("Encoded Shape", f"{encoded_data.shape[0]} × {encoded_data.shape[1]}")
                 
                 # Show new columns created
                 if encoding_method == "onehot":
-                    new_columns = [col for col in encoded_data.columns if col not in data.columns]
+                    new_columns = [col for col in encoded_data.columns if col not in processor.original_data.columns]
                     if new_columns:
                         st.write("**New Columns Created:**")
                         for col in new_columns[:10]:  # Show first 10
                             st.write(f"• {col}")
                         if len(new_columns) > 10:
                             st.write(f"... and {len(new_columns) - 10} more")
+                
+                # Add navigation button
+                if st.button("📊 View Before/After Comparison", type="primary", key="view_encoding_comparison"):
+                    st.session_state['auto_navigate_to_comparison'] = True
+                    st.session_state['force_rerun'] = True
+                    # Set query parameter for navigation
+                    try:
+                        st.query_params["section"] = "comparison"
+                    except:
+                        pass  # Fallback to session state only
+                    st.success("🔄 Navigating to Before/After Comparison...")
+                    st.rerun()
         else:
             st.info("No categorical variables found in the dataset.")
+    
+    elif preprocess_type == "Before/After Comparison":
+        st.subheader("Before/After Data Comparison")
+        
+        # Show success message if just navigated here
+        if st.session_state.get('force_rerun', False):
+            st.success("✅ **Successfully navigated to Before/After Comparison!**")
+            st.session_state['force_rerun'] = False  # Clear the flag
+        
+        # Show last processing info if available
+        if 'last_processing' in st.session_state:
+            processing_info = st.session_state['last_processing']
+            st.info(f"""
+            🔄 **Last Processing Applied:**
+            - **Type**: {processing_info['type'].replace('_', ' ').title()}
+            - **Feature**: {processing_info['feature']}
+            - **Method**: {processing_info['method']}
+            - **Detection Method**: {processing_info.get('detection_method', 'N/A')}
+            - **Outliers Treated**: {processing_info.get('outlier_count', 'N/A')}
+            - **Applied**: {processing_info['timestamp']}
+            """)
+        
+        # Check if processed data exists and is different from original
+        processor_obj = st.session_state.get('processor', processor)
+        
+        if (hasattr(processor_obj, 'processed_data') and 
+            processor_obj.processed_data is not None and
+            not processor_obj.processed_data.equals(processor_obj.original_data)):
+            
+            original_data = processor_obj.original_data
+            processed_data = processor_obj.processed_data
+            
+            # Show reset option with confirmation
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                st.success("✅ **Processed data available for comparison!**")
+            with col2:
+                if st.button("🔄 Reset All Data", type="secondary", key="reset_comparison_data"):
+                    processor_obj.processed_data = processor_obj.original_data.copy()
+                    # Clear last processing info
+                    if 'last_processing' in st.session_state:
+                        del st.session_state['last_processing']
+                    st.success("✅ Data reset to original state!")
+                    st.rerun()
+            
+            # Overall comparison
+            st.markdown("### 📊 Dataset Overview Comparison")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("**📋 Original Dataset:**")
+                st.metric("Records", f"{len(original_data):,}")
+                st.metric("Features", len(original_data.columns))
+                st.metric("Missing Values", original_data.isnull().sum().sum())
+                st.metric("Memory Usage", f"{original_data.memory_usage(deep=True).sum() / 1024**2:.2f} MB")
+            
+            with col2:
+                st.markdown("**🔧 Processed Dataset:**")
+                st.metric("Records", f"{len(processed_data):,}", 
+                         delta=f"{len(processed_data) - len(original_data):+,}")
+                st.metric("Features", len(processed_data.columns),
+                         delta=f"{len(processed_data.columns) - len(original_data.columns):+}")
+                st.metric("Missing Values", processed_data.isnull().sum().sum(),
+                         delta=f"{processed_data.isnull().sum().sum() - original_data.isnull().sum().sum():+}")
+                proc_memory = processed_data.memory_usage(deep=True).sum() / 1024**2
+                orig_memory = original_data.memory_usage(deep=True).sum() / 1024**2
+                st.metric("Memory Usage", f"{proc_memory:.2f} MB",
+                         delta=f"{proc_memory - orig_memory:+.2f} MB")
+            
+            # Feature-wise comparison
+            st.markdown("### 🔍 Feature-wise Comparison")
+            
+            # Select feature for detailed comparison
+            comparison_options = ["Statistical Summary", "Distribution Comparison", "Missing Values", "Data Types"]
+            comparison_type = st.selectbox("Select Comparison Type:", comparison_options)
+            
+            if comparison_type == "Statistical Summary":
+                # Get numeric columns common to both datasets
+                numeric_cols_orig = original_data.select_dtypes(include=[np.number]).columns
+                numeric_cols_proc = processed_data.select_dtypes(include=[np.number]).columns
+                common_numeric = list(set(numeric_cols_orig) & set(numeric_cols_proc))
+                
+                if common_numeric:
+                    # Auto-select the last processed feature if available
+                    default_feature = 0
+                    if 'last_processing' in st.session_state:
+                        last_feature = st.session_state['last_processing']['feature']
+                        if last_feature in common_numeric:
+                            default_feature = common_numeric.index(last_feature)
+                    
+                    selected_feature = st.selectbox("Select Feature for Statistical Comparison:", common_numeric, index=default_feature)
+                    
+                    if selected_feature:
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            st.markdown("**📊 Original Statistics:**")
+                            orig_stats = original_data[selected_feature].describe()
+                            st.dataframe(orig_stats.to_frame(name="Original"))
+                        
+                        with col2:
+                            st.markdown("**🔧 Processed Statistics:**")
+                            proc_stats = processed_data[selected_feature].describe()
+                            st.dataframe(proc_stats.to_frame(name="Processed"))
+                        
+                        # Create comparison chart
+                        stats_comparison = pd.DataFrame({
+                            'Original': orig_stats,
+                            'Processed': proc_stats
+                        })
+                        
+                        fig = px.bar(
+                            stats_comparison.reset_index(),
+                            x='index',
+                            y=['Original', 'Processed'],
+                            title=f'Statistical Comparison: {selected_feature}',
+                            barmode='group'
+                        )
+                        fig.update_layout(xaxis_title="Statistics", yaxis_title="Value")
+                        st.plotly_chart(fig, use_container_width=True)
+                
+                else:
+                    st.info("No common numeric features found for comparison.")
+            
+            elif comparison_type == "Distribution Comparison":
+                # Get numeric columns for distribution comparison
+                numeric_cols_orig = original_data.select_dtypes(include=[np.number]).columns
+                numeric_cols_proc = processed_data.select_dtypes(include=[np.number]).columns
+                common_numeric = list(set(numeric_cols_orig) & set(numeric_cols_proc))
+                
+                if common_numeric:
+                    # Auto-select the last processed feature if available
+                    default_feature = 0
+                    if 'last_processing' in st.session_state:
+                        last_feature = st.session_state['last_processing']['feature']
+                        if last_feature in common_numeric:
+                            default_feature = common_numeric.index(last_feature)
+                    
+                    selected_feature = st.selectbox("Select Feature for Distribution Comparison:", common_numeric, index=default_feature)
+                    
+                    if selected_feature:
+                        # Create side-by-side distribution plots
+                        fig = make_subplots(
+                            rows=2, cols=2,
+                            subplot_titles=[
+                                f'Original {selected_feature} Distribution',
+                                f'Processed {selected_feature} Distribution',
+                                f'Original {selected_feature} Box Plot',
+                                f'Processed {selected_feature} Box Plot'
+                            ],
+                            specs=[[{"type": "histogram"}, {"type": "histogram"}],
+                                   [{"type": "box"}, {"type": "box"}]]
+                        )
+                        
+                        # Histograms
+                        fig.add_trace(
+                            go.Histogram(x=original_data[selected_feature], name="Original", showlegend=False),
+                            row=1, col=1
+                        )
+                        
+                        fig.add_trace(
+                            go.Histogram(x=processed_data[selected_feature], name="Processed", showlegend=False),
+                            row=1, col=2
+                        )
+                        
+                        # Box plots
+                        fig.add_trace(
+                            go.Box(y=original_data[selected_feature], name="Original", showlegend=False),
+                            row=2, col=1
+                        )
+                        
+                        fig.add_trace(
+                            go.Box(y=processed_data[selected_feature], name="Processed", showlegend=False),
+                            row=2, col=2
+                        )
+                        
+                        fig.update_layout(
+                            title=f'Distribution Comparison: {selected_feature}',
+                            height=600
+                        )
+                        
+                        st.plotly_chart(fig, use_container_width=True)
+                        
+                        # Show key changes
+                        col1, col2, col3 = st.columns(3)
+                        
+                        with col1:
+                            orig_mean = original_data[selected_feature].mean()
+                            proc_mean = processed_data[selected_feature].mean()
+                            mean_change = ((proc_mean - orig_mean) / orig_mean) * 100 if orig_mean != 0 else 0
+                            st.metric("Mean Change", f"{mean_change:+.2f}%", f"{proc_mean:.2f}")
+                        
+                        with col2:
+                            orig_std = original_data[selected_feature].std()
+                            proc_std = processed_data[selected_feature].std()
+                            std_change = ((proc_std - orig_std) / orig_std) * 100 if orig_std != 0 else 0
+                            st.metric("Std Dev Change", f"{std_change:+.2f}%", f"{proc_std:.2f}")
+                        
+                        with col3:
+                            orig_range = original_data[selected_feature].max() - original_data[selected_feature].min()
+                            proc_range = processed_data[selected_feature].max() - processed_data[selected_feature].min()
+                            range_change = ((proc_range - orig_range) / orig_range) * 100 if orig_range != 0 else 0
+                            st.metric("Range Change", f"{range_change:+.2f}%", f"{proc_range:.2f}")
+                
+                else:
+                    st.info("No common numeric features found for distribution comparison.")
+            
+            elif comparison_type == "Missing Values":
+                st.markdown("**🔍 Missing Values Comparison:**")
+                
+                # Missing values comparison
+                orig_missing = original_data.isnull().sum()
+                proc_missing = processed_data.isnull().sum()
+                
+                missing_comparison = pd.DataFrame({
+                    'Feature': orig_missing.index,
+                    'Original_Missing': orig_missing.values,
+                    'Processed_Missing': proc_missing.values
+                })
+                missing_comparison['Difference'] = missing_comparison['Processed_Missing'] - missing_comparison['Original_Missing']
+                
+                # Show all features with any missing values (original or processed)
+                features_with_missing = missing_comparison[
+                    (missing_comparison['Original_Missing'] > 0) | 
+                    (missing_comparison['Processed_Missing'] > 0)
+                ]
+                
+                if len(features_with_missing) > 0:
+                    st.dataframe(features_with_missing, use_container_width=True)
+                    
+                    # Visualization
+                    fig = px.bar(
+                        features_with_missing,
+                        x='Feature',
+                        y=['Original_Missing', 'Processed_Missing'],
+                        title='Missing Values: Before vs After Processing',
+                        barmode='group'
+                    )
+                    st.plotly_chart(fig, use_container_width=True)
+                else:
+                    st.success("✅ No missing values in either dataset!")
+            
+            elif comparison_type == "Data Types":
+                st.markdown("**📋 Data Types Comparison:**")
+                
+                # Data types comparison
+                orig_types = original_data.dtypes.reset_index()
+                orig_types.columns = ['Feature', 'Original_Type']
+                orig_types['Original_Type'] = orig_types['Original_Type'].astype(str)  # Convert to string for display
+                
+                proc_types = processed_data.dtypes.reset_index()
+                proc_types.columns = ['Feature', 'Processed_Type']
+                proc_types['Processed_Type'] = proc_types['Processed_Type'].astype(str)  # Convert to string for display
+                
+                types_comparison = pd.merge(orig_types, proc_types, on='Feature', how='outer')
+                types_comparison['Type_Changed'] = types_comparison['Original_Type'] != types_comparison['Processed_Type']
+                
+                # Show changes
+                changed_types = types_comparison[types_comparison['Type_Changed']]
+                
+                if len(changed_types) > 0:
+                    st.markdown("**🔄 Features with Changed Data Types:**")
+                    st.dataframe(changed_types, use_container_width=True)
+                else:
+                    st.success("✅ No data type changes detected!")
+                
+                # Show all types
+                st.markdown("**📊 All Feature Types:**")
+                st.dataframe(types_comparison, use_container_width=True)
+            
+            # Processing summary
+            st.markdown("### 📋 Processing Summary")
+            
+            processing_summary = []
+            
+            # Record changes
+            if len(original_data) != len(processed_data):
+                processing_summary.append(f"• Records changed: {len(original_data):,} → {len(processed_data):,}")
+            
+            # Feature changes
+            if len(original_data.columns) != len(processed_data.columns):
+                processing_summary.append(f"• Features changed: {len(original_data.columns)} → {len(processed_data.columns)}")
+            
+            # Missing value changes
+            orig_missing_total = original_data.isnull().sum().sum()
+            proc_missing_total = processed_data.isnull().sum().sum()
+            if orig_missing_total != proc_missing_total:
+                processing_summary.append(f"• Missing values: {orig_missing_total:,} → {proc_missing_total:,}")
+            
+            # Memory usage changes
+            orig_memory = original_data.memory_usage(deep=True).sum() / 1024**2
+            proc_memory = processed_data.memory_usage(deep=True).sum() / 1024**2
+            memory_change = ((proc_memory - orig_memory) / orig_memory) * 100
+            processing_summary.append(f"• Memory usage: {orig_memory:.2f} MB → {proc_memory:.2f} MB ({memory_change:+.1f}%)")
+            
+            if processing_summary:
+                st.markdown("**🔧 Changes Applied:**")
+                for item in processing_summary:
+                    st.markdown(item)
+            else:
+                st.info("No significant structural changes detected between original and processed data.")
+        
+        else:
+            st.warning("⚠️ No processed data available for comparison.")
+            st.info("""
+            **To generate processed data:**
+            1. Apply preprocessing operations (Missing Value Handling, Outlier Treatment, Feature Scaling, or Categorical Encoding)
+            2. Return to this section to see before/after comparisons
+            
+            **Available preprocessing operations:**
+            - **Missing Value Handling**: Fill or remove missing values
+            - **Outlier Treatment**: Detect and handle outliers using IQR, Z-Score, or Modified Z-Score
+            - **Feature Scaling**: Normalize or standardize features using StandardScaler or MinMaxScaler
+            - **Categorical Encoding**: Convert categorical variables to numeric using one-hot or label encoding
+            
+            💡 **Tip**: Try applying outlier treatment to the 'price' or 'area' features to see meaningful before/after comparisons!
+            """)
+            
+            # Show a demo of what's available for processing
+            st.markdown("### 🔍 Preview: What Can Be Processed?")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("**📊 Numeric Features:**")
+                numeric_cols = data.select_dtypes(include=[np.number]).columns.tolist()
+                for col in numeric_cols:
+                    outlier_info = processor.detect_outliers(col, 'iqr')
+                    if outlier_info and outlier_info['count'] > 0:
+                        st.write(f"• **{col}**: {outlier_info['count']} outliers ({outlier_info['percentage']:.1f}%)")
+                    else:
+                        st.write(f"• **{col}**: No outliers detected")
+            
+            with col2:
+                st.markdown("**📝 Categorical Features:**")
+                cat_cols = data.select_dtypes(include=['object']).columns.tolist()
+                if cat_cols:
+                    for col in cat_cols:
+                        unique_count = data[col].nunique()
+                        st.write(f"• **{col}**: {unique_count} unique values")
+                else:
+                    st.write("No categorical features found")
 
 def show_model_evaluation(data, processor):
     """Display model training and evaluation tools"""
-    st.markdown('<h2 class="section-header">Machine Learning Model Development & Performance Evaluation</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Model Training & Evaluation</h2>', unsafe_allow_html=True)
     
     # Model training section
     st.subheader("Model Training Configuration")
@@ -1010,7 +1289,7 @@ def show_model_evaluation(data, processor):
 
 def show_interpretability_module(data, processor):
     """Display model interpretability tools"""
-    st.markdown('<h2 class="section-header">Model Interpretability & Explainable AI</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">🔬 Model Interpretability</h2>', unsafe_allow_html=True)
     
     # Check if models are trained
     if 'model_results' not in st.session_state:
@@ -1051,6 +1330,13 @@ def show_interpretability_module(data, processor):
                     'importance': selected_model.feature_importances_
                 }).sort_values('importance', ascending=False)
                 
+                # Show top features
+                st.markdown("**Top 10 Most Important Features:**")
+                st.dataframe(
+                    importance_df.head(10).style.format({'importance': '{:.4f}'}),
+                    use_container_width=True
+                )
+                
                 # Interactive bar plot
                 fig = px.bar(
                     importance_df.head(10),
@@ -1061,7 +1347,7 @@ def show_interpretability_module(data, processor):
                     color='importance',
                     color_continuous_scale='viridis'
                 )
-                fig.update_layout(height=500, yaxis={'categoryorder': 'total ascending'})
+                fig.update_layout(yaxis={'categoryorder': 'total ascending'})
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # Feature importance table
@@ -1312,23 +1598,8 @@ def show_interpretability_module(data, processor):
                     interaction_fig = interpreter.create_feature_interaction_plot(feature1, feature2)
                     if interaction_fig:
                         st.plotly_chart(interaction_fig, use_container_width=True)
-                        
-                        st.info(f"""
-                        **Understanding Feature Interaction Plot:**
-                        - Shows how {feature1} and {feature2} interact to influence predictions
-                        - Contour lines represent different prediction levels
-                        - Darker regions typically indicate higher/lower prediction values
-                        - Can reveal non-linear relationships between features
-                        """)
                     else:
-                        st.warning("⚠️ Feature interaction plot could not be generated. This might be due to:")
-                        st.markdown("""
-                        - Incompatible model type for partial dependence analysis
-                        - Insufficient data for reliable interaction analysis
-                        - Technical issues with the current feature combination
-                        
-                        💡 **Try**: Select different features or ensure models are properly trained.
-                        """)
+                        st.info("Feature interaction plots require scikit-learn >= 0.22.")
             
             # Model behavior summary
             st.markdown("**📋 Model Behavior Summary**")
@@ -1369,7 +1640,7 @@ def show_interpretability_module(data, processor):
 
 def show_interactive_features(data, processor):
     """Display interactive features and custom analysis"""
-    st.markdown('<h2 class="section-header">Interactive Analytics & Advanced Features</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Interactive Features</h2>', unsafe_allow_html=True)
     
     # Interactive data filtering
     st.subheader("🔍 Interactive Data Filtering")
@@ -1495,7 +1766,7 @@ def show_interactive_features(data, processor):
 
 def show_price_prediction(data, processor):
     """Display price prediction interface"""
-    st.markdown('<h2 class="section-header">Real Estate Price Prediction Engine</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">🏠 Price Prediction</h2>', unsafe_allow_html=True)
     
     # Check if models are trained
     if 'model_results' not in st.session_state:
