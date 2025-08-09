@@ -1,0 +1,1053 @@
+
+[     UTC     ] Logs for ahmedal-mahdi-housing-price-data-dashboard-copilotfix-f0-c3wh3z.streamlit.app/
+────────────────────────────────────────────────────────────────────────────────────────
+[08:19:12] 🚀 Starting up repository: 'housing-price-data', branch: 'copilot/fix-f0ade74e-4b9a-4836-8951-9e4f762d5309', main module: 'dashboard.py'
+[08:19:12] 🐙 Cloning repository...
+[08:19:13] 🐙 Cloning into '/mount/src/housing-price-data'...
+
+[08:19:13] 🐙 Cloned repository!
+[08:19:13] 🐙 Pulling code changes from Github...
+[08:19:13] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+Using Python 3.13.5 environment at /home/adminuser/venv
+Resolved 181 packages in 1.14s
+  × Failed to download and build `llvmlite==0.36.0`
+  ╰─▶ Build backend failed to determine requirements with `build_wheel()`
+      (exit status: 1)
+
+      [stderr]
+      Traceback (most recent call last):
+        File "<string>", line 14, in <module>
+          requires = get_requires_for_build({})
+        File
+      "/home/adminuser/.cache/uv/builds-v0/.tmp7yUWXH/lib/python3.13/site-packages/setuptools/build_meta.py",
+      line 331, in get_requires_for_build_wheel
+          return self._get_build_requires(config_settings, requirements=[])
+                 ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File
+      "/home/adminuser/.cache/uv/builds-v0/.tmp7yUWXH/lib/python3.13/site-packages/setuptools/build_meta.py",
+      line 301, in _get_build_requires
+          self.run_setup()
+          ~~~~~~~~~~~~~~^^
+        File
+      "/home/adminuser/.cache/uv/builds-v0/.tmp7yUWXH/lib/python3.13/site-packages/setuptools/build_meta.py",
+      line 512, in run_setup
+          super().run_setup(setup_script=setup_script)
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File
+      "/home/adminuser/.cache/uv/builds-v0/.tmp7yUWXH/lib/python3.13/site-packages/setuptools/build_meta.py",
+      line 317, in run_setup
+          exec(code, locals())
+          ~~~~^^^^^^^^^^^^^^^^
+        File "<string>", line 55, in <module>
+        File "<string>", line 52, in _guard_py_ver
+      RuntimeError: Cannot install on Python version 3.13.5; only versions
+      >=3.6,<3.10 are supported.
+
+  help: `llvmlite` was included because `shap==0.46.0` depends on
+        `numba==0.53.1` which depends on `llvmlite`
+Checking if Streamlit is installed
+Installing rich for an improved exception logging
+Using uv pip install.
+Using Python 3.13.5 environment at /home/adminuser/venv
+Resolved 4 packages in 151ms
+Prepared 3 packages in 47ms
+Installed 4 packages in 31ms
+ + markdown-it-py==3.0.0
+ + mdurl==[2025-08-04 08:19:19.378852] 0.1.2
+ + pygments==2.19.2
+ + rich==14.1.0
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting pandas>=2.0.0 (from -r /mount/src/housing-price-data/requirements.txt (line 2))
+  Downloading pandas-2.3.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (91 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 91.2/91.2 kB 4.0 MB/s eta 0:00:00[2025-08-04 08:19:21.499704] 
+Collecting numpy>=1.24.0 (from -r /mount/src/housing-price-data/requirements.txt (line 3))
+  Downloading numpy-2.3.2-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.1/62.1 kB 154.5 MB/s eta 0:00:00[2025-08-04 08:19:21.970417] 
+Collecting matplotlib>=3.7.0 (from -r /mount/src/housing-price-data/requirements.txt (line 4))
+  Downloading matplotlib-3.10.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (11 kB)
+Collecting seaborn>=0.12.0 (from -r /mount/src/housing-price-data/requirements.txt (line 5))
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting plotly>=5.15.0 (from -r /mount/src/housing-price-data/requirements.txt (line 6))
+  Downloading plotly-6.2.0-py3-none-any.whl.metadata (8.5 kB)
+Collecting scipy>=1.10.0 (from -r /mount/src/housing-price-data/requirements.txt (line 7))
+  Downloading scipy-1.16.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (61 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.0/62.0 kB 125.3 MB/s eta 0:00:00[2025-08-04 08:19:22.671021] 
+Collecting scikit-learn>=1.3.0 (from -r /mount/src/housing-price-data/requirements.txt (line 10))
+  Downloading scikit_learn-1.7.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (11 kB)
+Collecting xgboost>=1.7.0 (from -r /mount/src/housing-price-data/requirements.txt (line 11))
+  Downloading xgboost-3.0.3-py3-none-manylinux_2_28_x86_64.whl.metadata (2.1 kB)
+Collecting lightgbm>=4.0.0 (from -r /mount/src/housing-price-data/requirements.txt (line 12))
+  Downloading lightgbm-4.6.0-py3-none-manylinux_2_28_x86_64.whl.metadata (17 kB)
+Collecting torch>=2.0.0 (from -r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading torch-2.7.1-cp313-cp313-manylinux_2_28_x86_64.whl.metadata (29 kB)
+Collecting torchvision>=0.15.0 (from -r /mount/src/housing-price-data/requirements.txt (line 16))
+  Downloading torchvision-0.22.1-cp313-cp313-manylinux_2_28_x86_64.whl.metadata (6.1 kB)
+Collecting shap>=0.42.0 (from -r /mount/src/housing-price-data/requirements.txt (line 19))
+  Downloading shap-0.48.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (25 kB)
+Collecting lime>=0.2.0 (from -r /mount/src/housing-price-data/requirements.txt (line 20))
+  Downloading lime-0.2.0.1.tar.gz (275 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 275.7/275.7 kB 11.0 MB/s eta 0:00:00[2025-08-04 08:19:23.384065] 
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting streamlit>=1.25.0 (from -r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading streamlit-1.47.1-py3-none-any.whl.metadata (9.0 kB)
+Collecting streamlit-option-menu>=0.3.0 (from -r /mount/src/housing-price-data/requirements.txt (line 24))
+  Downloading streamlit_option_menu-0.4.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting dash>=2.14.0 (from -r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading dash-3.2.0-py3-none-any.whl.metadata (10 kB)
+Collecting dash-bootstrap-components>=1.5.0 (from -r /mount/src/housing-price-data/requirements.txt (line 26))
+  Downloading dash_bootstrap_components-2.0.3-py3-none-any.whl.metadata (18 kB)
+Collecting plotly-express>=0.4.0 (from -r /mount/src/housing-price-data/requirements.txt (line 29))
+  Downloading plotly_express-0.4.1-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting altair>=5.0.0 (from -r /mount/src/housing-price-data/requirements.txt (line 30))
+  Downloading altair-5.5.0-py3-none-any.whl.metadata (11 kB)
+Collecting openpyxl>=3.1.0 (from -r /mount/src/housing-price-data/requirements.txt (line 33))
+  Downloading openpyxl-3.1.5-py2.py3-none-any.whl.metadata (2.5 kB)
+Collecting xlrd>=2.0.0 (from -r /mount/src/housing-price-data/requirements.txt (line 34))
+  Downloading xlrd-2.0.2-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting statsmodels>=0.14.0 (from -r /mount/src/housing-price-data/requirements.txt (line 37))
+  Downloading statsmodels-0.14.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+Collecting tqdm>=4.65.0 (from -r /mount/src/housing-price-data/requirements.txt (line 40))
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.7/57.7 kB 101.4 MB/s eta 0:00:00[2025-08-04 08:19:27.239453] 
+Collecting jupyter>=1.0.0 (from -r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyter-1.1.1-py2.py3-none-any.whl.metadata (2.0 kB)
+Collecting ipywidgets>=8.0.0 (from -r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading ipywidgets-8.1.7-py3-none-any.whl.metadata (2.4 kB)
+Collecting python-dateutil>=2.8.2 (from pandas>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 2))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting pytz>=2020.1 (from pandas>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 2))
+  Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 2))
+  Downloading tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting contourpy>=1.0.1 (from matplotlib>=3.7.0->-r /mount/src/housing-price-data/requirements.txt (line 4))
+  Downloading contourpy-1.3.3-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (5.5 kB)
+Collecting cycler>=0.10 (from matplotlib>=3.7.0->-r /mount/src/housing-price-data/requirements.txt (line 4))
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.22.0 (from matplotlib>=3.7.0->-r /mount/src/housing-price-data/requirements.txt (line 4))
+  Downloading fonttools-4.59.0-cp313-cp313-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl.metadata (107 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.9/107.9 kB 124.6 MB/s eta 0:00:00[2025-08-04 08:19:28.257363] 
+Collecting kiwisolver>=1.3.1 (from matplotlib>=3.7.0->-r /mount/src/housing-price-data/requirements.txt (line 4))
+  Downloading kiwisolver-1.4.8-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.2 kB)
+Collecting packaging>=20.0 (from matplotlib>=3.7.0->-r /mount/src/housing-price-data/requirements.txt (line 4))
+  Downloading packaging-25.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting pillow>=8 (from matplotlib>=3.7.0->-r /mount/src/housing-price-data/requirements.txt (line 4))
+  Downloading pillow-11.3.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.0 kB)
+Collecting pyparsing>=2.3.1 (from matplotlib>=3.7.0->-r /mount/src/housing-price-data/requirements.txt (line 4))
+  Downloading pyparsing-3.2.3-py3-none-any.whl.metadata (5.0 kB)
+Collecting narwhals>=1.15.1 (from plotly>=5.15.0->-r /mount/src/housing-price-data/requirements.txt (line 6))
+  Downloading narwhals-2.0.1-py3-none-any.whl.metadata (11 kB)
+Collecting joblib>=1.2.0 (from scikit-learn>=1.3.0->-r /mount/src/housing-price-data/requirements.txt (line 10))
+  Downloading joblib-1.5.1-py3-none-any.whl.metadata (5.6 kB)
+Collecting threadpoolctl>=3.1.0 (from scikit-learn>=1.3.0->-r /mount/src/housing-price-data/requirements.txt (line 10))
+  Downloading threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+Collecting nvidia-nccl-cu12 (from xgboost>=1.7.0->-r /mount/src/housing-price-data/requirements.txt (line 11))
+  Downloading nvidia_nccl_cu12-2.27.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.0 kB)
+Collecting filelock (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting typing-extensions>=4.10.0 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading typing_extensions-4.14.1-py3-none-any.whl.metadata (3.0 kB)
+Collecting setuptools (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting sympy>=1.13.3 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading networkx-3.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting jinja2 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading fsspec-2025.7.0-py3-none-any.whl.metadata (12 kB)
+Collecting nvidia-cuda-nvrtc-cu12==12.6.77 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cuda_nvrtc_cu12-12.6.77-py3-none-manylinux2014_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-cuda-runtime-cu12==12.6.77 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cuda_runtime_cu12-12.6.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-cuda-cupti-cu12==12.6.80 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cuda_cupti_cu12-12.6.80-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.6 kB)
+Collecting nvidia-cudnn-cu12==9.5.1.17 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cudnn_cu12-9.5.1.17-py3-none-manylinux_2_28_x86_64.whl.metadata (1.6 kB)
+Collecting nvidia-cublas-cu12==12.6.4.1 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cublas_cu12-12.6.4.1-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-cufft-cu12==11.3.0.4 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cufft_cu12-11.3.0.4-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-curand-cu12==10.3.7.77 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_curand_cu12-10.3.7.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-cusolver-cu12==11.7.1.2 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cusolver_cu12-11.7.1.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.6 kB)
+Collecting nvidia-cusparse-cu12==12.5.4.2 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cusparse_cu12-12.5.4.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.6 kB)
+Collecting nvidia-cusparselt-cu12==0.6.3 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cusparselt_cu12-0.6.3-py3-none-manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting nvidia-nccl-cu12 (from xgboost>=1.7.0->-r /mount/src/housing-price-data/requirements.txt (line 11))
+  Downloading nvidia_nccl_cu12-2.26.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.0 kB)
+Collecting nvidia-nvtx-cu12==12.6.77 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_nvtx_cu12-12.6.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.6 kB)
+Collecting nvidia-nvjitlink-cu12==12.6.85 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_nvjitlink_cu12-12.6.85-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-cufile-cu12==1.11.1.6 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading nvidia_cufile_cu12-1.11.1.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.5 kB)
+Collecting triton==3.3.1 (from torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading triton-3.3.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (1.5 kB)
+Collecting slicer==0.0.8 (from shap>=0.42.0->-r /mount/src/housing-price-data/requirements.txt (line 19))
+  Downloading slicer-0.0.8-py3-none-any.whl.metadata (4.0 kB)
+Collecting numba>=0.54 (from shap>=0.42.0->-r /mount/src/housing-price-data/requirements.txt (line 19))
+  Downloading numba-0.61.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.8 kB)
+Collecting cloudpickle (from shap>=0.42.0->-r /mount/src/housing-price-data/requirements.txt (line 19))
+  Downloading cloudpickle-3.1.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting scikit-image>=0.12 (from lime>=0.2.0->-r /mount/src/housing-price-data/requirements.txt (line 20))
+  Downloading scikit_image-0.25.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (14 kB)
+Collecting blinker<2,>=1.5.0 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting cachetools<7,>=4.0 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading cachetools-6.1.0-py3-none-any.whl.metadata (5.4 kB)
+Collecting click<9,>=7.0 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading click-8.2.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting protobuf<7,>=3.20 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading protobuf-6.31.1-cp39-abi3-manylinux2014_x86_64.whl.metadata (593 bytes)
+Collecting pyarrow>=7.0 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading pyarrow-21.0.0-cp313-cp313-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Collecting requests<3,>=2.27 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading requests-2.32.4-py3-none-any.whl.metadata (4.9 kB)
+Collecting tenacity<10,>=8.1.0 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading tenacity-9.1.2-py3-none-any.whl.metadata (1.2 kB)
+Collecting toml<2,>=0.10.1 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+Collecting watchdog<7,>=2.1.5 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl.metadata (44 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 44.3/44.3 kB 115.1 MB/s eta 0:00:00
+Collecting gitpython!=3.1.19,<4,>=3.0.7 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading gitpython-3.1.45-py3-none-any.whl.metadata (13 kB)
+Collecting pydeck<1,>=0.8.0b4 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading pydeck-0.9.1-py2.py3-none-any.whl.metadata (4.1 kB)
+Collecting tornado!=6.5.0,<7,>=6.0.3 (from streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading tornado-6.5.1-cp39-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.8 kB)
+Collecting Flask<3.2,>=1.0.4 (from dash>=2.14.0->-r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading flask-3.1.1-py3-none-any.whl.metadata (3.0 kB)
+Collecting Werkzeug<3.2 (from dash>=2.14.0->-r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading werkzeug-3.1.3-py3-none-any.whl.metadata (3.7 kB)
+Collecting importlib-metadata (from dash>=2.14.0->-r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading importlib_metadata-8.7.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting retrying (from dash>=2.14.0->-r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading retrying-1.4.2-py3-none-any.whl.metadata (5.5 kB)
+Collecting nest-asyncio (from dash>=2.14.0->-r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading nest_asyncio-1.6.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting patsy>=0.5 (from plotly-express>=0.4.0->-r /mount/src/housing-price-data/requirements.txt (line 29))
+  Downloading patsy-1.0.1-py2.py3-none-any.whl.metadata (3.3 kB)
+Collecting jsonschema>=3.0 (from altair>=5.0.0->-r /mount/src/housing-price-data/requirements.txt (line 30))
+  Downloading jsonschema-4.25.0-py3-none-any.whl.metadata (7.7 kB)
+Collecting et-xmlfile (from openpyxl>=3.1.0->-r /mount/src/housing-price-data/requirements.txt (line 33))
+  Downloading et_xmlfile-2.0.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting notebook (from jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading notebook-7.4.4-py3-none-any.whl.metadata (10 kB)
+Collecting jupyter-console (from jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyter_console-6.6.3-py3-none-any.whl.metadata (5.8 kB)
+Collecting nbconvert (from jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading nbconvert-7.16.6-py3-none-any.whl.metadata (8.5 kB)
+Collecting ipykernel (from jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading ipykernel-6.30.0-py3-none-any.whl.metadata (6.2 kB)
+Collecting jupyterlab (from jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyterlab-4.4.5-py3-none-any.whl.metadata (16 kB)
+Collecting comm>=0.1.3 (from ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading comm-0.2.3-py3-none-any.whl.metadata (3.7 kB)
+Collecting ipython>=6.1.0 (from ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading ipython-9.4.0-py3-none-any.whl.metadata (4.4 kB)
+Collecting traitlets>=4.3.1 (from ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading traitlets-5.14.3-py3-none-any.whl.metadata (10 kB)
+Collecting widgetsnbextension~=4.0.14 (from ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading widgetsnbextension-4.0.14-py3-none-any.whl.metadata (1.6 kB)
+Collecting jupyterlab_widgets~=3.0.15 (from ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading jupyterlab_widgets-3.0.15-py3-none-any.whl.metadata (20 kB)
+Collecting itsdangerous>=2.2.0 (from Flask<3.2,>=1.0.4->dash>=2.14.0->-r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting markupsafe>=2.1.1 (from Flask<3.2,>=1.0.4->dash>=2.14.0->-r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading MarkupSafe-3.0.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
+Collecting gitdb<5,>=4.0.1 (from gitpython!=3.1.19,<4,>=3.0.7->streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading gitdb-4.0.12-py3-none-any.whl.metadata (1.2 kB)
+Collecting decorator (from ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading decorator-5.2.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting ipython-pygments-lexers (from ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl.metadata (1.1 kB)
+Collecting jedi>=0.16 (from ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading jedi-0.19.2-py2.py3-none-any.whl.metadata (22 kB)
+Collecting matplotlib-inline (from ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading matplotlib_inline-0.1.7-py3-none-any.whl.metadata (3.9 kB)
+Collecting pexpect>4.3 (from ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading pexpect-4.9.0-py2.py3-none-any.whl.metadata (2.5 kB)
+Collecting prompt_toolkit<3.1.0,>=3.0.41 (from ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading prompt_toolkit-3.0.51-py3-none-any.whl.metadata (6.4 kB)
+Collecting pygments>=2.4.0 (from ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+Collecting stack_data (from ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading stack_data-0.6.3-py3-none-any.whl.metadata (18 kB)
+Collecting attrs>=22.2.0 (from jsonschema>=3.0->altair>=5.0.0->-r /mount/src/housing-price-data/requirements.txt (line 30))
+  Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+Collecting jsonschema-specifications>=2023.03.6 (from jsonschema>=3.0->altair>=5.0.0->-r /mount/src/housing-price-data/requirements.txt (line 30))
+  Downloading jsonschema_specifications-2025.4.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting referencing>=0.28.4 (from jsonschema>=3.0->altair>=5.0.0->-r /mount/src/housing-price-data/requirements.txt (line 30))
+  Downloading referencing-0.36.2-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py>=0.7.1 (from jsonschema>=3.0->altair>=5.0.0->-r /mount/src/housing-price-data/requirements.txt (line 30))
+  Downloading rpds_py-0.26.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)
+Collecting llvmlite<0.45,>=0.44.0dev0 (from numba>=0.54->shap>=0.42.0->-r /mount/src/housing-price-data/requirements.txt (line 19))
+  Downloading llvmlite-0.44.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.0 kB)
+Collecting numpy>=1.24.0 (from -r /mount/src/housing-price-data/requirements.txt (line 3))
+  Downloading numpy-2.2.6-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.0/62.0 kB 167.8 MB/s eta 0:00:00[2025-08-04 08:19:35.475430] 
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 2))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting charset_normalizer<4,>=2 (from requests<3,>=2.27->streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading charset_normalizer-3.4.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+Collecting idna<4,>=2.5 (from requests<3,>=2.27->streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+Collecting urllib3<3,>=1.21.1 (from requests<3,>=2.27->streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading urllib3-2.5.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting certifi>=2017.4.17 (from requests<3,>=2.27->streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading certifi-2025.8.3-py3-none-any.whl.metadata (2.4 kB)
+Collecting imageio!=2.35.0,>=2.33 (from scikit-image>=0.12->lime>=0.2.0->-r /mount/src/housing-price-data/requirements.txt (line 20))
+  Downloading imageio-2.37.0-py3-none-any.whl.metadata (5.2 kB)
+Collecting tifffile>=2022.8.12 (from scikit-image>=0.12->lime>=0.2.0->-r /mount/src/housing-price-data/requirements.txt (line 20))
+  Downloading tifffile-2025.6.11-py3-none-any.whl.metadata (32 kB)
+Collecting lazy-loader>=0.4 (from scikit-image>=0.12->lime>=0.2.0->-r /mount/src/housing-price-data/requirements.txt (line 20))
+  Downloading lazy_loader-0.4-py3-none-any.whl.metadata (7.6 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch>=2.0.0->-r /mount/src/housing-price-data/requirements.txt (line 15))
+  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting zipp>=3.20 (from importlib-metadata->dash>=2.14.0->-r /mount/src/housing-price-data/requirements.txt (line 25))
+  Downloading zipp-3.23.0-py3-none-any.whl.metadata (3.6 kB)
+Collecting debugpy>=1.6.5 (from ipykernel->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading debugpy-1.8.15-cp313-cp313-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.3 kB)
+Collecting jupyter-client>=8.0.0 (from ipykernel->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyter_client-8.6.3-py3-none-any.whl.metadata (8.3 kB)
+Collecting jupyter-core!=5.0.*,>=4.12 (from ipykernel->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyter_core-5.8.1-py3-none-any.whl.metadata (1.6 kB)
+Collecting psutil>=5.7 (from ipykernel->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (22 kB)
+Collecting pyzmq>=25 (from ipykernel->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading pyzmq-27.0.1-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (6.0 kB)
+Collecting async-lru>=1.0.0 (from jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading async_lru-2.0.5-py3-none-any.whl.metadata (4.5 kB)
+Collecting httpx>=0.25.0 (from jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jupyter-lsp>=2.0.0 (from jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyter_lsp-2.2.6-py3-none-any.whl.metadata (1.8 kB)
+Collecting jupyter-server<3,>=2.4.0 (from jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyter_server-2.16.0-py3-none-any.whl.metadata (8.5 kB)
+Collecting jupyterlab-server<3,>=2.27.1 (from jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyterlab_server-2.27.3-py3-none-any.whl.metadata (5.9 kB)
+Collecting notebook-shim>=0.2 (from jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading notebook_shim-0.2.4-py3-none-any.whl.metadata (4.0 kB)
+Collecting beautifulsoup4 (from nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading beautifulsoup4-4.13.4-py3-none-any.whl.metadata (3.8 kB)
+Collecting bleach!=5.0.0 (from bleach[css]!=5.0.0->nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading bleach-6.2.0-py3-none-any.whl.metadata (30 kB)
+Collecting defusedxml (from nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+Collecting jupyterlab-pygments (from nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyterlab_pygments-0.3.0-py3-none-any.whl.metadata (4.4 kB)
+Collecting mistune<4,>=2.0.3 (from nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading mistune-3.1.3-py3-none-any.whl.metadata (1.8 kB)
+Collecting nbclient>=0.5.0 (from nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading nbclient-0.10.2-py3-none-any.whl.metadata (8.3 kB)
+Collecting nbformat>=5.7 (from nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading nbformat-5.10.4-py3-none-any.whl.metadata (3.6 kB)
+Collecting pandocfilters>=1.4.1 (from nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading pandocfilters-1.5.1-py2.py3-none-any.whl.metadata (9.0 kB)
+Collecting webencodings (from bleach!=5.0.0->bleach[css]!=5.0.0->nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading webencodings-0.5.1-py2.py3-none-any.whl.metadata (2.1 kB)
+Collecting tinycss2<1.5,>=1.1.0 (from bleach[css]!=5.0.0->nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading tinycss2-1.4.0-py3-none-any.whl.metadata (3.0 kB)
+Collecting smmap<6,>=3.0.1 (from gitdb<5,>=4.0.1->gitpython!=3.1.19,<4,>=3.0.7->streamlit>=1.25.0->-r /mount/src/housing-price-data/requirements.txt (line 23))
+  Downloading smmap-5.0.2-py3-none-any.whl.metadata (4.3 kB)
+Collecting anyio (from httpx>=0.25.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+Collecting httpcore==1.* (from httpx>=0.25.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx>=0.25.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting parso<0.9.0,>=0.8.4 (from jedi>=0.16->ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading parso-0.8.4-py2.py3-none-any.whl.metadata (7.7 kB)
+Collecting platformdirs>=2.5 (from jupyter-core!=5.0.*,>=4.12->ipykernel->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading platformdirs-4.3.8-py3-none-any.whl.metadata (12 kB)
+Collecting argon2-cffi>=21.1 (from jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading argon2_cffi-25.1.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting jupyter-events>=0.11.0 (from jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyter_events-0.12.0-py3-none-any.whl.metadata (5.8 kB)
+Collecting jupyter-server-terminals>=0.4.4 (from jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jupyter_server_terminals-0.5.3-py3-none-any.whl.metadata (5.6 kB)
+Collecting overrides>=5.0 (from jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading overrides-7.7.0-py3-none-any.whl.metadata (5.8 kB)
+Collecting prometheus-client>=0.9 (from jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading prometheus_client-0.22.1-py3-none-any.whl.metadata (1.9 kB)
+Collecting send2trash>=1.8.2 (from jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading Send2Trash-1.8.3-py3-none-any.whl.metadata (4.0 kB)
+Collecting terminado>=0.8.3 (from jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading terminado-0.18.1-py3-none-any.whl.metadata (5.8 kB)
+Collecting websocket-client>=1.7 (from jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading websocket_client-1.8.0-py3-none-any.whl.metadata (8.0 kB)
+Collecting babel>=2.10 (from jupyterlab-server<3,>=2.27.1->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading babel-2.17.0-py3-none-any.whl.metadata (2.0 kB)
+Collecting json5>=0.9.0 (from jupyterlab-server<3,>=2.27.1->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading json5-0.12.0-py3-none-any.whl.metadata (36 kB)
+Collecting fastjsonschema>=2.15 (from nbformat>=5.7->nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading fastjsonschema-2.21.1-py3-none-any.whl.metadata (2.2 kB)
+Collecting ptyprocess>=0.5 (from pexpect>4.3->ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading ptyprocess-0.7.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting wcwidth (from prompt_toolkit<3.1.0,>=3.0.41->ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading wcwidth-0.2.13-py2.py3-none-any.whl.metadata (14 kB)
+Collecting soupsieve>1.2 (from beautifulsoup4->nbconvert->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading soupsieve-2.7-py3-none-any.whl.metadata (4.6 kB)
+Collecting executing>=1.2.0 (from stack_data->ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading executing-2.2.0-py2.py3-none-any.whl.metadata (8.9 kB)
+Collecting asttokens>=2.1.0 (from stack_data->ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading asttokens-3.0.0-py3-none-any.whl.metadata (4.7 kB)
+Collecting pure-eval (from stack_data->ipython>=6.1.0->ipywidgets>=8.0.0->-r /mount/src/housing-price-data/requirements.txt (line 44))
+  Downloading pure_eval-0.2.3-py3-none-any.whl.metadata (6.3 kB)
+Collecting sniffio>=1.1 (from anyio->httpx>=0.25.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting argon2-cffi-bindings (from argon2-cffi>=21.1->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading argon2_cffi_bindings-25.1.0-cp39-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl.metadata (7.4 kB)
+Collecting python-json-logger>=2.0.4 (from jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading python_json_logger-3.3.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting pyyaml>=5.3 (from jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading PyYAML-6.0.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+Collecting rfc3339-validator (from jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading rfc3339_validator-0.1.4-py2.py3-none-any.whl.metadata (1.5 kB)
+Collecting rfc3986-validator>=0.1.1 (from jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading rfc3986_validator-0.1.1-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting fqdn (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading fqdn-1.5.1-py3-none-any.whl.metadata (1.4 kB)
+Collecting isoduration (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading isoduration-20.11.0-py3-none-any.whl.metadata (5.7 kB)
+Collecting jsonpointer>1.13 (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading jsonpointer-3.0.0-py2.py3-none-any.whl.metadata (2.3 kB)
+Collecting rfc3987-syntax>=1.1.0 (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading rfc3987_syntax-1.1.0-py3-none-any.whl.metadata (7.7 kB)
+Collecting uri-template (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading uri_template-1.3.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting webcolors>=24.6.0 (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading webcolors-24.11.1-py3-none-any.whl.metadata (2.2 kB)
+Collecting cffi>=1.0.1 (from argon2-cffi-bindings->argon2-cffi>=21.1->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading cffi-1.17.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.5 kB)
+Collecting pycparser (from cffi>=1.0.1->argon2-cffi-bindings->argon2-cffi>=21.1->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading pycparser-2.22-py3-none-any.whl.metadata (943 bytes)
+Collecting lark>=1.2.2 (from rfc3987-syntax>=1.1.0->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading lark-1.2.2-py3-none-any.whl.metadata (1.8 kB)
+Collecting arrow>=0.15.0 (from isoduration->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading arrow-1.3.0-py3-none-any.whl.metadata (7.5 kB)
+Collecting types-python-dateutil>=2.8.10 (from arrow>=0.15.0->isoduration->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->jupyterlab->jupyter>=1.0.0->-r /mount/src/housing-price-data/requirements.txt (line 43))
+  Downloading types_python_dateutil-2.9.0.20250708-py3-none-any.whl.metadata (1.9 kB)
+Downloading pandas-2.3.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.1/12.1 MB 209.2 MB/s eta 0:00:00[2025-08-04 08:19:44.524926] 
+Downloading matplotlib-3.10.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (8.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.7/8.7 MB 207.7 MB/s eta 0:00:00[2025-08-04 08:19:44.579348] 
+Downloading seaborn-0.13.2-py3-none-any.whl (294 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 294.9/294.9 kB 197.7 MB/s eta 0:00:00[2025-08-04 08:19:44.593056] 
+Downloading plotly-6.2.0-py3-none-any.whl (9.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.6/9.6 MB 191.6 MB/s eta 0:00:00[2025-08-04 08:19:44.656148] 
+Downloading scipy-1.16.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (35.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.2/35.2 MB 144.1 MB/s eta 0:00:00[2025-08-04 08:19:44.963802] 
+Downloading scikit_learn-1.7.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (9.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.4/9.4 MB 201.3 MB/s eta 0:00:00[2025-08-04 08:19:45.023239] 
+Downloading xgboost-3.0.3-py3-none-manylinux_2_28_x86_64.whl (253.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 253.8/253.8 MB 209.1 MB/s eta 0:00:00[2025-08-04 08:19:46.362907] 
+Downloading lightgbm-4.6.0-py3-none-manylinux_2_28_x86_64.whl (3.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 219.3 MB/s eta 0:00:00[2025-08-04 08:19:46.391926] 
+Downloading torch-2.7.1-cp313-cp313-manylinux_2_28_x86_64.whl (821.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 821.0/821.0 MB 200.5 MB/s eta 0:00:00[2025-08-04 08:19:51.277184] 
+Downloading nvidia_cublas_cu12-12.6.4.1-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (393.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 393.1/393.1 MB 202.5 MB/s eta 0:00:00[2025-08-04 08:19:53.278552] 
+Downloading nvidia_cuda_cupti_cu12-12.6.80-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (8.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.9/8.9 MB 212.3 MB/s eta 0:00:00[2025-08-04 08:19:53.332088] 
+Downloading nvidia_cuda_nvrtc_cu12-12.6.77-py3-none-manylinux2014_x86_64.whl (23.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.7/23.7 MB 142.2 MB/s eta 0:00:00[2025-08-04 08:19:53.524238] 
+Downloading nvidia_cuda_runtime_cu12-12.6.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (897 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 897.7/897.7 kB 210.4 MB/s eta 0:00:00[2025-08-04 08:19:53.541935] 
+Downloading nvidia_cudnn_cu12-9.5.1.17-py3-none-manylinux_2_28_x86_64.whl (571.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 571.0/571.0 MB 148.8 MB/s eta 0:00:00[2025-08-04 08:19:56.753394] 
+Downloading nvidia_cufft_cu12-11.3.0.4-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (200.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 200.2/200.2 MB 205.8 MB/s eta 0:00:00[2025-08-04 08:19:57.885201] 
+Downloading nvidia_cufile_cu12-1.11.1.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 217.2 MB/s eta 0:00:00[2025-08-04 08:19:57.902736] 
+Downloading nvidia_curand_cu12-10.3.7.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (56.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.3/56.3 MB 186.9 MB/s eta 0:00:00[2025-08-04 08:19:58.222655] 
+Downloading nvidia_cusolver_cu12-11.7.1.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (158.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 158.2/158.2 MB 126.1 MB/s eta 0:00:00[2025-08-04 08:19:59.764868] 
+Downloading nvidia_cusparse_cu12-12.5.4.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (216.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 216.6/216.6 MB 187.2 MB/s eta 0:00:00[2025-08-04 08:20:01.246805] 
+Downloading nvidia_cusparselt_cu12-0.6.3-py3-none-manylinux2014_x86_64.whl (156.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 156.8/156.8 MB 180.2 MB/s eta 0:00:00[2025-08-04 08:20:02.185739] 
+Downloading nvidia_nccl_cu12-2.26.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (201.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 201.3/201.3 MB 184.7 MB/s eta 0:00:00[2025-08-04 08:20:03.465455] 
+Downloading nvidia_nvjitlink_cu12-12.6.85-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (19.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.7/19.7 MB 124.3 MB/s eta 0:00:00[2025-08-04 08:20:03.626866] 
+Downloading nvidia_nvtx_cu12-12.6.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (89 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.3/89.3 kB 132.9 MB/s eta 0:00:00[2025-08-04 08:20:03.641514] 
+Downloading triton-3.3.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (155.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 155.7/155.7 MB 178.6 MB/s eta 0:00:00[2025-08-04 08:20:04.680386] 
+Downloading torchvision-0.22.1-cp313-cp313-manylinux_2_28_x86_64.whl (7.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.5/7.5 MB 182.8 MB/s eta 0:00:00[2025-08-04 08:20:04.737198] 
+Downloading shap-0.48.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 202.9 MB/s eta 0:00:00[2025-08-04 08:20:04.755929] 
+Downloading slicer-0.0.8-py3-none-any.whl (15 kB)
+Downloading streamlit-1.47.1-py3-none-any.whl (9.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.9/9.9 MB 106.7 MB/s eta 0:00:00[2025-08-04 08:20:04.873415] 
+Downloading streamlit_option_menu-0.4.0-py3-none-any.whl (829 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 829.3/829.3 kB 137.9 MB/s eta 0:00:00[2025-08-04 08:20:04.900852] 
+Downloading dash-3.2.0-py3-none-any.whl (7.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.9/7.9 MB 115.8 MB/s eta 0:00:00[2025-08-04 08:20:04.991545] 
+Downloading dash_bootstrap_components-2.0.3-py3-none-any.whl (203 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 203.7/203.7 kB 123.9 MB/s eta 0:00:00[2025-08-04 08:20:05.008556] 
+Downloading plotly_express-0.4.1-py2.py3-none-any.whl (2.9 kB)
+Downloading altair-5.5.0-py3-none-any.whl (731 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 731.2/731.2 kB 158.7 MB/s eta 0:00:00[2025-08-04 08:20:05.037116] 
+Downloading openpyxl-3.1.5-py2.py3-none-any.whl (250 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.9/250.9 kB 165.7 MB/s eta 0:00:00[2025-08-04 08:20:05.051193] 
+Downloading xlrd-2.0.2-py2.py3-none-any.whl (96 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.6/96.6 kB 180.0 MB/s eta 0:00:00[2025-08-04 08:20:05.064224] 
+Downloading statsmodels-0.14.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (10.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.5/10.5 MB 129.2 MB/s eta 0:00:00[2025-08-04 08:20:05.161224] 
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 150.6 MB/s eta 0:00:00[2025-08-04 08:20:05.174998] 
+Downloading jupyter-1.1.1-py2.py3-none-any.whl (2.7 kB)
+Downloading ipywidgets-8.1.7-py3-none-any.whl (139 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 139.8/139.8 kB 158.9 MB/s eta 0:00:00
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading cachetools-6.1.0-py3-none-any.whl (11 kB)
+Downloading click-8.2.1-py3-none-any.whl (102 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 102.2/102.2 kB 101.5 MB/s eta 0:00:00[2025-08-04 08:20:05.233560] 
+Downloading comm-0.2.3-py3-none-any.whl (7.3 kB)
+Downloading contourpy-1.3.3-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (362 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 362.9/362.9 kB 148.1 MB/s eta 0:00:00[2025-08-04 08:20:05.258359] 
+Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading flask-3.1.1-py3-none-any.whl (103 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.3/103.3 kB 174.1 MB/s eta 0:00:00[2025-08-04 08:20:05.281333] 
+Downloading fonttools-4.59.0-cp313-cp313-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl (4.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 136.8 MB/s eta 0:00:00[2025-08-04 08:20:05.329468] 
+Downloading gitpython-3.1.45-py3-none-any.whl (208 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 208.2/208.2 kB 218.4 MB/s eta 0:00:00[2025-08-04 08:20:05.342549] 
+Downloading ipython-9.4.0-py3-none-any.whl (611 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 611.0/611.0 kB 153.2 MB/s eta 0:00:00[2025-08-04 08:20:05.359179] 
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 kB 199.6 MB/s eta 0:00:00[2025-08-04 08:20:05.371508] 
+Downloading joblib-1.5.1-py3-none-any.whl (307 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 307.7/307.7 kB 193.0 MB/s eta 0:00:00[2025-08-04 08:20:05.385404] 
+Downloading jsonschema-4.25.0-py3-none-any.whl (89 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 89.2/89.2 kB 190.5 MB/s eta 0:00:00[2025-08-04 08:20:05.397144] 
+Downloading jupyterlab_widgets-3.0.15-py3-none-any.whl (216 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 216.6/216.6 kB 160.8 MB/s eta 0:00:00[2025-08-04 08:20:05.411214] 
+Downloading kiwisolver-1.4.8-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 130.9 MB/s eta 0:00:00[2025-08-04 08:20:05.434534] 
+Downloading narwhals-2.0.1-py3-none-any.whl (385 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 385.4/385.4 kB 173.8 MB/s eta 0:00:00[2025-08-04 08:20:05.448795] 
+Downloading numba-0.61.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (3.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 138.5 MB/s eta 0:00:00[2025-08-04 08:20:05.489174] 
+Downloading numpy-2.2.6-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.5/16.5 MB 124.2 MB/s eta 0:00:00[2025-08-04 08:20:05.635723] 
+Downloading packaging-25.0-py3-none-any.whl (66 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.5/66.5 kB 117.9 MB/s eta 0:00:00[2025-08-04 08:20:05.650784] 
+Downloading patsy-1.0.1-py2.py3-none-any.whl (232 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.9/232.9 kB 129.4 MB/s eta 0:00:00[2025-08-04 08:20:05.666657] 
+Downloading pillow-11.3.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.6/6.6 MB 105.7 MB/s eta 0:00:00[2025-08-04 08:20:05.744969] 
+Downloading protobuf-6.31.1-cp39-abi3-manylinux2014_x86_64.whl (321 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 321.1/321.1 kB 133.9 MB/s eta 0:00:00[2025-08-04 08:20:05.761641] 
+Downloading pyarrow-21.0.0-cp313-cp313-manylinux_2_28_x86_64.whl (42.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.8/42.8 MB 141.1 MB/s eta 0:00:00[2025-08-04 08:20:06.101066] 
+Downloading pydeck-0.9.1-py2.py3-none-any.whl (6.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 120.3 MB/s eta 0:00:00[2025-08-04 08:20:06.172689] 
+Downloading pyparsing-3.2.3-py3-none-any.whl (111 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 111.1/111.1 kB 126.1 MB/s eta 0:00:00[2025-08-04 08:20:06.187524] 
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.9/229.9 kB 137.4 MB/s eta 0:00:00[2025-08-04 08:20:06.202920] 
+Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 509.2/509.2 kB 126.4 MB/s eta 0:00:00[2025-08-04 08:20:06.220386] 
+Downloading requests-2.32.4-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.8/64.8 kB 123.3 MB/s eta 0:00:00[2025-08-04 08:20:06.234105] 
+Downloading scikit_image-0.25.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (15.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.0/15.0 MB 121.7 MB/s eta 0:00:00[2025-08-04 08:20:06.375442] 
+Downloading networkx-3.5-py3-none-any.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 154.5 MB/s eta 0:00:00[2025-08-04 08:20:06.401120] 
+Downloading setuptools-80.9.0-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 133.6 MB/s eta 0:00:00[2025-08-04 08:20:06.422542] 
+Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 145.5 MB/s eta 0:00:00[2025-08-04 08:20:06.478613] 
+Downloading tenacity-9.1.2-py3-none-any.whl (28 kB)
+Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+Downloading tornado-6.5.1-cp39-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (443 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.3/443.3 kB 136.3 MB/s eta 0:00:00[2025-08-04 08:20:06.527745] 
+Downloading traitlets-5.14.3-py3-none-any.whl (85 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.4/85.4 kB 122.6 MB/s eta 0:00:00[2025-08-04 08:20:06.541894] 
+Downloading typing_extensions-4.14.1-py3-none-any.whl (43 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.9/43.9 kB 104.5 MB/s eta 0:00:00[2025-08-04 08:20:06.555831] 
+Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 347.8/347.8 kB 142.0 MB/s eta 0:00:00[2025-08-04 08:20:06.573037] 
+Downloading watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl (79 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.1/79.1 kB 132.5 MB/s eta 0:00:00[2025-08-04 08:20:06.588643] 
+Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.5/224.5 kB 120.8 MB/s eta 0:00:00[2025-08-04 08:20:06.604802] 
+Downloading widgetsnbextension-4.0.14-py3-none-any.whl (2.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 121.6 MB/s eta 0:00:00[2025-08-04 08:20:06.637339] 
+Downloading cloudpickle-3.1.1-py3-none-any.whl (20 kB)
+Downloading et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+Downloading fsspec-2025.7.0-py3-none-any.whl (199 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 199.6/199.6 kB 96.5 MB/s eta 0:00:00[2025-08-04 08:20:06.685506] 
+Downloading importlib_metadata-8.7.0-py3-none-any.whl (27 kB)
+Downloading ipykernel-6.30.0-py3-none-any.whl (117 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.3/117.3 kB 124.0 MB/s eta 0:00:00[2025-08-04 08:20:06.711341] 
+Downloading nest_asyncio-1.6.0-py3-none-any.whl (5.2 kB)
+Downloading jupyter_console-6.6.3-py3-none-any.whl (24 kB)
+Downloading jupyterlab-4.4.5-py3-none-any.whl (12.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.3/12.3 MB 147.1 MB/s eta 0:00:00[2025-08-04 08:20:06.832004] 
+Downloading nbconvert-7.16.6-py3-none-any.whl (258 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 258.5/258.5 kB 220.4 MB/s eta 0:00:00[2025-08-04 08:20:06.845770] 
+Downloading notebook-7.4.4-py3-none-any.whl (14.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.3/14.3 MB 142.5 MB/s eta 0:00:00[2025-08-04 08:20:06.957407] 
+Downloading retrying-1.4.2-py3-none-any.whl (10 kB)
+Downloading async_lru-2.0.5-py3-none-any.whl (6.1 kB)
+Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 206.8 MB/s eta 0:00:00[2025-08-04 08:20:06.988697] 
+Downloading bleach-6.2.0-py3-none-any.whl (163 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.4/163.4 kB 208.8 MB/s eta 0:00:00[2025-08-04 08:20:07.001200] 
+Downloading certifi-2025.8.3-py3-none-any.whl (161 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 161.2/161.2 kB 184.2 MB/s eta 0:00:00[2025-08-04 08:20:07.014431] 
+Downloading charset_normalizer-3.4.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (148 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 148.2/148.2 kB 241.4 MB/s eta 0:00:00[2025-08-04 08:20:07.026674] 
+Downloading debugpy-1.8.15-cp313-cp313-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.2/4.2 MB 147.0 MB/s eta 0:00:00[2025-08-04 08:20:07.070804] 
+Downloading gitdb-4.0.12-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.8/62.8 kB 88.3 MB/s eta 0:00:00[2025-08-04 08:20:07.083710] 
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 192.0 MB/s eta 0:00:00[2025-08-04 08:20:07.095921] 
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 185.6 MB/s eta 0:00:00[2025-08-04 08:20:07.108692] 
+Downloading idna-3.10-py3-none-any.whl (70 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70.4/70.4 kB 118.5 MB/s eta 0:00:00[2025-08-04 08:20:07.121364] 
+Downloading imageio-2.37.0-py3-none-any.whl (315 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 315.8/315.8 kB 205.4 MB/s eta 0:00:00[2025-08-04 08:20:07.135255] 
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jedi-0.19.2-py2.py3-none-any.whl (1.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 120.2 MB/s eta 0:00:00[2025-08-04 08:20:07.172246] 
+Downloading jsonschema_specifications-2025.4.1-py3-none-any.whl (18 kB)
+Downloading jupyter_client-8.6.3-py3-none-any.whl (106 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 106.1/106.1 kB 144.5 MB/s eta 0:00:00[2025-08-04 08:20:07.197768] 
+Downloading jupyter_core-5.8.1-py3-none-any.whl (28 kB)
+Downloading jupyter_lsp-2.2.6-py3-none-any.whl (69 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.4/69.4 kB 63.2 MB/s eta 0:00:00[2025-08-04 08:20:07.222904] 
+Downloading jupyter_server-2.16.0-py3-none-any.whl (386 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 386.9/386.9 kB 151.0 MB/s eta 0:00:00[2025-08-04 08:20:07.238473] 
+Downloading jupyterlab_server-2.27.3-py3-none-any.whl (59 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.7/59.7 kB 195.7 MB/s eta 0:00:00[2025-08-04 08:20:07.250992] 
+Downloading lazy_loader-0.4-py3-none-any.whl (12 kB)
+Downloading llvmlite-0.44.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (42.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.4/42.4 MB 114.7 MB/s eta 0:00:00[2025-08-04 08:20:07.592585] 
+Downloading MarkupSafe-3.0.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (23 kB)
+Downloading matplotlib_inline-0.1.7-py3-none-any.whl (9.9 kB)
+Downloading mistune-3.1.3-py3-none-any.whl (53 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.4/53.4 kB 156.3 MB/s eta 0:00:00[2025-08-04 08:20:07.625737] 
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 129.6 MB/s eta 0:00:00[2025-08-04 08:20:07.644957] 
+Downloading nbclient-0.10.2-py3-none-any.whl (25 kB)
+Downloading nbformat-5.10.4-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.5/78.5 kB 120.2 MB/s eta 0:00:00[2025-08-04 08:20:07.669803] 
+Downloading notebook_shim-0.2.4-py3-none-any.whl (13 kB)
+Downloading pandocfilters-1.5.1-py2.py3-none-any.whl (8.7 kB)
+Downloading pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 132.1 MB/s eta 0:00:00[2025-08-04 08:20:07.705353] 
+Downloading prompt_toolkit-3.0.51-py3-none-any.whl (387 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 387.8/387.8 kB 133.2 MB/s eta 0:00:00[2025-08-04 08:20:07.722707] 
+Downloading psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (277 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 278.0/278.0 kB 143.5 MB/s eta 0:00:00[2025-08-04 08:20:07.739438] 
+Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 106.0 MB/s eta 0:00:00[2025-08-04 08:20:07.765902] 
+Downloading pyzmq-27.0.1-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (839 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 839.8/839.8 kB 106.9 MB/s eta 0:00:00[2025-08-04 08:20:07.791397] 
+Downloading referencing-0.36.2-py3-none-any.whl (26 kB)
+Downloading rpds_py-0.26.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (385 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 385.9/385.9 kB 130.9 MB/s eta 0:00:00[2025-08-04 08:20:07.820146] 
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading tifffile-2025.6.11-py3-none-any.whl (230 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 230.8/230.8 kB 142.3 MB/s eta 0:00:00[2025-08-04 08:20:07.847023] 
+Downloading urllib3-2.5.0-py3-none-any.whl (129 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 129.8/129.8 kB 119.8 MB/s eta 0:00:00[2025-08-04 08:20:07.861875] 
+Downloading zipp-3.23.0-py3-none-any.whl (10 kB)
+Downloading beautifulsoup4-4.13.4-py3-none-any.whl (187 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 187.3/187.3 kB 126.9 MB/s eta 0:00:00[2025-08-04 08:20:07.888523] 
+Downloading decorator-5.2.1-py3-none-any.whl (9.2 kB)
+Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl (8.1 kB)
+Downloading jupyterlab_pygments-0.3.0-py3-none-any.whl (15 kB)
+Downloading stack_data-0.6.3-py3-none-any.whl (24 kB)
+Downloading anyio-4.9.0-py3-none-any.whl (100 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.9/100.9 kB 174.8 MB/s eta 0:00:00[2025-08-04 08:20:07.954038] 
+Downloading argon2_cffi-25.1.0-py3-none-any.whl (14 kB)
+Downloading asttokens-3.0.0-py3-none-any.whl (26 kB)
+Downloading babel-2.17.0-py3-none-any.whl (10.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.2/10.2 MB 100.7 MB/s eta 0:00:00[2025-08-04 08:20:08.088337] 
+Downloading executing-2.2.0-py2.py3-none-any.whl (26 kB)
+Downloading fastjsonschema-2.21.1-py3-none-any.whl (23 kB)
+Downloading json5-0.12.0-py3-none-any.whl (36 kB)
+Downloading jupyter_events-0.12.0-py3-none-any.whl (19 kB)
+Downloading jupyter_server_terminals-0.5.3-py3-none-any.whl (13 kB)
+Downloading overrides-7.7.0-py3-none-any.whl (17 kB)
+Downloading parso-0.8.4-py2.py3-none-any.whl (103 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.7/103.7 kB 224.5 MB/s eta 0:00:00[2025-08-04 08:20:08.160323] 
+Downloading platformdirs-4.3.8-py3-none-any.whl (18 kB)
+Downloading prometheus_client-0.22.1-py3-none-any.whl (58 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.7/58.7 kB 195.8 MB/s eta 0:00:00[2025-08-04 08:20:08.185407] 
+Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+Downloading Send2Trash-1.8.3-py3-none-any.whl (18 kB)
+Downloading smmap-5.0.2-py3-none-any.whl (24 kB)
+Downloading soupsieve-2.7-py3-none-any.whl (36 kB)
+Downloading terminado-0.18.1-py3-none-any.whl (14 kB)
+Downloading tinycss2-1.4.0-py3-none-any.whl (26 kB)
+Downloading webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+Downloading websocket_client-1.8.0-py3-none-any.whl (58 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.8/58.8 kB 202.0 MB/s eta 0:00:00[2025-08-04 08:20:08.270654] 
+Downloading pure_eval-0.2.3-py3-none-any.whl (11 kB)
+Downloading wcwidth-0.2.13-py2.py3-none-any.whl (34 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading python_json_logger-3.3.0-py3-none-any.whl (15 kB)
+Downloading PyYAML-6.0.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (759 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 759.5/759.5 kB 138.5 MB/s eta 0:00:00[2025-08-04 08:20:08.329857] 
+Downloading rfc3986_validator-0.1.1-py2.py3-none-any.whl (4.2 kB)
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading argon2_cffi_bindings-25.1.0-cp39-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.1/87.1 kB 132.3 MB/s eta 0:00:00[2025-08-04 08:20:08.365630] 
+Downloading rfc3339_validator-0.1.4-py2.py3-none-any.whl (3.5 kB)
+Downloading cffi-1.17.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (479 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 479.4/479.4 kB 140.4 MB/s eta 0:00:00[2025-08-04 08:20:08.392671] 
+Downloading jsonpointer-3.0.0-py2.py3-none-any.whl (7.6 kB)
+Downloading rfc3987_syntax-1.1.0-py3-none-any.whl (8.0 kB)
+Downloading webcolors-24.11.1-py3-none-any.whl (14 kB)
+Downloading fqdn-1.5.1-py3-none-any.whl (9.1 kB)
+Downloading isoduration-20.11.0-py3-none-any.whl (11 kB)
+Downloading uri_template-1.3.0-py3-none-any.whl (11 kB)
+Downloading arrow-1.3.0-py3-none-any.whl (66 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.4/66.4 kB 101.6 MB/s eta 0:00:00[2025-08-04 08:20:08.470738] 
+Downloading lark-1.2.2-py3-none-any.whl (111 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 111.0/111.0 kB 130.4 MB/s eta 0:00:00[2025-08-04 08:20:08.485533] 
+Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 130.6 MB/s eta 0:00:00[2025-08-04 08:20:08.500518] 
+Downloading types_python_dateutil-2.9.0.20250708-py3-none-any.whl (17 kB)
+Building wheels for collected packages: lime
+  Building wheel for lime (pyproject.toml): started
+  Building wheel for lime (pyproject.toml): finished with status 'done'
+  Created wheel for lime: filename=lime-0.2.0.1-py3-none-any.whl size=283913 sha256=274187bd690e435accf16950c9c2884c3ffebc4bcb0e2d0f2d568539f23879fa
+  Stored in directory: /tmp/pip-ephem-wheel-cache-6ccldy7o/wheels/7c/04/5c/157dc9106512a6c7a30653ec064490c94a49e0fc8f63d19ab9
+Successfully built lime
+Installing collected packages: webencodings, wcwidth, pytz, pure-eval, ptyprocess, nvidia-cusparselt-cu12, mpmath, fastjsonschema, zipp, xlrd, widgetsnbextension, websocket-client, webcolors, watchdog, urllib3, uri-template, tzdata, typing-extensions, types-python-dateutil, traitlets, tqdm, tornado, toml, tinycss2, threadpoolctl, tenacity, sympy, soupsieve, sniffio, smmap, slicer, six, setuptools, send2trash, rpds-py, rfc3986-validator, retrying, pyzmq, pyyaml, python-json-logger, pyparsing, pygments, pycparser, pyarrow, psutil, protobuf, prompt_toolkit, prometheus-client, platformdirs, pillow, pexpect, parso, pandocfilters, packaging, overrides, nvidia-nvtx-cu12, nvidia-nvjitlink-cu12, nvidia-nccl-cu12, nvidia-curand-cu12, nvidia-cufile-cu12, nvidia-cuda-runtime-cu12, nvidia-cuda-nvrtc-cu12, nvidia-cuda-cupti-cu12, nvidia-cublas-cu12, numpy, networkx, nest-asyncio, narwhals, mistune, markupsafe, llvmlite, lark, kiwisolver, jupyterlab_widgets, jupyterlab-pygments, jsonpointer, json5, joblib, itsdangerous, idna, h11, fsspec, fqdn, fonttools, filelock, executing, et-xmlfile, defusedxml, decorator, debugpy, cycler, comm, cloudpickle, click, charset_normalizer, certifi, cachetools, blinker, bleach, babel, attrs, async-lru, asttokens, Werkzeug, triton, tifffile, terminado, stack_data, scipy, rfc3987-syntax, rfc3339-validator, requests, referencing, python-dateutil, plotly, patsy, openpyxl, nvidia-cusparse-cu12, nvidia-cufft-cu12, nvidia-cudnn-cu12, numba, matplotlib-inline, lazy-loader, jupyter-core, jinja2, jedi, ipython-pygments-lexers, importlib-metadata, imageio, httpcore, gitdb, contourpy, cffi, beautifulsoup4, anyio, xgboost, scikit-learn, scikit-image, pydeck, pandas, nvidia-cusolver-cu12, matplotlib, lightgbm, jupyter-server-terminals, jupyter-client, jsonschema-specifications, ipython, httpx, gitpython, Flask, arrow, argon2-cffi-bindings, torch, statsmodels, shap, seaborn, lime, jsonschema, isoduration, ipywidgets, ipykernel, dash, argon2-cffi, torchvision, plotly-express, nbformat, jupyter-console, dash-bootstrap-components, altair, streamlit, nbclient, jupyter-events, streamlit-option-menu, nbconvert, jupyter-server, notebook-shim, jupyterlab-server, jupyter-lsp, jupyterlab, notebook, jupyter
+  Attempting uninstall: pygments
+    Found existing installation: Pygments 2.19.2
+    Uninstalling Pygments-2.19.2:
+      Successfully uninstalled Pygments-2.19.2
+Successfully installed Flask-3.1.1 Werkzeug-3.1.3 altair-5.5.0 anyio-4.9.0 argon2-cffi-25.1.0 argon2-cffi-bindings-25.1.0 arrow-1.3.0 asttokens-3.0.0 async-lru-2.0.5 attrs-25.3.0 babel-2.17.0 beautifulsoup4-4.13.4 bleach-6.2.0 blinker-1.9.0 cachetools-6.1.0 certifi-2025.8.3 cffi-1.17.1 charset_normalizer-3.4.2 click-8.2.1 cloudpickle-3.1.1 comm-0.2.3 contourpy-1.3.3 cycler-0.12.1 dash-3.2.0 dash-bootstrap-components-2.0.3 debugpy-1.8.15 decorator-5.2.1 defusedxml-0.7.1 et-xmlfile-2.0.0 executing-2.2.0 fastjsonschema-2.21.1 filelock-3.18.0 fonttools-4.59.0 fqdn-1.5.1 fsspec-2025.7.0 gitdb-4.0.12 gitpython-3.1.45 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.10 imageio-2.37.0 importlib-metadata-8.7.0 ipykernel-6.30.0 ipython-9.4.0 ipython-pygments-lexers-1.1.1 ipywidgets-8.1.7 isoduration-20.11.0 itsdangerous-2.2.0 jedi-0.19.2 jinja2-3.1.6 joblib-1.5.1 json5-0.12.0 jsonpointer-3.0.0 jsonschema-4.25.0 jsonschema-specifications-2025.4.1 jupyter-1.1.1 jupyter-client-8.6.3 jupyter-console-6.6.3 jupyter-core-5.8.1 jupyter-events-0.12.0 jupyter-lsp-2.2.6 jupyter-server-2.16.0 jupyter-server-terminals-0.5.3 jupyterlab-4.4.5 jupyterlab-pygments-0.3.0 jupyterlab-server-2.27.3 jupyterlab_widgets-3.0.15 kiwisolver-1.4.8 lark-1.2.2 lazy-loader-0.4 lightgbm-4.6.0 lime-0.2.0.1 llvmlite-0.44.0 markupsafe-3.0.2 matplotlib-3.10.5 matplotlib-inline-0.1.7 mistune-3.1.3 mpmath-1.3.0 narwhals-2.0.1 nbclient-0.10.2 nbconvert-7.16.6 nbformat-5.10.4 nest-asyncio-1.6.0 networkx-3.5 notebook-7.4.4 notebook-shim-0.2.4 numba-0.61.2 numpy-2.2.6 nvidia-cublas-cu12-12.6.4.1 nvidia-cuda-cupti-cu12-12.6.80 nvidia-cuda-nvrtc-cu12-12.6.77 nvidia-cuda-runtime-cu12-12.6.77 nvidia-cudnn-cu12-9.5.1.17 nvidia-cufft-cu12-11.3.0.4 nvidia-cufile-cu12-1.11.1.6 nvidia-curand-cu12-10.3.7.77 nvidia-cusolver-cu12-11.7.1.2 nvidia-cusparse-cu12-12.5.4.2 nvidia-cusparselt-cu12-0.6.3 nvidia-nccl-cu12-2.26.2 nvidia-nvjitlink-cu12-12.6.85 nvidia-nvtx-cu12-12.6.77 openpyxl-3.1.5 overrides-7.7.0 packaging-25.0 pandas-2.3.1 pandocfilters-1.5.1 parso-0.8.4 patsy-1.0.1 pexpect-4.9.0 pillow-11.3.0 platformdirs-4.3.8 plotly-6.2.0 plotly-express-0.4.1 prometheus-client-0.22.1 prompt_toolkit-3.0.51 protobuf-6.31.1 psutil-7.0.0 ptyprocess-0.7.0 pure-eval-0.2.3 pyarrow-21.0.0 pycparser-2.22 pydeck-0.9.1 pygments-2.19.2 pyparsing-3.2.3 python-dateutil-2.9.0.post0 python-json-logger-3.3.0 pytz-2025.2 pyyaml-6.0.2 pyzmq-27.0.1 referencing-0.36.2 requests-2.32.4 retrying-1.4.2 rfc3339-validator-0.1.4 rfc3986-validator-0.1.1 rfc3987-syntax-1.1.0 rpds-py-0.26.0 scikit-image-0.25.2 scikit-learn-1.7.1 scipy-1.16.1 seaborn-0.13.2 send2trash-1.8.3 setuptools-80.9.0 shap-0.48.0 six-1.17.0 slicer-0.0.8 smmap-5.0.2 sniffio-1.3.1 soupsieve-2.7 stack_data-0.6.3 statsmodels-0.14.5 streamlit-1.47.1 streamlit-option-menu-0.4.0 sympy-1.14.0 tenacity-9.1.2 terminado-0.18.1 threadpoolctl-3.6.0 tifffile-2025.6.11 tinycss2-1.4.0 toml-0.10.2 torch-2.7.1 torchvision-0.22.1 tornado-6.5.1 tqdm-4.67.1 traitlets-5.14.3 triton-3.3.1 types-python-dateutil-2.9.0.20250708 typing-extensions-4.14.1 tzdata-2025.2 uri-template-1.3.0 urllib3-2.5.0 watchdog-6.0.0 wcwidth-0.2.13 webcolors-24.11.1 webencodings-0.5.1 websocket-client-1.8.0 widgetsnbextension-4.0.14 xgboost-3.0.3 xlrd-2.0.2 zipp-3.23.0
+
+[notice] A new release of pip is available: 24.0 -> 25.2
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+Found Streamlit version 1.47.1 in the environment
+Installing rich for an improved exception logging
+Using standard pip install.
+Collecting rich>=10.14.0
+  Downloading rich-14.1.0-py3-none-any.whl.metadata (18 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=10.14.0)
+  Downloading markdown_it_py-3.0.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=10.14.0)
+  Downloading pygments-2.19.2-py3-none-any.whl.metadata (2.5 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=10.14.0)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Downloading rich-14.1.0-py3-none-any.whl (243 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 243.4/243.4 kB 10.6 MB/s eta 0:00:00[2025-08-04 08:22:39.165968] 
+Downloading markdown_it_py-3.0.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.5/87.5 kB 129.2 MB/s eta 0:00:00[2025-08-04 08:22:39.181905] 
+Downloading pygments-2.19.2-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 64.8 MB/s eta 0:00:00[2025-08-04 08:22:39.216113] 
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Installing collected packages: pygments, mdurl, markdown-it-py, rich
+  Attempting uninstall: pygments
+    Found existing installation: Pygments 2.19.2
+    Uninstalling Pygments-2.19.2:
+      Successfully uninstalled Pygments-2.19.2
+  Attempting uninstall: mdurl
+    Found existing installation: mdurl 0.1.2
+    Uninstalling mdurl-0.1.2:
+      Successfully uninstalled mdurl-0.1.2
+  Attempting uninstall: markdown-it-py
+    Found existing installation: markdown-it-py 3.0.0
+    Uninstalling markdown-it-py-3.0.0:
+      Successfully uninstalled markdown-it-py-3.0.0
+  Attempting uninstall: rich
+    Found existing installation: rich 14.1.0
+    Uninstalling rich-14.1.0:
+      Successfully uninstalled rich-14.1.0
+Successfully installed markdown-it-py-3.0.0 mdurl-0.1.2 pygments-2.19.2 rich-14.1.0
+
+[notice] A new release of pip is available: 24.0 -> 25.2
+[notice] To update, run: pip install --upgrade pip
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[08:22:44] 🐍 Python dependencies were installed from /mount/src/housing-price-data/requirements.txt using pip.
+Check if streamlit is installed
+Streamlit is already installed
+[08:22:45] 📦 Processed dependencies!
+
+
+
+2025-08-04 08:24:17.545 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
+Traceback (most recent call last):
+  File "/home/adminuser/venv/lib/python3.13/site-packages/streamlit/dataframe_util.py", line 821, in convert_pandas_df_to_arrow_bytes
+    table = pa.Table.from_pandas(df)
+  File "pyarrow/table.pxi", line 4795, in pyarrow.lib.Table.from_pandas
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 637, in dataframe_to_arrays
+    arrays = [convert_column(c, f)
+              ~~~~~~~~~~~~~~^^^^^^
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 625, in convert_column
+    raise e
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 619, in convert_column
+    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
+  File "pyarrow/array.pxi", line 365, in pyarrow.lib.array
+  File "pyarrow/array.pxi", line 91, in pyarrow.lib._ndarray_to_array
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowInvalid: ("Could not convert dtype('int64') with type numpy.dtypes.Int64DType: did not recognize Python value type when inferring an Arrow data type", 'Conversion failed for column Type with type object')
+2025-08-04 08:26:39.772 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
+Traceback (most recent call last):
+  File "/home/adminuser/venv/lib/python3.13/site-packages/streamlit/dataframe_util.py", line 821, in convert_pandas_df_to_arrow_bytes
+    table = pa.Table.from_pandas(df)
+  File "pyarrow/table.pxi", line 4795, in pyarrow.lib.Table.from_pandas
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 637, in dataframe_to_arrays
+    arrays = [convert_column(c, f)
+              ~~~~~~~~~~~~~~^^^^^^
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 625, in convert_column
+    raise e
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 619, in convert_column
+    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
+  File "pyarrow/array.pxi", line 365, in pyarrow.lib.array
+  File "pyarrow/array.pxi", line 91, in pyarrow.lib._ndarray_to_array
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowInvalid: ("Could not convert dtype('int64') with type numpy.dtypes.Int64DType: did not recognize Python value type when inferring an Arrow data type", 'Conversion failed for column Type with type object')
+────────────────────── Traceback (most recent call last) ───────────────────────
+  /home/adminuser/venv/lib/python3.13/site-packages/streamlit/runtime/scriptru  
+  nner/exec_code.py:128 in exec_func_with_error_handling                        
+                                                                                
+  /home/adminuser/venv/lib/python3.13/site-packages/streamlit/runtime/scriptru  
+  nner/script_runner.py:669 in code_to_exec                                     
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:1353 in <module>                   
+                                                                                
+    1350 │   │   │   │   st.error(f"Error processing bulk data: {str(e)}")      
+    1351                                                                        
+    1352 if __name__ == "__main__":                                             
+  ❱ 1353 │   main()                                                             
+    1354                                                                        
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:111 in main                        
+                                                                                
+     108 │                                                                      
+     109 │   # EDA Module                                                       
+     110 │   elif page == "🔍 Exploratory Data Analysis":                       
+  ❱  111 │   │   show_eda_module(data, processor)                               
+     112 │                                                                      
+     113 │   # Preprocessing Module                                             
+     114 │   elif page == "🔧 Data Preprocessing":                              
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:317 in show_eda_module             
+                                                                                
+     314 │   │   │   │   │   value_counts = data[selected_cat].value_counts()   
+     315 │   │   │   │   │   fig = px.bar(x=value_counts.index, y=value_counts  
+     316 │   │   │   │   │   │   │      title=f"Distribution of {selected_cat}  
+  ❱  317 │   │   │   │   │   fig.update_xaxis(title=selected_cat)               
+     318 │   │   │   │   │   fig.update_yaxis(title="Count")                    
+     319 │   │   │   │   │   st.plotly_chart(fig, use_container_width=True)     
+     320                                                                        
+────────────────────────────────────────────────────────────────────────────────
+AttributeError: 'Figure' object has no attribute 'update_xaxis'
+2025-08-04 08:29:13.789 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
+Traceback (most recent call last):
+  File "/home/adminuser/venv/lib/python3.13/site-packages/streamlit/dataframe_util.py", line 821, in convert_pandas_df_to_arrow_bytes
+    table = pa.Table.from_pandas(df)
+  File "pyarrow/table.pxi", line 4795, in pyarrow.lib.Table.from_pandas
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 637, in dataframe_to_arrays
+    arrays = [convert_column(c, f)
+              ~~~~~~~~~~~~~~^^^^^^
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 625, in convert_column
+    raise e
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 619, in convert_column
+    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
+  File "pyarrow/array.pxi", line 365, in pyarrow.lib.array
+  File "pyarrow/array.pxi", line 91, in pyarrow.lib._ndarray_to_array
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowInvalid: ("Could not convert dtype('int64') with type numpy.dtypes.Int64DType: did not recognize Python value type when inferring an Arrow data type", 'Conversion failed for column Type with type object')
+2025-08-04 08:34:13.857 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
+Traceback (most recent call last):
+  File "/home/adminuser/venv/lib/python3.13/site-packages/streamlit/dataframe_util.py", line 821, in convert_pandas_df_to_arrow_bytes
+    table = pa.Table.from_pandas(df)
+  File "pyarrow/table.pxi", line 4795, in pyarrow.lib.Table.from_pandas
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 637, in dataframe_to_arrays
+    arrays = [convert_column(c, f)
+              ~~~~~~~~~~~~~~^^^^^^
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 625, in convert_column
+    raise e
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 619, in convert_column
+    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
+  File "pyarrow/array.pxi", line 365, in pyarrow.lib.array
+  File "pyarrow/array.pxi", line 91, in pyarrow.lib._ndarray_to_array
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowInvalid: ("Could not convert dtype('int64') with type numpy.dtypes.Int64DType: did not recognize Python value type when inferring an Arrow data type", 'Conversion failed for column Type with type object')
+2025-08-04 08:38:40.244 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
+Traceback (most recent call last):
+  File "/home/adminuser/venv/lib/python3.13/site-packages/streamlit/dataframe_util.py", line 821, in convert_pandas_df_to_arrow_bytes
+    table = pa.Table.from_pandas(df)
+  File "pyarrow/table.pxi", line 4795, in pyarrow.lib.Table.from_pandas
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 637, in dataframe_to_arrays
+    arrays = [convert_column(c, f)
+              ~~~~~~~~~~~~~~^^^^^^
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 625, in convert_column
+    raise e
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 619, in convert_column
+    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
+  File "pyarrow/array.pxi", line 365, in pyarrow.lib.array
+  File "pyarrow/array.pxi", line 91, in pyarrow.lib._ndarray_to_array
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowInvalid: ("Could not convert dtype('int64') with type numpy.dtypes.Int64DType: did not recognize Python value type when inferring an Arrow data type", 'Conversion failed for column Type with type object')
+2025-08-04 08:39:13.821 Serialization of dataframe to Arrow table was unsuccessful. Applying automatic fixes for column types to make the dataframe Arrow-compatible.
+Traceback (most recent call last):
+  File "/home/adminuser/venv/lib/python3.13/site-packages/streamlit/dataframe_util.py", line 821, in convert_pandas_df_to_arrow_bytes
+    table = pa.Table.from_pandas(df)
+  File "pyarrow/table.pxi", line 4795, in pyarrow.lib.Table.from_pandas
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 637, in dataframe_to_arrays
+    arrays = [convert_column(c, f)
+              ~~~~~~~~~~~~~~^^^^^^
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 625, in convert_column
+    raise e
+  File "/home/adminuser/venv/lib/python3.13/site-packages/pyarrow/pandas_compat.py", line 619, in convert_column
+    result = pa.array(col, type=type_, from_pandas=True, safe=safe)
+  File "pyarrow/array.pxi", line 365, in pyarrow.lib.array
+  File "pyarrow/array.pxi", line 91, in pyarrow.lib._ndarray_to_array
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowInvalid: ("Could not convert dtype('int64') with type numpy.dtypes.Int64DType: did not recognize Python value type when inferring an Arrow data type", 'Conversion failed for column Type with type object')
+────────────────────── Traceback (most recent call last) ───────────────────────
+  /home/adminuser/venv/lib/python3.13/site-packages/streamlit/runtime/scriptru  
+  nner/exec_code.py:128 in exec_func_with_error_handling                        
+                                                                                
+  /home/adminuser/venv/lib/python3.13/site-packages/streamlit/runtime/scriptru  
+  nner/script_runner.py:669 in code_to_exec                                     
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:1353 in <module>                   
+                                                                                
+    1350 │   │   │   │   st.error(f"Error processing bulk data: {str(e)}")      
+    1351                                                                        
+    1352 if __name__ == "__main__":                                             
+  ❱ 1353 │   main()                                                             
+    1354                                                                        
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:111 in main                        
+                                                                                
+     108 │                                                                      
+     109 │   # EDA Module                                                       
+     110 │   elif page == "🔍 Exploratory Data Analysis":                       
+  ❱  111 │   │   show_eda_module(data, processor)                               
+     112 │                                                                      
+     113 │   # Preprocessing Module                                             
+     114 │   elif page == "🔧 Data Preprocessing":                              
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:317 in show_eda_module             
+                                                                                
+     314 │   │   │   │   │   value_counts = data[selected_cat].value_counts()   
+     315 │   │   │   │   │   fig = px.bar(x=value_counts.index, y=value_counts  
+     316 │   │   │   │   │   │   │      title=f"Distribution of {selected_cat}  
+  ❱  317 │   │   │   │   │   fig.update_xaxis(title=selected_cat)               
+     318 │   │   │   │   │   fig.update_yaxis(title="Count")                    
+     319 │   │   │   │   │   st.plotly_chart(fig, use_container_width=True)     
+     320                                                                        
+────────────────────────────────────────────────────────────────────────────────
+AttributeError: 'Figure' object has no attribute 'update_xaxis'
+────────────────────── Traceback (most recent call last) ───────────────────────
+  /home/adminuser/venv/lib/python3.13/site-packages/streamlit/runtime/scriptru  
+  nner/exec_code.py:128 in exec_func_with_error_handling                        
+                                                                                
+  /home/adminuser/venv/lib/python3.13/site-packages/streamlit/runtime/scriptru  
+  nner/script_runner.py:669 in code_to_exec                                     
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:1353 in <module>                   
+                                                                                
+    1350 │   │   │   │   st.error(f"Error processing bulk data: {str(e)}")      
+    1351                                                                        
+    1352 if __name__ == "__main__":                                             
+  ❱ 1353 │   main()                                                             
+    1354                                                                        
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:123 in main                        
+                                                                                
+     120 │                                                                      
+     121 │   # Model Interpretability                                           
+     122 │   elif page == "🔬 Model Interpretability":                          
+  ❱  123 │   │   show_interpretability_module(data, processor)                  
+     124 │                                                                      
+     125 │   # Price Prediction                                                 
+     126 │   elif page == "🏠 Price Prediction":                                
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:648 in                             
+  show_interpretability_module                                                  
+                                                                                
+     645 │   │   │   │   │   │   st.markdown("**🎯 Interactive SHAP Analysis D  
+     646 │   │   │   │   │   │   st.info("Comprehensive view showing feature i  
+     647 │   │   │   │   │   │                                                  
+  ❱  648 │   │   │   │   │   │   interactive_fig = interpreter.create_interact  
+     649 │   │   │   │   │   │   if interactive_fig:                            
+     650 │   │   │   │   │   │   │   st.plotly_chart(interactive_fig, use_cont  
+     651                                                                        
+────────────────────────────────────────────────────────────────────────────────
+AttributeError: 'ModelInterpreter' object has no attribute 
+'create_interactive_shap_summary'
+────────────────────── Traceback (most recent call last) ───────────────────────
+  /home/adminuser/venv/lib/python3.13/site-packages/streamlit/runtime/scriptru  
+  nner/exec_code.py:128 in exec_func_with_error_handling                        
+                                                                                
+  /home/adminuser/venv/lib/python3.13/site-packages/streamlit/runtime/scriptru  
+  nner/script_runner.py:669 in code_to_exec                                     
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:1353 in <module>                   
+                                                                                
+    1350 │   │   │   │   st.error(f"Error processing bulk data: {str(e)}")      
+    1351                                                                        
+    1352 if __name__ == "__main__":                                             
+  ❱ 1353 │   main()                                                             
+    1354                                                                        
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:123 in main                        
+                                                                                
+     120 │                                                                      
+     121 │   # Model Interpretability                                           
+     122 │   elif page == "🔬 Model Interpretability":                          
+  ❱  123 │   │   show_interpretability_module(data, processor)                  
+     124 │                                                                      
+     125 │   # Price Prediction                                                 
+     126 │   elif page == "🏠 Price Prediction":                                
+                                                                                
+  /mount/src/housing-price-data/dashboard.py:648 in                             
+  show_interpretability_module                                                  
+                                                                                
+     645 │   │   │   │   │   │   st.markdown("**🎯 Interactive SHAP Analysis D  
+     646 │   │   │   │   │   │   st.info("Comprehensive view showing feature i  
+     647 │   │   │   │   │   │                                                  
+  ❱  648 │   │   │   │   │   │   interactive_fig = interpreter.create_interact  
+     649 │   │   │   │   │   │   if interactive_fig:                            
+     650 │   │   │   │   │   │   │   st.plotly_chart(interactive_fig, use_cont  
+     651                                                                        
+────────────────────────────────────────────────────────────────────────────────
+AttributeError: 'ModelInterpreter' object has no attribute 
+'create_interactive_shap_summary'
